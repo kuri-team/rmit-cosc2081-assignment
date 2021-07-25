@@ -42,9 +42,11 @@ Each data object has a geographic area, which can be either a country (e.g., Vie
 
 This is the data after processed and ready to display. To create summary data, original data are grouped (2.1), a metric is chosen (2.2), and a result is calculated (2.3). The possible ways of specifying groupings are (explanation of 2.1):
 
-No grouping: each day is a separate group.
+#### a. No grouping:
+Each day is a separate group.
 
-Number of groups: a number is specified, and you must divide your data into that number of groups. You need to divide your data as equally as possible. For example, if your data consist of 10 days (day 1 to day 10) and 3 groups are needed, then you can divide your data into either
+#### b. Number of groups:
+A number is specified, and you must divide your data into that number of groups. You need to divide your data as equally as possible. For example, if your data consist of 10 days (day 1 to day 10) and 3 groups are needed, then you can divide your data into either
 
     [day 1 to day 3], [day 4 to day 6], [day 7 to day 10]
 
@@ -58,7 +60,10 @@ Number of groups: a number is specified, and you must divide your data into that
 
 Note that you can only put consecutive days into a group. In other words, putting day 1, day 2, and day 4 into a group is invalid.
 
-Number of days: a number is specified and you divide your data into groups so that each group contains that number of days. For this grouping, if it is not possible to divide groups equally, raise an error telling the caller about that. For example, if your data consist of 10 days (day 1 to day 10) and 5 days per group are needed, you can divide your data into 2 groups. “Number of days” like 3 or 4 are invalid in this case.
+#### c. Number of days:
+A number is specified and you divide your data into groups so that each group contains that number of days. For this grouping, if it is not possible to divide groups equally, raise an error telling the caller about that. For example, if your data consist of 10 days (day 1 to day 10) and 5 days per group are needed, you can divide your data into 2 groups. “Number of days” like 3 or 4 are invalid in this case.
+
+***
 
 After specifying a grouping method, a metric is chosen. There are 3 possible metrics (explanation of 2.2): positive cases, deaths, and people vaccinated.
 
