@@ -98,7 +98,7 @@ This is an opinionated project. Coding style is strictly enforced using `/.edito
 - Student: Doan Yen Nhi [@doanyennhi](https://github.com/doanyennhi)
 - Student: Du Duc Manh [@rider3458](https://github.com/rider3458)
 - Student: Nguyen "Tom" Vu [@]()
-- Student: Mike Vo [@miketvo](https://github.com/miketvo) | [website](https://miketvo.com)
+- Student: Tuong-Minh "Mike" Vo [@miketvo](https://github.com/miketvo) | [website](https://miketvo.com)
 ***
 
 # Submission
@@ -130,5 +130,7 @@ An example of contribution information is
 Another example 
 
     All contributions are the same
+
+**Contribution information is in `/contribution.md`**
 
 Compress all files as one .zip file and submit the .zip file to Canvas
