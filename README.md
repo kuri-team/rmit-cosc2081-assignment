@@ -102,7 +102,7 @@ This is an opinionated project. Coding style is strictly enforced using `/intell
 - Instructor: Bao Nguyen, M.S. [@baothien](https://github.com/baothien)
 - Student: Doan Yen Nhi [@doanyennhi](https://github.com/doanyennhi)
 - Student: Du Duc Manh [@rider3458](https://github.com/rider3458)
-- Student: Nguyen "Tom" Vu [@]()
+- Student: Nguyen "Tom" Vu [@NguyenVu11796](https://github.com/NguyenVu11796)
 - Student: Tuong-Minh "Mike" Vo [@miketvo](https://github.com/miketvo) | [website](https://miketvo.com)
 ***
 
