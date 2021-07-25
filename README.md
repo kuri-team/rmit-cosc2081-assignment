@@ -91,7 +91,7 @@ Your program should show a menu that lets users choose data (area and range), su
 # Implementation
 
 ## 1. Coding style, standards and workflow conventions
-This is an opinionated project. Coding style is strictly enforced using `/.editorconfig`.
+This is an opinionated project. Coding style is strictly enforced using `/intellij-java-google-style.xml`.
 
 - IDE (required): IntelliJ IDEA. [Guide](https://www.jetbrains.com/help/idea/getting-started.html).
 - [Java coding style and standards](https://google.github.io/styleguide/javaguide.html) (Google Java Style Guide)
