@@ -63,10 +63,10 @@ public class Main {
         System.out.println("Choose a country/region. Available choices:");
         String[] allGeoAreas = database.allGeoAreas();
         for (int i = 0; i < allGeoAreas.length; i++) {
-          System.out.printf("\t%d - %s\t", i, allGeoAreas[i]);
+          System.out.printf("\t%d - %s\t", i + 1, allGeoAreas[i]);
         }
         System.out.print("\n>>> ");
-        String geoArea = allGeoAreas[Integer.parseInt(sc.nextLine())];
+        String geoArea = allGeoAreas[Integer.parseInt(sc.nextLine()) - 1];
 
         System.out.print("""
         Enter a date range. Valid format:
@@ -149,13 +149,13 @@ public class Main {
         }
 
         // Data processing
-        Summary summary = new Summary();
+        Summary summary = new Summary(geoArea, dateRange, grouping, database);
 
         // Display processed data
         System.out.println("─────────────────[ RESULTS ]─────────────────");
         switch (Objects.requireNonNull(displayFormat)) {
-          case TABULAR -> Display.tabular(summary);
-          case CHART -> Display.chart(summary);
+          case TABULAR -> Display.tabular(summary, metric);
+          case CHART -> Display.chart(summary, metric);
         }
       }
 
