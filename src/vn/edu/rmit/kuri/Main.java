@@ -53,7 +53,9 @@ public class Main {
     header(databasePath);
     try {
       // Load database into memory
+      System.out.print("Data base loading... ");
       Database database = new Database(databasePath);
+      System.out.println("[ LOADED ]\n\n");
 
       if (database.size() == 0) {
         printEmptyDatabaseMessage();
@@ -157,10 +159,12 @@ public class Main {
         }
 
         // 6 - Data processing
+        System.out.print("\n\nProcessing data... ");
         Summary summary = new Summary(geoArea, dateRange, grouping, database);
+        System.out.println("[ DONE ]\n");
 
         // 7 - Display processed data
-        System.out.println("─────────────────[ RESULTS ]─────────────────");
+        System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
         switch (Objects.requireNonNull(displayFormat)) {
           case TABULAR -> Display.tabular(summary, metric, resultType);
           case CHART -> Display.chart(summary, metric, resultType);
