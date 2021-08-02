@@ -5,10 +5,12 @@ import vn.edu.rmit.kuri.processing.Summary;
 public class Display {
 
   public static void tabular(Summary summary) {
-    // code here
+    // Dummy content TODO: Implement
+    System.out.println("To be implemented");
   }
 
   public static void chart(Summary summary) {
-    // code here
+    // Dummy content TODO: Implement
+    System.out.println("To be implemented");
   }
 }

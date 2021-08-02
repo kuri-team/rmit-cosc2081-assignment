@@ -4,15 +4,19 @@ import java.io.FileNotFoundException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Database implements DataArray {
 
   private final Data[] data;
+  private final HashSet<String> geoAreas;
 
   public Database(String path) throws FileNotFoundException {
     ArrayList<HashMap<String, String>> data = Csv.read(path);
     this.data = new Data[data.size()];
+    this.geoAreas = new HashSet<>();
 
     for (int i = 0; i < this.data.length; i++) {
       HashMap<String, String> row = data.get(i);
@@ -23,6 +27,7 @@ public class Database implements DataArray {
           row.get("new_deaths"),
           row.get("people_vaccinated")
       );
+      geoAreas.add(row.get("location"));
     }
   }
 
@@ -48,6 +53,12 @@ public class Database implements DataArray {
     }
 
     return earliestDate;
+  }
+
+  public String[] allGeoAreas() {
+    String[] result = this.geoAreas.toArray(new String[0]);
+    Arrays.sort(result);
+    return result;
   }
 
   public LocalDate getLatestDate() {
