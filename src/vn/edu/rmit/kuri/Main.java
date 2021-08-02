@@ -58,7 +58,6 @@ public class Main {
       if (database.size() == 0) {
         printEmptyDatabaseMessage();
       } else {
-        // Prompt user for their input on how to process and display the data
         Scanner sc = new Scanner(System.in);
 
         // User chooses a country/region
