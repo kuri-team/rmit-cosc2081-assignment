@@ -58,7 +58,7 @@ public class Main {
       if (database.size() == 0) {
         printEmptyDatabaseMessage();
       } else {
-        // TODO: (Nhi) optimize 1 through 5 and check for bad inputs from user. I.e. when the program wants an integer but the user enters a string, when the user press enters too many times, etc.
+        // TODO: Optimize 1 through 5 (input) and check for bad inputs from user. I.e. when the program wants an integer but the user enters a string, when the user press enters too many times, etc.
         Scanner sc = new Scanner(System.in);
 
         // 1 - User chooses a country/region
