@@ -13,7 +13,7 @@ public class Main {
   /**
    * Prints out the program's header. For decoration purpose.
    *
-   * @param databasePath String: Path to the database to be displayed back to the user
+   * @param databasePath <code>String</code>: Path to the database to be displayed back to the user
    */
   public static void header(String databasePath) {
     System.out.println("╔═══════════════════════════════════════════╗");
