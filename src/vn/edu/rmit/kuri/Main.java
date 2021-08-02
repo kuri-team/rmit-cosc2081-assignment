@@ -162,8 +162,8 @@ public class Main {
         // 7 - Display processed data
         System.out.println("─────────────────[ RESULTS ]─────────────────");
         switch (Objects.requireNonNull(displayFormat)) {
-          case TABULAR -> Display.tabular(summary, metric);
-          case CHART -> Display.chart(summary, metric);
+          case TABULAR -> Display.tabular(summary, metric, resultType);
+          case CHART -> Display.chart(summary, metric, resultType);
         }
       }
 
