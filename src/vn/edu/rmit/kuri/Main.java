@@ -58,9 +58,10 @@ public class Main {
       if (database.size() == 0) {
         printEmptyDatabaseMessage();
       } else {
+        // TODO: (Nhi) optimize 1 through 5 and check for bad inputs from user. I.e. when the program wants an integer but the user enters a string, when the user press enters too many times, etc.
         Scanner sc = new Scanner(System.in);
 
-        // User chooses a country/region
+        // 1 - User chooses a country/region
         System.out.println("Choose a country/region. Available choices:");
         String[] allGeoAreas = database.allGeoAreas();
         for (int i = 0; i < allGeoAreas.length; i++) {
@@ -70,28 +71,28 @@ public class Main {
         String geoArea = allGeoAreas[Integer.parseInt(sc.nextLine()) - 1];
 
         System.out.print("""
-        Enter a date range. Valid format:
-        
-        \tyyyy-MM-dd yyyy-MM-dd (start date -> end date, inclusive)
-        \t\tExample: 2020-01-02 2021-03-04
-        
-        \t Number of days before end date, inclusive
-        \t\tExample: 12d 2021-03-04
-        
-        \t Number of weeks before end date, inclusive
-        \t\tExample: 3w 2021-03-04
-        
-        \t Number of days after start date, inclusive
-        \t\tExample: 2020-01-02 12d
-        
-        \t Number of weeks after start date, inclusive
-        \t\tExample: 2020-01-02 3w
-        
-        >>>\s"""
+            Enter a date range. Valid format:
+                    
+            \tyyyy-MM-dd yyyy-MM-dd (start date -> end date, inclusive)
+            \t\tExample: 2020-01-02 2021-03-04
+                    
+            \t Number of days before end date, inclusive
+            \t\tExample: 12d 2021-03-04
+                    
+            \t Number of weeks before end date, inclusive
+            \t\tExample: 3w 2021-03-04
+                    
+            \t Number of days after start date, inclusive
+            \t\tExample: 2020-01-02 12d
+                    
+            \t Number of weeks after start date, inclusive
+            \t\tExample: 2020-01-02 3w
+                    
+            >>>\s"""
         );
         DateRange dateRange = new DateRange(sc.nextLine());
 
-        // User chooses a metric
+        // 2 - User chooses a metric
         Metric metric = null;
         System.out.print("""
             Choose a metric to track:
@@ -106,13 +107,13 @@ public class Main {
           case 3 -> metric = Metric.VACCINATIONS;
         }
 
-        // User chooses a calculation method
+        // 3 - User chooses a calculation method
         ResultType resultType = null;
         System.out.printf("""
-            Choose a metric to track:
-            \t1 - New %s per day
-            \t2 - Cumulative %s
-            >>>\s""",
+                Choose a metric to track:
+                \t1 - New %s per day
+                \t2 - Cumulative %s
+                >>>\s""",
             metric.toString().toLowerCase(),
             metric.toString().toLowerCase()
         );
@@ -121,7 +122,7 @@ public class Main {
           case 2 -> resultType = ResultType.CUMULATIVE;
         }
 
-        // User chooses a groupingType method
+        // 4 - User chooses a grouping method
         Grouping grouping = null;
         System.out.print("""
             Choose a metric to track:
@@ -142,7 +143,7 @@ public class Main {
           }
         }
 
-        // User chooses a display format
+        // 5 - User chooses a display format
         DisplayFormat displayFormat = null;
         System.out.print("""
             Choose a format to display the processed data:
@@ -155,10 +156,10 @@ public class Main {
           case 2 -> displayFormat = DisplayFormat.CHART;
         }
 
-        // Data processing
+        // 6 - Data processing
         Summary summary = new Summary(geoArea, dateRange, grouping, database);
 
-        // Display processed data
+        // 7 - Display processed data
         System.out.println("─────────────────[ RESULTS ]─────────────────");
         switch (Objects.requireNonNull(displayFormat)) {
           case TABULAR -> Display.tabular(summary, metric);
