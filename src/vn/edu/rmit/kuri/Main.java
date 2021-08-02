@@ -1,7 +1,6 @@
 package vn.edu.rmit.kuri;
 
 import java.io.FileNotFoundException;
-import java.util.Objects;
 import java.util.Scanner;
 import vn.edu.rmit.kuri.data.Database;
 import vn.edu.rmit.kuri.input.DateRange;
@@ -165,7 +164,7 @@ public class Main {
 
         // 7 - Display processed data
         System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
-        switch (Objects.requireNonNull(displayFormat)) {
+        switch (displayFormat) {
           case TABULAR -> Display.tabular(summary, metric, resultType);
           case CHART -> Display.chart(summary, metric, resultType);
         }
