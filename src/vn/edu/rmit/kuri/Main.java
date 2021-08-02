@@ -6,6 +6,7 @@ import java.util.Scanner;
 import vn.edu.rmit.kuri.data.Database;
 import vn.edu.rmit.kuri.input.DateRange;
 import vn.edu.rmit.kuri.input.Grouping;
+import vn.edu.rmit.kuri.input.GroupingType;
 import vn.edu.rmit.kuri.input.Metric;
 import vn.edu.rmit.kuri.input.ResultType;
 import vn.edu.rmit.kuri.output.Display;
@@ -23,7 +24,8 @@ public class Main {
   }
 
   /**
-   * Prints out the program's header. For decoration purpose.
+   * Prints out the program's header. Essentially an eye-candy except serving to provide the user
+   * feedback on which file/where the database is loaded from.
    *
    * @param databasePath <code>String</code>: Path to the database to be displayed back to the user
    */
@@ -120,19 +122,25 @@ public class Main {
           case 2 -> resultType = ResultType.CUMULATIVE;
         }
 
-        // User chooses a grouping method
+        // User chooses a groupingType method
         Grouping grouping = null;
         System.out.print("""
             Choose a metric to track:
-            \t1 - No grouping
+            \t1 - No groupingType
             \t2 - n group(s)
             \t3 - n day(s) per group
             >>>\s"""
         );
         switch (Integer.parseInt(sc.nextLine())) {
-          case 1 -> grouping = Grouping.NONE;
-          case 2 -> grouping = Grouping.N_GROUPS;
-          case 3 -> grouping = Grouping.N_DAYS_PER_GROUP;
+          case 1 -> grouping = new Grouping();
+          case 2 -> {
+            System.out.print("Enter number of group(s): ");
+            grouping = new Grouping(Integer.parseInt(sc.nextLine()), GroupingType.N_GROUPS);
+          }
+          case 3 -> {
+            System.out.print("Enter number of day(s) per group: ");
+            grouping = new Grouping(Integer.parseInt(sc.nextLine()), GroupingType.N_DAYS_PER_GROUP);
+          }
         }
 
         // User chooses a display format

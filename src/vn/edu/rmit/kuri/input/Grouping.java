@@ -1,7 +1,24 @@
 package vn.edu.rmit.kuri.input;
 
-public enum Grouping {
-  NONE,
-  N_GROUPS,
-  N_DAYS_PER_GROUP
+public class Grouping {
+
+  private final GroupingType type;
+  private int groupingNum = 0;
+
+  public Grouping() {
+    this.type = GroupingType.NONE;
+  }
+
+  public Grouping(int groupingNum, GroupingType type) {
+    this.type = type;
+    this.groupingNum = groupingNum;
+  }
+
+  public GroupingType getType() {
+    return this.type;
+  }
+
+  public int getGroupingNum() {
+    return this.groupingNum;
+  }
 }
