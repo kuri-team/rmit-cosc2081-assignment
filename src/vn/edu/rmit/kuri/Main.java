@@ -6,12 +6,13 @@ import vn.edu.rmit.kuri.processing.Summary;
 
 public class Main {
 
-  public static void argError() {
+  public static void invalidSyntaxError() {
     System.out.println("Invalid number of arguments");
   }
 
   /**
    * Prints out the program's header. For decoration purpose.
+   *
    * @param databasePath String: Path to the database to be displayed back to the user
    */
   public static void header(String databasePath) {
@@ -22,26 +23,33 @@ public class Main {
   }
 
   public static void main(String[] args) {
-    if (args.length != 1) {  // Program accepts only one argument: path to the covid database
-      argError();
-    } else {
-      try {
-        String databasePath = args[0];
-        header(databasePath);
+    String databasePath;
 
-        // Load database into memory
-        Database database = new Database(databasePath);
-
-        // Prompt user for input
-
-        // Data processing
-        Summary summary = new Summary();
-
-        // Display processed data
-
-      } catch (FileNotFoundException e) {
-        System.out.println(e.getMessage());
+    // Parameter conditions
+    switch (args.length) {
+      case 0 -> databasePath = "data/covid-data.csv";   // Default database path when no argument is provided
+      case 1 -> databasePath = args[0];                 // Database path provided via program argument
+      default -> {                                      // Invalid syntax, exit immediately
+        invalidSyntaxError();
+        return;
       }
+    }
+
+    // Main program
+    header(databasePath);
+    try {
+      // Load database into memory
+      Database database = new Database(databasePath);
+
+      // Prompt user for input
+
+      // Data processing
+      Summary summary = new Summary();
+
+      // Display processed data
+
+    } catch (FileNotFoundException e) {  // Invalid database file path, or file doesn't exist
+      System.out.println(e.getMessage());
     }
   }
 }
