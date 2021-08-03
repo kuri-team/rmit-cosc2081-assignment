@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Database implements DataArray {
+public class Database implements DataArray<Data> {
 
   private final Data[] data;
   private final HashSet<String> geoAreas;

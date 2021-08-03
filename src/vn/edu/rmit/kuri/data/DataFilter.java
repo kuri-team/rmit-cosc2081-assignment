@@ -3,7 +3,7 @@ package vn.edu.rmit.kuri.data;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class DataFilter implements DataArray {
+public class DataFilter implements DataArray<Data> {
 
   private final Data[] data;
 

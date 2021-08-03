@@ -2,13 +2,13 @@ package vn.edu.rmit.kuri.processing;
 
 import java.util.ArrayList;
 import vn.edu.rmit.kuri.data.Data;
+import vn.edu.rmit.kuri.data.DataArray;
 import vn.edu.rmit.kuri.data.DataFilter;
 import vn.edu.rmit.kuri.data.Database;
 import vn.edu.rmit.kuri.input.DateRange;
 import vn.edu.rmit.kuri.input.Grouping;
-import vn.edu.rmit.kuri.input.GroupingType;
 
-public class Summary {
+public class Summary implements DataArray<ArrayList<Data>> {
 
   private final DataFilter filteredData;
   private final ArrayList<ArrayList<Data>> processedData;

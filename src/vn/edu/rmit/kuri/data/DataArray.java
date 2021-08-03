@@ -1,6 +1,6 @@
 package vn.edu.rmit.kuri.data;
 
-public interface DataArray {
+public interface DataArray<T> {
   int size();
-  Data get(int index);
+  T get(int index);
 }
