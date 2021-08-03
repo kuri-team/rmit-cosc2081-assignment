@@ -39,6 +39,12 @@ public class Database implements DataArray {
     return this.data[index];
   }
 
+  public String[] allGeoAreas() {
+    String[] result = this.geoAreas.toArray(new String[0]);
+    Arrays.sort(result);
+    return result;
+  }
+
   public LocalDate getEarliestDate() {
     LocalDate now = LocalDate.now();
     LocalDate earliestDate = now;
@@ -53,12 +59,6 @@ public class Database implements DataArray {
     }
 
     return earliestDate;
-  }
-
-  public String[] allGeoAreas() {
-    String[] result = this.geoAreas.toArray(new String[0]);
-    Arrays.sort(result);
-    return result;
   }
 
   public LocalDate getLatestDate() {
