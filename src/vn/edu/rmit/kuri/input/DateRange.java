@@ -2,6 +2,7 @@ package vn.edu.rmit.kuri.input;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 
 public class DateRange {
 
@@ -28,10 +29,12 @@ public class DateRange {
     //    Number of weeks after start date, inclusive. Example: 2020-01-02 3w
 
     String[] rangeInput = dateRange.split(" ");
-    String range;
+    String range = "";
+    String[] numRange, timePeriod;
 
     if (isValidDate(rangeInput[0])) {
       start = LocalDate.parse(rangeInput[0]);
+      // can do an else if here: if invalid date (e.g: 30/2) but correct date format
     } else {
       range = rangeInput[0];
     }
@@ -41,6 +44,10 @@ public class DateRange {
     } else {
       range = rangeInput[1];
     }
+
+    numRange = range.split("[a-z]");
+    timePeriod = range.replaceFirst("[0-9]+", "").split("[0-9]+");
+
   }
 
   static boolean isValidDate(String range) {
@@ -70,5 +77,6 @@ public class DateRange {
 //      System.out.print("Invalid date range. Please enter the date range again in valid format: ");
 //      range = sc.nextLine();
 //    }
+
   }
 }
