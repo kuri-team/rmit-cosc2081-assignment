@@ -1,10 +1,7 @@
 package vn.edu.rmit.kuri.input;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Scanner;
+import java.time.format.DateTimeParseException;
 
 public class DateRange {
 
@@ -40,13 +37,12 @@ public class DateRange {
   }
 
   static boolean isValidDate(String range) {
+    // check validity of date entered according to specified format
     try {
-      DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-      dateFormat.setLenient(false);
-      dateFormat.parse(range);
+      LocalDate.parse(range);
       return true;
-    } catch (ParseException exception) {
-        return false;
+    } catch (DateTimeParseException exception) {
+      return false;
     }
   }
 
@@ -67,6 +63,5 @@ public class DateRange {
 //      System.out.print("Invalid date range. Please enter the date range again in valid format: ");
 //      range = sc.nextLine();
 //    }
-
   }
 }
