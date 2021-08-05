@@ -9,7 +9,7 @@ public class DateRange {
   private LocalDate end;
 
   /**
-   * @param range <code>String</code>. Possible format:<br />
+   * @param dateRange <code>String</code>. Possible format:<br />
    *              <ul>
    *                <li><code>yyyy-MM-dd yyyy-MM-dd</code> (start date -> end date, inclusive). Example: <code>2020-01-02 2021-03-04</code></li>
    *                <li>Number of days before end date, inclusive. Example: <code>12d 2021-03-04</code></li>
@@ -18,7 +18,7 @@ public class DateRange {
    *                <li>Number of weeks after start date, inclusive. Example: <code>2020-01-02 3w</code></li>
    *              </ul>
    */
-  public DateRange(String range) {
+  public DateRange(String dateRange) {
     // Implementation TODO: Process the String range into start date and end date
     // Possible format:
     //  	yyyy-MM-dd yyyy-MM-dd (start date -> end date, inclusive). Example: 2020-01-02 2021-03-04
@@ -27,13 +27,20 @@ public class DateRange {
     //    Number of days after start date, inclusive. Example: 2020-01-02 12d
     //    Number of weeks after start date, inclusive. Example: 2020-01-02 3w
 
+    String[] rangeInput = dateRange.split(" ");
+    String range;
 
-////    String[] rangeInput = range.split(" ");
-////
-////    if (rangeInput[0].matches(dateRegex) && rangeInput[1].matches(dateRegex)) {
-////
-////    }
+    if (isValidDate(rangeInput[0])) {
+      start = LocalDate.parse(rangeInput[0]);
+    } else {
+      range = rangeInput[0];
+    }
 
+    if (isValidDate(rangeInput[1])) {
+      end = LocalDate.parse(rangeInput[1]);
+    } else {
+      range = rangeInput[1];
+    }
   }
 
   static boolean isValidDate(String range) {
