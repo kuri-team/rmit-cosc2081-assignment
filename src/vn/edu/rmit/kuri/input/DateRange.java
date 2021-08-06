@@ -30,7 +30,8 @@ public class DateRange {
     //    Number of weeks after start date, inclusive. Example: 2020-01-02 3w
 
     Scanner sc = new Scanner(System.in);
-    String[] rangeTokens;
+    String[] rangeTokens, range, timePeriod;
+    int numRange;
 
     /* WHEN USER CHOOSES PAIR DATES
     // regex for start and end dates format
@@ -64,10 +65,18 @@ public class DateRange {
       dateRange = sc.nextLine();
       dateRange = checkValidFormat(dateRange, durationEndDateRegex, durationEndValidFormat, sc);
       rangeTokens = dateRange.split("\s+");
-
-      end = LocalDate.parse(rangeTokens[1]);
     }
 
+    end = LocalDate.parse(rangeTokens[1]);
+    range = rangeTokens[0].split("[a-z]");
+    numRange = Integer.parseInt(range[0]);
+    timePeriod = rangeTokens[0].replaceFirst("[0-9]+", "").split("[0-9]+");
+
+    if (timePeriod[0].matches("d")) {
+      start = end.minusDays(numRange);
+    } else {
+      start = end.minusWeeks(numRange);
+    }
 
 
     /* WHEN USER CHOOSES START DATE AND DURATION */
@@ -100,8 +109,7 @@ public class DateRange {
 //      range = rangeInput[1];
 //    }
 //
-//    numRange = range.split("[a-z]");
-//    timePeriod = range.replaceFirst("[0-9]+", "").split("[0-9]+");
+//
 
   }
 
@@ -148,7 +156,7 @@ public class DateRange {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
 
-    DateRange date = new DateRange("2020-3-1    2020-02-28");
+    DateRange date = new DateRange("2d 2021-01-08");
     System.out.println(date.getStart());
     System.out.println(date.getEnd());
   }
