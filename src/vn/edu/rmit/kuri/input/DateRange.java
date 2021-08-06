@@ -33,6 +33,7 @@ public class DateRange {
 
     // regex for start and end dates format
     String datesRegex = "^\\d{4}-\\d{2}-\\d{2}\\s+\\d{4}-\\d{2}-\\d{2}$";
+    String datesValidFormat = "Correct format example: 2020-01-02 2021-03-04";
 
     // regex for number of days/ week before end date
     String durationEndDateRegex = "^\\d+[wd]\\s+\\d{4}-\\d{2}-\\d{2}$";
@@ -40,62 +41,70 @@ public class DateRange {
     // regex for number of days/ week after start date
     String startDateDurationRegex = "^\\d{4}-\\d{2}-\\d{2}\\s+\\d+[wd]$";
 
-    while (!dateRange.matches(datesRegex) && !dateRange.matches(durationEndDateRegex) &&
-          !dateRange.matches(startDateDurationRegex)) {
-      System.out.print("Your date range format is invalid. Please try again: ");
+    dateRange = checkValidFormat(dateRange, datesRegex, datesValidFormat, sc);
+    String[] rangeTokens = dateRange.split("\s+");
+
+    while (!isValidDate(rangeTokens[0]) || !isValidDate(rangeTokens[1])) {
+      System.out.print("The date you have entered does not exist. Please try again.\n>>>\s");
       dateRange = sc.nextLine();
+      dateRange = checkValidFormat(dateRange, datesRegex, datesValidFormat, sc);
+      rangeTokens = dateRange.split("\s+");
     }
 
-    String[] rangeInput = dateRange.split(" ");
-    String range = "";
-    String[] numRange, timePeriod; //regex for duration: \d+(w|d)
+    start = LocalDate.parse(rangeTokens[0]);
+    end = LocalDate.parse(rangeTokens[1]);
 
-    while (!(isValidDate(rangeInput[0]) && isValidDate(rangeInput[1]))) {
-      System.out.println("invalid. Enter again: ");
-      dateRange = sc.nextLine();
-      rangeInput = dateRange.split(" ");
-    }
-
-    System.out.println(Arrays.toString(rangeInput));
-
-    if (isValidDate(rangeInput[0])) {
-      start = LocalDate.parse(rangeInput[0]);
-      // can do an else if here: if invalid date (e.g: 30/2) but correct date format
-    } else {
-      range = rangeInput[0];
-    }
-
-    if (isValidDate(rangeInput[1])) {
-      end = LocalDate.parse(rangeInput[1]);
-    } else {
-      range = rangeInput[1];
-    }
-
-    numRange = range.split("[a-z]");
-    timePeriod = range.replaceFirst("[0-9]+", "").split("[0-9]+");
+//    String[] rangeInput = dateRange.split(" ");
+//    String range = "";
+//    String[] numRange, timePeriod; //regex for duration: \d+(w|d)
+//
+//    while (!(isValidDate(rangeInput[0]) && isValidDate(rangeInput[1]))) {
+//      System.out.println("invalid. Enter again: ");
+//      dateRange = sc.nextLine();
+//      rangeInput = dateRange.split(" ");
+//    }
+//
+//    System.out.println(Arrays.toString(rangeInput));
+//
+//    if (isValidDate(rangeInput[0])) {
+//      start = LocalDate.parse(rangeInput[0]);
+//      // can do an else if here: if invalid date (e.g: 30/2) but correct date format
+//    } else {
+//      range = rangeInput[0];
+//    }
+//
+//    if (isValidDate(rangeInput[1])) {
+//      end = LocalDate.parse(rangeInput[1]);
+//    } else {
+//      range = rangeInput[1];
+//    }
+//
+//    numRange = range.split("[a-z]");
+//    timePeriod = range.replaceFirst("[0-9]+", "").split("[0-9]+");
 
   }
 
   /**
-   * Prompt user to enter their input again if input has invalid format
+   * Prompt user to enter their input again if input has invalid format.
    * @param range <code>String</code>: user input
    * @param pattern <code>String</code>: regex pattern to check against
-   * @param message <code>String</code>: message to print correct format example if user input
+   * @param msg <code>String</code>: message to print correct format example if user input
    *                has invalid format
    * @param sc <code>Scanner</code>: scan user input again
    */
-  static void checkValidFormat(String range, String pattern, String message, Scanner sc) {
+  static String checkValidFormat(String range, String pattern, String msg, Scanner sc) {
     while (!range.matches(pattern)) {
       System.out.println("The date range entered has invalid format. Please try again.");
-      System.out.print(message + "\n>>>\s");
+      System.out.print(msg + "\n>>>\s");
       range = sc.nextLine();
     }
+    return range;
   }
 
   /**
    * @param date <code>String</code>
    * @return true if date provided is valid, false otherwise.
-   * E.g: if user enters 2021-01-33 => return false
+   * E.g: if user enters 2021-01-33 => return false since that date doesn't exist
    */
   static boolean isValidDate(String date) {
     try {
@@ -124,9 +133,11 @@ public class DateRange {
 //      range = sc.nextLine();
 //    }
 
-//    DateRange date = new DateRange("2020-03-01   2020-02-28");
+    DateRange date = new DateRange("2020-3-1    2020-02-28");
+    System.out.println(date.getStart());
+    System.out.println(date.getEnd());
 
-    checkValidFormat("2021-01-33", "^\\d+[wd]\\s+\\d{4}-\\d{2}-\\d{2}$",
-        "Correct format example: 12w 2021-02-03", sc);
+//    checkValidFormat("2021-01-33", "^\\d+[wd]\\s+\\d{4}-\\d{2}-\\d{2}$",
+//        "Correct format example: 12w 2021-02-03", sc);
   }
 }
