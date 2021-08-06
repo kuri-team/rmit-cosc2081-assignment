@@ -3,6 +3,7 @@ package vn.edu.rmit.kuri.input;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class DateRange {
 
@@ -28,9 +29,23 @@ public class DateRange {
     //    Number of days after start date, inclusive. Example: 2020-01-02 12d
     //    Number of weeks after start date, inclusive. Example: 2020-01-02 3w
 
+    String startEndDateRegex = "\\d{4}-\\d{2}-\\d{2}\\s+\\d{4}-\\d{2}-\\d{2}";
+    String durationEndDateRegex = "\\d+(w|d)\\s+\\d{4}-\\d{2}-\\d{2}";
+    String startDateDurationRegex = "\\d{4}-\\d{2}-\\d{2}\\s+\\d+(w|d)";
+
     String[] rangeInput = dateRange.split(" ");
     String range = "";
-    String[] numRange, timePeriod;
+    String[] numRange, timePeriod; //regex for duration: \d+(w|d)
+    Scanner sc = new Scanner(System.in);
+
+
+    while (!(isValidDate(rangeInput[0]) && isValidDate(rangeInput[1]))) {
+      System.out.println("invalid. Enter again: ");
+      dateRange = sc.nextLine();
+      rangeInput = dateRange.split(" ");
+    }
+
+    System.out.println(Arrays.toString(rangeInput));
 
     if (isValidDate(rangeInput[0])) {
       start = LocalDate.parse(rangeInput[0]);
@@ -78,5 +93,11 @@ public class DateRange {
 //      range = sc.nextLine();
 //    }
 
+//    DateRange date = new DateRange("2020-03-01   2020-02-28");
+
+    String[] range = "".split("\\s+");
+    System.out.println(Arrays.toString(range));
+
+    System.out.println(isValidDate(range[0]));
   }
 }
