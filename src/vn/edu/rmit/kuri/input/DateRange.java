@@ -29,15 +29,26 @@ public class DateRange {
     //    Number of days after start date, inclusive. Example: 2020-01-02 12d
     //    Number of weeks after start date, inclusive. Example: 2020-01-02 3w
 
-    String startEndDateRegex = "\\d{4}-\\d{2}-\\d{2}\\s+\\d{4}-\\d{2}-\\d{2}";
-    String durationEndDateRegex = "\\d+(w|d)\\s+\\d{4}-\\d{2}-\\d{2}";
-    String startDateDurationRegex = "\\d{4}-\\d{2}-\\d{2}\\s+\\d+(w|d)";
+    Scanner sc = new Scanner(System.in);
+
+    // for start and end dates format
+    String datesRegex = "^\\d{4}-\\d{2}-\\d{2}\\s+\\d{4}-\\d{2}-\\d{2}$";
+
+    // for number of days/ week before end date
+    String durationEndDateRegex = "^\\d+[wd]\\s+\\d{4}-\\d{2}-\\d{2}$";
+
+    // for  number of days/ week after start date
+    String startDateDurationRegex = "^\\d{4}-\\d{2}-\\d{2}\\s+\\d+[wd]$";
+
+    while (!dateRange.matches(datesRegex) && !dateRange.matches(durationEndDateRegex) &&
+          !dateRange.matches(startDateDurationRegex)) {
+      System.out.print("Your date range format is invalid. Please try again: ");
+      dateRange = sc.nextLine();
+    }
 
     String[] rangeInput = dateRange.split(" ");
     String range = "";
     String[] numRange, timePeriod; //regex for duration: \d+(w|d)
-    Scanner sc = new Scanner(System.in);
-
 
     while (!(isValidDate(rangeInput[0]) && isValidDate(rangeInput[1]))) {
       System.out.println("invalid. Enter again: ");
@@ -95,9 +106,5 @@ public class DateRange {
 
 //    DateRange date = new DateRange("2020-03-01   2020-02-28");
 
-    String[] range = "".split("\\s+");
-    System.out.println(Arrays.toString(range));
-
-    System.out.println(isValidDate(range[0]));
   }
 }
