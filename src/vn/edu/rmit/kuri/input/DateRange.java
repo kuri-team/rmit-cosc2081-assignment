@@ -52,7 +52,7 @@ public class DateRange {
     end = LocalDate.parse(rangeTokens[1]);
     */
 
-    /* WHEN USER CHOOSES DURATION AND END DATE */
+    /* WHEN USER CHOOSES DURATION AND END DATE
     // regex for number of days/ week before end date
     String durationEndDateRegex = "^\\d+[wd]\\s+\\d{4}-\\d{2}-\\d{2}$";
     String durationEndValidFormat = "Correct format example: 12d 2021-03-04";
@@ -77,11 +77,33 @@ public class DateRange {
     } else {
       start = end.minusWeeks(numRange);
     }
-
+  */
 
     /* WHEN USER CHOOSES START DATE AND DURATION */
     // regex for number of days/ week after start date
-//    String startDateDurationRegex = "^\\d{4}-\\d{2}-\\d{2}\\s+\\d+[wd]$";
+    String startDateDurationRegex = "^\\d{4}-\\d{2}-\\d{2}\\s+\\d+[wd]$";
+    String startDurationValidFormat = "Correct format example: 2020-01-02 12d";
+
+    dateRange = checkValidFormat(dateRange, startDateDurationRegex, startDurationValidFormat, sc);
+    rangeTokens = dateRange.split("\s+");
+
+    while (!isValidDate(rangeTokens[0])) {
+      System.out.print("The date you have entered does not exist. Please try again.\n>>>\s");
+      dateRange = sc.nextLine();
+      dateRange = checkValidFormat(dateRange, startDateDurationRegex, startDurationValidFormat, sc);
+      rangeTokens = dateRange.split("\s+");
+    }
+
+    start = LocalDate.parse(rangeTokens[0]);
+    range = rangeTokens[1].split("[a-z]");
+    numRange = Integer.parseInt(range[0]);
+    timePeriod = rangeTokens[1].replaceFirst("[0-9]+", "").split("[0-9]+");
+
+    if (timePeriod[0].matches("d")) {
+      end = start.plusDays(numRange);
+    } else {
+      end = start.plusWeeks(numRange);
+    }
 
 
 //    String[] rangeInput = dateRange.split(" ");
@@ -156,7 +178,7 @@ public class DateRange {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
 
-    DateRange date = new DateRange("2d 2021-01-08");
+    DateRange date = new DateRange("12w 2021-12-08");
     System.out.println(date.getStart());
     System.out.println(date.getEnd());
   }
