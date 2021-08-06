@@ -31,13 +31,13 @@ public class DateRange {
 
     Scanner sc = new Scanner(System.in);
 
-    // for start and end dates format
+    // regex for start and end dates format
     String datesRegex = "^\\d{4}-\\d{2}-\\d{2}\\s+\\d{4}-\\d{2}-\\d{2}$";
 
-    // for number of days/ week before end date
+    // regex for number of days/ week before end date
     String durationEndDateRegex = "^\\d+[wd]\\s+\\d{4}-\\d{2}-\\d{2}$";
 
-    // for  number of days/ week after start date
+    // regex for number of days/ week after start date
     String startDateDurationRegex = "^\\d{4}-\\d{2}-\\d{2}\\s+\\d+[wd]$";
 
     while (!dateRange.matches(datesRegex) && !dateRange.matches(durationEndDateRegex) &&
@@ -77,13 +77,29 @@ public class DateRange {
   }
 
   /**
-   * @param range <code>String</code>
+   * Prompt user to enter their input again if input has invalid format
+   * @param range <code>String</code>: user input
+   * @param pattern <code>String</code>: regex pattern to check against
+   * @param message <code>String</code>: message to print correct format example if user input
+   *                has invalid format
+   * @param sc <code>Scanner</code>: scan user input again
+   */
+  static void checkValidFormat(String range, String pattern, String message, Scanner sc) {
+    while (!range.matches(pattern)) {
+      System.out.println("The date range entered has invalid format. Please try again.");
+      System.out.print(message + "\n>>>\s");
+      range = sc.nextLine();
+    }
+  }
+
+  /**
+   * @param date <code>String</code>
    * @return true if date provided is valid, false otherwise.
    * E.g: if user enters 2021-01-33 => return false
    */
-  static boolean isValidDate(String range) {
+  static boolean isValidDate(String date) {
     try {
-      LocalDate.parse(range);
+      LocalDate.parse(date);
       return true;
     } catch (DateTimeParseException exception) {
       return false;
@@ -99,7 +115,7 @@ public class DateRange {
   }
 
   public static void main(String[] args) {
-//    Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
 //    System.out.println("Enter date range: ");
 //    String range = sc.nextLine();
 //
@@ -110,5 +126,7 @@ public class DateRange {
 
 //    DateRange date = new DateRange("2020-03-01   2020-02-28");
 
+    checkValidFormat("2021-01-33", "^\\d+[wd]\\s+\\d{4}-\\d{2}-\\d{2}$",
+        "Correct format example: 12w 2021-02-03", sc);
   }
 }
