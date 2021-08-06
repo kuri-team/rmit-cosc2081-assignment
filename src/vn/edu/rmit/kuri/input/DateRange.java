@@ -76,8 +76,12 @@ public class DateRange {
 
   }
 
+  /**
+   * @param range <code>String</code>
+   * @return true if date provided is valid, false otherwise.
+   * E.g: if user enters 2021-01-33 => return false
+   */
   static boolean isValidDate(String range) {
-    // check validity of date entered according to specified format
     try {
       LocalDate.parse(range);
       return true;
