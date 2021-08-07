@@ -35,21 +35,32 @@ public class DateRange {
       dateRange = checkValidFormat(dateRange, datesRegex, datesValidFormat, sc);
       rangeTokens = dateRange.split("\s+");
 
-      while (!isValidDate(rangeTokens[0]) || !isValidDate(rangeTokens[1])) {
-        System.out.print("The date you have entered does not exist. Please try again.\n>>>\s");
+      while (!isValidDate(rangeTokens[0]) || !isValidDate(rangeTokens[1])
+          || rangeTokens[0].equals(rangeTokens[1])) {
+        System.out.print("The date you have entered does not exist, or the 2 dates entered "
+            + "are identical. Please try again.\n>>>\s");
         dateRange = sc.nextLine();
         dateRange = checkValidFormat(dateRange, datesRegex, datesValidFormat, sc);
         rangeTokens = dateRange.split("\s+");
       }
 
-      start = LocalDate.parse(rangeTokens[0]);
-      end = LocalDate.parse(rangeTokens[1]);
+      LocalDate firstDate = LocalDate.parse(rangeTokens[0]);
+      LocalDate secondDate = LocalDate.parse(rangeTokens[1]);
+
+      if (firstDate.isBefore(secondDate)) {
+        start = firstDate;
+        end = secondDate;
+      } else {
+        start = secondDate;
+        end = firstDate;
+      }
+
 
     } else if (option == 2) {
       /* WHEN USER CHOOSES DURATION AND END DATE */
       // regex for number of days/ week before end date
       String durationEndDateRegex = "^\\d+[wd]\\s+\\d{4}-\\d{2}-\\d{2}$";
-      String durationEndValidFormat = "Correct format example: 12d 2021-03-04";
+      String durationEndValidFormat = "Correct format example: 12d 2021-03-04 or 3w 2021-03-04";
 
       dateRange = checkValidFormat(dateRange, durationEndDateRegex, durationEndValidFormat, sc);
       rangeTokens = dateRange.split("\s+");
@@ -76,7 +87,7 @@ public class DateRange {
       /* WHEN USER CHOOSES START DATE AND DURATION */
       // regex for number of days/ week after start date
       String startDateDurationRegex = "^\\d{4}-\\d{2}-\\d{2}\\s+\\d+[wd]$";
-      String startDurationValidFormat = "Correct format example: 2020-01-02 12d";
+      String startDurationValidFormat = "Correct format example: 2020-01-02 12d or 2020-01-02 3w";
 
       dateRange = checkValidFormat(dateRange, startDateDurationRegex, startDurationValidFormat, sc);
       rangeTokens = dateRange.split("\s+");
@@ -142,7 +153,7 @@ public class DateRange {
   }
 
   public static void main(String[] args) {
-    DateRange date = new DateRange(2, "12w 2021-12-08");
+    DateRange date = new DateRange(1, "2021-1201 2021-02-08");
     System.out.println(date.getStart());
     System.out.println(date.getEnd());
   }
