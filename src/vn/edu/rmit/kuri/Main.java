@@ -52,7 +52,7 @@ public class Main {
     header(databasePath);
     try {
       // Load database into memory
-      System.out.print("Data base loading... ");
+      System.out.print("Loading database... ");
       Database database = new Database(databasePath);
       System.out.println("[ LOADED ]\n\n");
 
