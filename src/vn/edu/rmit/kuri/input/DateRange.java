@@ -10,13 +10,12 @@ public class DateRange {
   private LocalDate end;
 
   /**
-   * @param dateRange <code>String</code>. Possible format:<br />
+   * @param option <code>int</code>. Format type.
+   * @param dateRange <code>String</code> in these possible formats:<br />
    *              <ul>
-   *                <li><code>yyyy-MM-dd yyyy-MM-dd</code> (start date -> end date, inclusive). Example: <code>2020-01-02 2021-03-04</code></li>
-   *                <li>Number of days before end date, inclusive. Example: <code>12d 2021-03-04</code></li>
-   *                <li>Number of weeks before end date, inclusive. Example: <code>3w 2021-03-04</code></li>
-   *                <li>Number of days after start date, inclusive. Example: <code>2020-01-02 12d</code></li>
-   *                <li>Number of weeks after start date, inclusive. Example: <code>2020-01-02 3w</code></li>
+   *                <li>Type 1: <code>yyyy-MM-dd yyyy-MM-dd</code> (start date -> end date, inclusive). Example: <code>2020-01-02 2021-03-04</code></li>
+   *                <li>Type 2: Number of days or weeks before end date, inclusive. Example: <code>12d 2021-03-04</code></li>
+   *                <li>Type 3: Number of days or weeks after start date, inclusive. Example: <code>2020-01-02 12d</code></li>
    *              </ul>
    */
   public DateRange(int option, String dateRange) {
