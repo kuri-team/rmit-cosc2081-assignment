@@ -32,7 +32,6 @@ public class Display {
     // The 1st col and the last row will be left for groups and results
     // Data from summary will be queried to return a 2D array to add data to the chart
     // metric and resultType will determine the data of the 2D array
-
     System.out.println("To be implemented");
   }
 }
