@@ -71,29 +71,41 @@ public class Main {
         System.out.print("\n>>> ");
         String geoArea = allGeoAreas[Integer.parseInt(sc.nextLine()) - 1];
 
+        // 2 - User chooses a date range
         System.out.print("""
-            Enter a date range. Valid format:
-                    
-            \tyyyy-MM-dd yyyy-MM-dd (start date -> end date, inclusive)
-            \t\tExample: 2020-01-02 2021-03-04
-                    
-            \t Number of days before end date, inclusive
-            \t\tExample: 12d 2021-03-04
-                    
-            \t Number of weeks before end date, inclusive
-            \t\tExample: 3w 2021-03-04
-                    
-            \t Number of days after start date, inclusive
-            \t\tExample: 2020-01-02 12d
-                    
-            \t Number of weeks after start date, inclusive
-            \t\tExample: 2020-01-02 3w
-                    
+            Choose a format for date range:
+            \t1 - yyyy-MM-dd yyyy-MM-dd (start date and end date, inclusive and in any order)
+            \t2 - Number of days or weeks before end date, inclusive
+            \t3 - Number of days or weeks after start date, inclusive
             >>>\s"""
         );
-        DateRange dateRange = new DateRange(sc.nextLine());
+        int option = Integer.parseInt(sc.nextLine());
 
-        // 2 - User chooses a metric
+        while (option != 1 && option != 2 && option != 3) {
+          System.out.print("Please enter a valid option.\n>>>\s");
+          option = Integer.parseInt(sc.nextLine());
+        }
+
+        switch (option) {
+          case 1 -> System.out.print("""
+              \tEnter a pair of dates. Valid format example:
+              \t\t2020-01-02 2021-03-04
+              >>>\s"""
+          );
+          case 2 -> System.out.print("""
+              \tEnter number of days/ weeks and end date (yyyy-MM-dd). Valid format example:
+              \t\t12d 2021-03-04 or 3w 2021-03-04
+              >>>\s"""
+          );
+          case 3 -> System.out.print("""
+              \tEnter start date (yyyy-MM-dd) and number of days/ weeks. Valid format example:
+              \t\t2020-01-02 12d or 2020-01-02 3w
+              >>>\s"""
+          );
+        }
+        DateRange dateRange = new DateRange(option, sc.nextLine());
+
+        // 3 - User chooses a metric
         Metric metric = null;
         System.out.print("""
             Choose a metric to track:
@@ -108,7 +120,7 @@ public class Main {
           case 3 -> metric = Metric.VACCINATIONS;
         }
 
-        // 3 - User chooses a calculation method
+        // 4 - User chooses a calculation method
         ResultType resultType = null;
         System.out.printf("""
                 Choose a metric to track:
@@ -123,7 +135,7 @@ public class Main {
           case 2 -> resultType = ResultType.CUMULATIVE;
         }
 
-        // 4 - User chooses a grouping method
+        // 5 - User chooses a grouping method
         Grouping grouping = null;
         System.out.print("""
             Choose a metric to track:
@@ -144,7 +156,7 @@ public class Main {
           }
         }
 
-        // 5 - User chooses a display format
+        // 6 - User chooses a display format
         DisplayFormat displayFormat = null;
         System.out.print("""
             Choose a format to display the processed data:
@@ -157,12 +169,12 @@ public class Main {
           case 2 -> displayFormat = DisplayFormat.CHART;
         }
 
-        // 6 - Data processing
+        // 7 - Data processing
         System.out.print("\n\nProcessing data... ");
         Summary summary = new Summary(geoArea, dateRange, grouping, database);
         System.out.println("[ DONE ]\n");
 
-        // 7 - Display processed data
+        // 8 - Display processed data
         System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
         switch (displayFormat) {
           case TABULAR -> Display.tabular(summary, metric, resultType);
