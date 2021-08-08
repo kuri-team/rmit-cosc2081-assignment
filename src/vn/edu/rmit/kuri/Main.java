@@ -52,14 +52,14 @@ public class Main {
     header(databasePath);
     try {
       // Load database into memory
-      System.out.print("Data base loading... ");
+      System.out.print("Loading database... ");
       Database database = new Database(databasePath);
       System.out.println("[ LOADED ]\n\n");
 
       if (database.size() == 0) {
         printEmptyDatabaseMessage();
       } else {
-        // TODO: Optimize 1 through 5 (input) and check for bad inputs from user. I.e. when the program wants an integer but the user enters a string, when the user press enters too many times, etc.
+        // TODO: Optimize 1 through 6 (input) and check for bad inputs from user. I.e. when the program wants an integer but the user enters a string, when the user press enters too many times, etc.
         Scanner sc = new Scanner(System.in);
 
         // 1 - User chooses a country/region
