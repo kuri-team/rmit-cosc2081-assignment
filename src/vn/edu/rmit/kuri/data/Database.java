@@ -14,6 +14,7 @@ public class Database implements DataArray<Data> {
   private final HashSet<String> geoAreas;
 
   public Database(String path) throws FileNotFoundException {
+    // TODO: Optimize database loading: Cut down any redundant operations; Fill in missing dates with blank data.
     ArrayList<HashMap<String, String>> data = Csv.read(path);
     this.data = new Data[data.size()];
     this.geoAreas = new HashSet<>();

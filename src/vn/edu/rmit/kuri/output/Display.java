@@ -3,10 +3,11 @@ package vn.edu.rmit.kuri.output;
 import vn.edu.rmit.kuri.input.Metric;
 import vn.edu.rmit.kuri.input.ResultType;
 import vn.edu.rmit.kuri.processing.Summary;
+import vn.edu.rmit.kuri.test.TestSummary;
 
 public class Display {
 
-  public static void tabular(Summary summary, Metric metric, ResultType resultType) {
+  public static void tabular(TestSummary summary, Metric metric, ResultType resultType) {
     // Dummy content TODO: Implement this
     // Create a table
     // Data from summary will be queried to return 2 arrays to add data to the table
