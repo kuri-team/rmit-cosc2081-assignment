@@ -21,6 +21,7 @@ public class Summary implements DataArray<ArrayList<Data>> {
     switch (grouping.getType()) {
       case NONE -> {}  // do processing
       case N_GROUPS -> {}  // do processing
+      // test something out
       case N_DAYS_PER_GROUP -> {}  // do processing
     }
   }
