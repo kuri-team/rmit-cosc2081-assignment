@@ -11,6 +11,7 @@ import vn.edu.rmit.kuri.input.ResultType;
 import vn.edu.rmit.kuri.output.Display;
 import vn.edu.rmit.kuri.output.DisplayFormat;
 import vn.edu.rmit.kuri.processing.Summary;
+import vn.edu.rmit.kuri.test.Test;
 
 public class Main {
 
@@ -52,14 +53,14 @@ public class Main {
     header(databasePath);
     try {
       // Load database into memory
-      System.out.print("Data base loading... ");
+      System.out.print("Loading database...");
       Database database = new Database(databasePath);
       System.out.println("[ LOADED ]\n\n");
 
       if (database.size() == 0) {
         printEmptyDatabaseMessage();
       } else {
-        // TODO: Optimize 1 through 5 (input) and check for bad inputs from user. I.e. when the program wants an integer but the user enters a string, when the user press enters too many times, etc.
+        // TODO: Optimize 1 through 6 (input) and check for bad inputs from user. I.e. when the program wants an integer but the user enters a string, when the user press enters too many times, etc.
         Scanner sc = new Scanner(System.in);
 
         // 1 - User chooses a country/region
@@ -139,7 +140,7 @@ public class Main {
         Grouping grouping = null;
         System.out.print("""
             Choose a metric to track:
-            \t1 - No groupingType
+            \t1 - No grouping
             \t2 - n group(s)
             \t3 - n day(s) per group
             >>>\s"""
@@ -170,16 +171,17 @@ public class Main {
         }
 
         // 7 - Data processing
-        System.out.print("\n\nProcessing data... ");
+        System.out.print("\n\nProcessing data...");
         Summary summary = new Summary(geoArea, dateRange, grouping, database);
         System.out.println("[ DONE ]\n");
 
         // 8 - Display processed data
+        Test.main(database); // TODO: Remove this line after summary has been implemented
         System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
-        switch (displayFormat) {
-          case TABULAR -> Display.tabular(summary, metric, resultType);
-          case CHART -> Display.chart(summary, metric, resultType);
-        }
+//        switch (displayFormat) {
+//          case TABULAR -> Display.tabular(summary, metric, resultType);
+//          case CHART -> Display.chart(summary, metric, resultType);
+//        }
       }
 
     } catch (FileNotFoundException e) {  // Invalid database file path, or file doesn't exist
