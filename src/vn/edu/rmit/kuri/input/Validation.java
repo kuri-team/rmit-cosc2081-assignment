@@ -13,6 +13,15 @@ public class Validation {
     }
   }
 
+  public static int returnValidOption(String input, int[] options) {
+    for (int option : options) {
+      if (input.equals(Integer.toString(option))) {
+        return option;
+      }
+    }
+    return -1;
+  }
+
   public static int checkInput(String input, Scanner sc) {
     while (!isIntegerFormat(input)) {
       System.out.print("Your input is invalid. Please try again.\n>>>\s");
