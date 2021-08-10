@@ -11,6 +11,12 @@ import vn.edu.rmit.kuri.test.TestSummary;
 
 public class Display {
 
+  /**
+   * Create a table from the summary data and user's selections
+   * @param summary Data that already has grouping
+   * @param metric  Metric chosen by the user
+   * @param resultType  Result type chosen by the user
+   */
   public static void tabular(TestSummary summary, Metric metric, ResultType resultType) {
     // Dummy content TODO: Implement this
     // Create a table
@@ -29,6 +35,9 @@ public class Display {
     //+---------------------+---------------+
     System.out.println("To be implemented");
 
+    // Extract needed values based on the metric
+    // Stored data in a 2D ArrayList
+    // Data from the same group will be in the same ArrayList
     ArrayList<ArrayList<Integer>> value = new ArrayList<>();
     for (int i = 0; i < summary.size(); i++) {
       ArrayList<Integer> valueGroup = new ArrayList<>();
@@ -52,20 +61,24 @@ public class Display {
       value.add(valueGroup);
     }
 
+    // Calculate the value to display based on the resultType
+    // Each group's value will be stored as an integer in an ArrayList
     ArrayList<Integer> valueForDisplay = new ArrayList<>();
+    int valueOfEachGroup = 0;
     for (int i = 0; i < value.size(); i++) {
-      int valueOfEachGroup = 0;
       for (int j = 0; j < value.get(i).size(); j++) {
         valueOfEachGroup += value.get(i).get(j);
         switch (resultType) {
           case CUMULATIVE -> {
             if (j == value.get(i).size() - 1) {
+              // do not reset value for cumulative results
               valueForDisplay.add(valueOfEachGroup);
             }
           }
           case NEW_PER_PERIOD -> {
             if (j == value.get(i).size() - 1) {
               valueForDisplay.add(valueOfEachGroup);
+              // reset value for the next group when reach the last value
               valueOfEachGroup = 0;
             }
           }
@@ -73,6 +86,7 @@ public class Display {
       }
     }
 
+    // Store each group's range in an ArrayList
     ArrayList<String> range = new ArrayList<>();
     for (int i = 0; i < summary.size(); i++) {
       int groupSize = summary.get(i).size();
@@ -85,14 +99,21 @@ public class Display {
       }
     }
 
+    // Methods for creating table
     interface tableInterface {
-      String cellWidthFirstCol(int width, String header);
-      String cellWidth(int width, String data);
+      String cellWidthFirstCol(int width, String value);
+      String cellWidth(int width, String value);
       String horizontalBorder(int width);
       String horizontalBorderFirstCol(int width);
     }
 
     tableInterface table = new tableInterface() {
+      /**
+       * Methods for creating non-first-column cells
+       * @param width Width of the cell
+       * @param value Value inside the cell
+       * @return Return the padding, value, and 1 vertical borderline for non-first-column cells
+       */
       public String cellWidth(int width, String value) {
         String cell = " ";
         int padding = Math.round((width - value.length()) / 2);
@@ -105,12 +126,24 @@ public class Display {
         return cell;
       }
 
+      /**
+       * Methods for creating first-column cells
+       * @param width Width of the cell
+       * @param value Value inside the cell
+       * @return Return the padding, value, and 2 vertical borderlines for column cells
+       */
       public String cellWidthFirstCol(int width, String value) {
         String cell = cellWidth(width, value);
         cell = "|" + cell;
         return cell;
       }
 
+      /**
+       * Methods for creating a non-first-column horizontal borderline
+       * @param width Width of the cell
+       * @return <p>Return the conjunction of borderlines using "+", a vertical borderline
+       * for non-first-column cells using "-"</p>
+       */
       public String horizontalBorder(int width) {
         String border = "-";
         border = border.repeat(width);
@@ -118,6 +151,12 @@ public class Display {
         return border;
       }
 
+      /**
+       * Methods for creating a first-column horizontal borderline
+       * @param width Width of the cell
+       * @return <p>Return the conjunctions of borderlines using "+", a vertical borderline
+       * for non-first-column cells using "-"</p>
+       */
       public String horizontalBorderFirstCol(int width) {
         String border = horizontalBorder(width);
         border = "+" + border;
@@ -125,7 +164,6 @@ public class Display {
       }
     };
 
-    //Use odd values
     int rangeColWidth = 35;
     int valueColWidth = 10;
 
@@ -137,7 +175,6 @@ public class Display {
       System.out.println(table.cellWidthFirstCol(rangeColWidth, range.get(i)) + table.cellWidth(valueColWidth, valueForDisplay.get(i).toString()));
     }
     System.out.println(table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
-
   }
 
   public static void chart(Summary summary, Metric metric, ResultType resultType) {
