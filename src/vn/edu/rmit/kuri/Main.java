@@ -8,6 +8,7 @@ import vn.edu.rmit.kuri.input.Grouping;
 import vn.edu.rmit.kuri.input.GroupingType;
 import vn.edu.rmit.kuri.input.Metric;
 import vn.edu.rmit.kuri.input.ResultType;
+import vn.edu.rmit.kuri.input.Validation;
 import vn.edu.rmit.kuri.output.Display;
 import vn.edu.rmit.kuri.output.DisplayFormat;
 import vn.edu.rmit.kuri.processing.Summary;
@@ -70,7 +71,8 @@ public class Main {
           System.out.printf("\t%d - %s\t", i + 1, allGeoAreas[i]);
         }
         System.out.print("\n>>> ");
-        String geoArea = allGeoAreas[Integer.parseInt(sc.nextLine()) - 1];
+        int areaOption = Validation.checkInput(sc.nextLine(), sc);
+        String geoArea = allGeoAreas[areaOption - 1];
 
         // 2 - User chooses a date range
         System.out.print("""

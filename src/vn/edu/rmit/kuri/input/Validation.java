@@ -13,10 +13,17 @@ public class Validation {
     }
   }
 
-  public static void checkInput(String input, Scanner sc) {
+  public static int checkInput(String input, Scanner sc) {
     while (!isIntegerFormat(input)) {
       System.out.print("Your input is invalid. Please try again.\n>>>\s");
       input = sc.nextLine();
     }
+    return Integer.parseInt(input);
+  }
+
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int option = checkInput("abc", sc);
+    System.out.println(option);
   }
 }
