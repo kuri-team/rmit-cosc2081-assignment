@@ -1,5 +1,9 @@
 package vn.edu.rmit.kuri.output;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import vn.edu.rmit.kuri.data.Data;
 import vn.edu.rmit.kuri.input.Metric;
 import vn.edu.rmit.kuri.input.ResultType;
 import vn.edu.rmit.kuri.processing.Summary;
@@ -24,6 +28,116 @@ public class Display {
     //|         .....       |     .....     |
     //+---------------------+---------------+
     System.out.println("To be implemented");
+
+    ArrayList<ArrayList<Integer>> value = new ArrayList<>();
+    for (int i = 0; i < summary.size(); i++) {
+      ArrayList<Integer> valueGroup = new ArrayList<>();
+      for (int j = 0; j <summary.get(i).size(); j++)
+      {
+        switch (metric) {
+          case CASES -> {
+            int k = summary.get(i).get(j).getNewCases();
+            valueGroup.add(k);
+          }
+          case DEATHS -> {
+            int k = summary.get(i).get(j).getNewDeaths();
+            valueGroup.add(k);
+          }
+          case VACCINATIONS -> {
+            int k = summary.get(i).get(j).getNewVaccinations();
+            valueGroup.add(k);
+          }
+        }
+      }
+      value.add(valueGroup);
+    }
+
+    ArrayList<Integer> valueForDisplay = new ArrayList<>();
+    for (int i = 0; i < value.size(); i++) {
+      int valueOfEachGroup = 0;
+      for (int j = 0; j < value.get(i).size(); j++) {
+        valueOfEachGroup += value.get(i).get(j);
+        switch (resultType) {
+          case CUMULATIVE -> {
+            if (j == value.get(i).size() - 1) {
+              valueForDisplay.add(valueOfEachGroup);
+            }
+          }
+          case NEW_PER_PERIOD -> {
+            if (j == value.get(i).size() - 1) {
+              valueForDisplay.add(valueOfEachGroup);
+              valueOfEachGroup = 0;
+            }
+          }
+        }
+      }
+    }
+
+    ArrayList<String> range = new ArrayList<>();
+    for (int i = 0; i < summary.size(); i++) {
+      int groupSize = summary.get(i).size();
+      String startDate = summary.get(i).get(0).getDate().toString();
+      String endDate = summary.get(i).get(groupSize - 1).getDate().toString();
+      if (groupSize > 1) {
+        range.add(startDate + " - " + endDate);
+      } else {
+        range.add(startDate);
+      }
+    }
+
+    interface tableInterface {
+      String cellWidthFirstCol(int width, String header);
+      String cellWidth(int width, String data);
+      String horizontalBorder(int width);
+      String horizontalBorderFirstCol(int width);
+    }
+
+    tableInterface table = new tableInterface() {
+      public String cellWidth(int width, String value) {
+        String cell = " ";
+        int padding = Math.round((width - value.length()) / 2);
+        cell = cell.repeat(padding);
+        cell += value;
+        if ((width - value.length()) % 2 == 1) {
+          padding += 1;
+        }
+        cell += " ".repeat(padding) + "|";
+        return cell;
+      }
+
+      public String cellWidthFirstCol(int width, String value) {
+        String cell = cellWidth(width, value);
+        cell = "|" + cell;
+        return cell;
+      }
+
+      public String horizontalBorder(int width) {
+        String border = "-";
+        border = border.repeat(width);
+        border += "+";
+        return border;
+      }
+
+      public String horizontalBorderFirstCol(int width) {
+        String border = horizontalBorder(width);
+        border = "+" + border;
+        return border;
+      }
+    };
+
+    //Use odd values
+    int rangeColWidth = 35;
+    int valueColWidth = 10;
+
+    System.out.println(table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
+    System.out.println(table.cellWidthFirstCol(rangeColWidth, "Range") + table.cellWidth(valueColWidth, "Value"));
+    System.out.println(table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
+
+    for (int i = 0; i < range.size(); i++) {
+      System.out.println(table.cellWidthFirstCol(rangeColWidth, range.get(i)) + table.cellWidth(valueColWidth, valueForDisplay.get(i).toString()));
+    }
+    System.out.println(table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
+
   }
 
   public static void chart(Summary summary, Metric metric, ResultType resultType) {
