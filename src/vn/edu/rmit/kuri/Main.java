@@ -39,6 +39,7 @@ public class Main {
 
   public static void main(String[] args) {
     String databasePath;
+    int[] commonOptions = {1, 2, 3};
 
     // Parameter conditions
     switch (args.length) {
@@ -71,7 +72,7 @@ public class Main {
           System.out.printf("\t%d - %s\t", i + 1, allGeoAreas[i]);
         }
         System.out.print("\n>>> ");
-        int areaOption = Validation.checkInput(sc.nextLine(), sc);
+        int areaOption = Validation.checkInput(sc.nextLine(), sc, commonOptions);
         String geoArea = allGeoAreas[areaOption - 1];
 
         // 2 - User chooses a date range
@@ -82,13 +83,7 @@ public class Main {
             \t3 - Number of days or weeks after start date, inclusive
             >>>\s"""
         );
-        int dateRangeOption = Validation.checkInput(sc.nextLine(), sc);
-
-        while (dateRangeOption != 1 && dateRangeOption != 2 && dateRangeOption != 3) {
-          System.out.print("Please enter a valid option.\n>>>\s");
-          dateRangeOption = Integer.parseInt(sc.nextLine());
-        }
-
+        int dateRangeOption = Validation.checkInput(sc.nextLine(), sc, Validation.getThreeOptions());
         switch (dateRangeOption) {
           case 1 -> System.out.print("""
               \tEnter a pair of dates. Valid format example:
@@ -117,7 +112,7 @@ public class Main {
             \t3 - Vaccinations
             >>>\s"""
         );
-        int metricOption = Validation.checkInput(sc.nextLine(), sc);
+        int metricOption = Validation.checkInput(sc.nextLine(), sc, Validation.getThreeOptions());
         switch (metricOption) {
           case 1 -> metric = Metric.CASES;
           case 2 -> metric = Metric.DEATHS;
@@ -134,7 +129,7 @@ public class Main {
             metric.toString().toLowerCase(),
             metric.toString().toLowerCase()
         );
-        int resultTypeOption = Validation.checkInput(sc.nextLine(), sc);
+        int resultTypeOption = Validation.checkInput(sc.nextLine(), sc, Validation.getTwoOptions());
         switch (resultTypeOption) {
           case 1 -> resultType = ResultType.NEW_PER_PERIOD;
           case 2 -> resultType = ResultType.CUMULATIVE;
@@ -149,7 +144,7 @@ public class Main {
             \t3 - n day(s) per group
             >>>\s"""
         );
-        int groupingOption = Validation.checkInput(sc.nextLine(), sc);
+        int groupingOption = Validation.checkInput(sc.nextLine(), sc, Validation.getThreeOptions());
         switch (groupingOption) {
           case 1 -> grouping = new Grouping();
           case 2 -> {
@@ -170,7 +165,7 @@ public class Main {
             \t2 - Chart
             >>>\s"""
         );
-        int formatOption = Validation.checkInput(sc.nextLine(), sc);
+        int formatOption = Validation.checkInput(sc.nextLine(), sc, Validation.getTwoOptions());
         switch (formatOption) {
           case 1 -> displayFormat = DisplayFormat.TABULAR;
           case 2 -> displayFormat = DisplayFormat.CHART;
