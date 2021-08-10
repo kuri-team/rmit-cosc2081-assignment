@@ -82,14 +82,14 @@ public class Main {
             \t3 - Number of days or weeks after start date, inclusive
             >>>\s"""
         );
-        int option = Integer.parseInt(sc.nextLine());
+        int dateRangeOption = Validation.checkInput(sc.nextLine(), sc);
 
-        while (option != 1 && option != 2 && option != 3) {
+        while (dateRangeOption != 1 && dateRangeOption != 2 && dateRangeOption != 3) {
           System.out.print("Please enter a valid option.\n>>>\s");
-          option = Integer.parseInt(sc.nextLine());
+          dateRangeOption = Integer.parseInt(sc.nextLine());
         }
 
-        switch (option) {
+        switch (dateRangeOption) {
           case 1 -> System.out.print("""
               \tEnter a pair of dates. Valid format example:
               \t\t2020-01-02 2021-03-04
@@ -106,7 +106,7 @@ public class Main {
               >>>\s"""
           );
         }
-        DateRange dateRange = new DateRange(option, sc.nextLine());
+        DateRange dateRange = new DateRange(dateRangeOption, sc.nextLine());
 
         // 3 - User chooses a metric
         Metric metric = null;
@@ -117,7 +117,8 @@ public class Main {
             \t3 - Vaccinations
             >>>\s"""
         );
-        switch (Integer.parseInt(sc.nextLine())) {
+        int metricOption = Validation.checkInput(sc.nextLine(), sc);
+        switch (metricOption) {
           case 1 -> metric = Metric.CASES;
           case 2 -> metric = Metric.DEATHS;
           case 3 -> metric = Metric.VACCINATIONS;
@@ -133,7 +134,8 @@ public class Main {
             metric.toString().toLowerCase(),
             metric.toString().toLowerCase()
         );
-        switch (Integer.parseInt(sc.nextLine())) {
+        int resultTypeOption = Validation.checkInput(sc.nextLine(), sc);
+        switch (resultTypeOption) {
           case 1 -> resultType = ResultType.NEW_PER_PERIOD;
           case 2 -> resultType = ResultType.CUMULATIVE;
         }
@@ -147,7 +149,8 @@ public class Main {
             \t3 - n day(s) per group
             >>>\s"""
         );
-        switch (Integer.parseInt(sc.nextLine())) {
+        int groupingOption = Validation.checkInput(sc.nextLine(), sc);
+        switch (groupingOption) {
           case 1 -> grouping = new Grouping();
           case 2 -> {
             System.out.print("Enter number of group(s): ");
@@ -167,7 +170,8 @@ public class Main {
             \t2 - Chart
             >>>\s"""
         );
-        switch (Integer.parseInt(sc.nextLine())) {
+        int formatOption = Validation.checkInput(sc.nextLine(), sc);
+        switch (formatOption) {
           case 1 -> displayFormat = DisplayFormat.TABULAR;
           case 2 -> displayFormat = DisplayFormat.CHART;
         }
