@@ -16,7 +16,8 @@ public class Validation {
     return options;
   }
 
-  public static int returnValidOption(String input, int[] options) {
+  private static int returnValidOption(String input, int numOptions) {
+    int[] options = returnOptionsArray(numOptions);
     for (int option : options) {
       if (input.equals(Integer.toString(option))) {
         return option;
@@ -24,11 +25,10 @@ public class Validation {
     }
     return -1;
   }
-
-  public static int checkInput(String input, Scanner sc, int[] options) {
+  public static int checkInput(String input, Scanner sc, int numOptions) {
     input = input.trim();
 
-    while (returnValidOption(input, options) == -1) {
+    while (returnValidOption(input, numOptions) == -1) {
       System.out.print("Your input is invalid. Please enter one of the options "
           + "specified above.\n>>>\s");
       input = sc.nextLine().trim();
@@ -46,8 +46,7 @@ public class Validation {
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
-    int[] common = {1, 2, 3};
-    int option = checkInput("abc", sc, common);
+    int option = checkInput("abc", sc, 3);
     System.out.println(option);
   }
 }
