@@ -1,9 +1,6 @@
 package vn.edu.rmit.kuri.output;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import vn.edu.rmit.kuri.data.Data;
 import vn.edu.rmit.kuri.input.Metric;
 import vn.edu.rmit.kuri.input.ResultType;
 import vn.edu.rmit.kuri.processing.Summary;
@@ -65,18 +62,18 @@ public class Display {
     // Each group's value will be stored as an integer in an ArrayList
     ArrayList<Integer> valueForDisplay = new ArrayList<>();
     int valueOfEachGroup = 0;
-    for (int i = 0; i < value.size(); i++) {
-      for (int j = 0; j < value.get(i).size(); j++) {
-        valueOfEachGroup += value.get(i).get(j);
+    for (ArrayList<Integer> integers : value) {
+      for (int j = 0; j < integers.size(); j++) {
+        valueOfEachGroup += integers.get(j);
         switch (resultType) {
           case CUMULATIVE -> {
-            if (j == value.get(i).size() - 1) {
+            if (j == integers.size() - 1) {
               // do not reset value for cumulative results
               valueForDisplay.add(valueOfEachGroup);
             }
           }
           case NEW_PER_PERIOD -> {
-            if (j == value.get(i).size() - 1) {
+            if (j == integers.size() - 1) {
               valueForDisplay.add(valueOfEachGroup);
               // reset value for the next group when reach the last value
               valueOfEachGroup = 0;
@@ -99,8 +96,8 @@ public class Display {
       }
     }
 
-    //Nested interface containing methods for creating a terminal-based table
-    //Cells have their own vertical borderlines, horizontal borderlines methods must be used before or after the cell methods
+    // Nested interface containing methods for creating a terminal-based table
+    // Cells have their own vertical borderlines, horizontal borderlines methods must be used before or after the cell methods
     interface tableInterface {
 
       /**
@@ -141,7 +138,7 @@ public class Display {
     tableInterface table = new tableInterface() {
       public String cellWidth(int width, String value) {
         String cell = " ";
-        int padding = Math.round((width - value.length()) / 2);
+        int padding = Math.round(((float) width - value.length()) / 2);
         cell = cell.repeat(padding);
         cell += value;
         if ((width - value.length()) % 2 == 1) {
