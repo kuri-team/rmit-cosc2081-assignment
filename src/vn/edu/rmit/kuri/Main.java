@@ -143,9 +143,7 @@ public class Main {
             \t3 - n day(s) per group
             >>>\s"""
         );
-        //TODO: validate num of groups or num days per group
         int groupingOption = Validation.checkInput(sc.nextLine(), sc, 3);
-        String input;
 
         switch (groupingOption) {
           case 1 -> grouping = new Grouping();
@@ -156,7 +154,8 @@ public class Main {
           }
           case 3 -> {
             System.out.print("Enter number of day(s) per group: ");
-            grouping = new Grouping(Integer.parseInt(sc.nextLine()), GroupingType.N_DAYS_PER_GROUP);
+            int numDaysPerGroup = Validation.canDivideGroupsEqually(sc.nextLine(), dateRange.getNumDays(), sc);
+            grouping = new Grouping(numDaysPerGroup, GroupingType.N_DAYS_PER_GROUP);
           }
         }
 

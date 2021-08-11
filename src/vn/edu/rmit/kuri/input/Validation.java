@@ -86,8 +86,4 @@ public class Validation {
     return numDaysPerGroup;
   }
 
-  public static void main(String[] args) {
-    DateRange d = new DateRange(2, "1w 2021-01-08");
-    System.out.println(canDivideGroupsEqually("abx", d.getNumDays(), new Scanner(System.in)));
-  }
 }
