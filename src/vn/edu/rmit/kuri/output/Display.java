@@ -33,7 +33,7 @@ public class Display {
     //|         .....       |     .....     |
     //|         .....       |     .....     |
     //+---------------------+---------------+
-    System.out.println("To be implemented");
+
 
     // Extract needed values based on the metric
     // Stored data in a 2D ArrayList
@@ -99,21 +99,46 @@ public class Display {
       }
     }
 
-    // Methods for creating table
+    //Nested interface containing methods for creating a terminal-based table
+    //Cells have their own vertical borderlines, horizontal borderlines methods must be used before or after the cell methods
     interface tableInterface {
-      String cellWidthFirstCol(int width, String value);
-      String cellWidth(int width, String value);
-      String horizontalBorder(int width);
-      String horizontalBorderFirstCol(int width);
-    }
 
-    tableInterface table = new tableInterface() {
+      /**
+       * Methods for creating first-column cells
+       * @param width Width of the cell
+       * @param value Value inside the cell
+       * @return Return the padding, value, and 2 vertical borderlines for column cells
+       */
+      String cellWidthFirstCol(int width, String value);
+
       /**
        * Methods for creating non-first-column cells
        * @param width Width of the cell
        * @param value Value inside the cell
        * @return Return the padding, value, and 1 vertical borderline for non-first-column cells
        */
+      String cellWidth(int width, String value);
+
+
+      /**
+       * Methods for creating a non-first-column horizontal borderline
+       * @param width Width of the cell
+       * @return <p>Return the conjunction of borderlines using "+", a vertical borderline
+       * for non-first-column cells using "-"</p>
+       */
+      String horizontalBorder(int width);
+
+      /**
+       * Methods for creating a first-column horizontal borderline
+       * @param width Width of the cell
+       * @return <p>Return the conjunctions of borderlines using "+", a vertical borderline
+       * for non-first-column cells using "-"</p>
+       */
+      String horizontalBorderFirstCol(int width);
+    }
+
+    // Anonymous class is used to provide methods that help improve expandability in case there are more columns needed
+    tableInterface table = new tableInterface() {
       public String cellWidth(int width, String value) {
         String cell = " ";
         int padding = Math.round((width - value.length()) / 2);
@@ -126,24 +151,12 @@ public class Display {
         return cell;
       }
 
-      /**
-       * Methods for creating first-column cells
-       * @param width Width of the cell
-       * @param value Value inside the cell
-       * @return Return the padding, value, and 2 vertical borderlines for column cells
-       */
       public String cellWidthFirstCol(int width, String value) {
         String cell = cellWidth(width, value);
         cell = "|" + cell;
         return cell;
       }
 
-      /**
-       * Methods for creating a non-first-column horizontal borderline
-       * @param width Width of the cell
-       * @return <p>Return the conjunction of borderlines using "+", a vertical borderline
-       * for non-first-column cells using "-"</p>
-       */
       public String horizontalBorder(int width) {
         String border = "-";
         border = border.repeat(width);
@@ -151,12 +164,6 @@ public class Display {
         return border;
       }
 
-      /**
-       * Methods for creating a first-column horizontal borderline
-       * @param width Width of the cell
-       * @return <p>Return the conjunctions of borderlines using "+", a vertical borderline
-       * for non-first-column cells using "-"</p>
-       */
       public String horizontalBorderFirstCol(int width) {
         String border = horizontalBorder(width);
         border = "+" + border;
