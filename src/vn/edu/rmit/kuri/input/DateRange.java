@@ -10,7 +10,6 @@ public class DateRange {
 
   private LocalDate start;
   private LocalDate end;
-  private long numDays;
 
   /**
    * @param option <code>int</code>. Format type.
@@ -166,6 +165,9 @@ public class DateRange {
     return this.end;
   }
 
+  /**
+   * @return the number of days between the start and end date
+   */
   public long getNumDays() {
     // add 1 because the original method misses 1 day
     return (DAYS.between(start, end) + 1);
