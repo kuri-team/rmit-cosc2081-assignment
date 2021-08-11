@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 public class Validation {
 
+  /**
+   * Check if user input can be parsed to an integer
+   * @param input <code>String</code>
+   * @return true if input is in integer format, false otherwise
+   */
   private static boolean isIntegerFormat(String input) {
     try {
       Integer.parseInt(input);
@@ -29,7 +34,7 @@ public class Validation {
 
   /**
    * Check if user input matches one of the options in the menu
-   * @param input <code>String</code>: user input
+   * @param input <code>String</code>
    * @param numOptions <code>int</code>: the number of options in the menu
    * @return <code>int</code>: the option that matches with the user input, or -1 if
    * there is no match
@@ -47,7 +52,7 @@ public class Validation {
   /**
    * Prompt user to enter their input again if their input is not one of the available choices
    * in the menu
-   * @param input <code>String</code>: user input
+   * @param input <code>String</code>
    * @param sc <code>Scanner</code>: to scan user input again
    * @param numOptions <code>int</code>: the number of options in the menu
    * @return <code>int</code>: user input in integer format only when user input is valid
@@ -64,9 +69,19 @@ public class Validation {
     return Integer.parseInt(input);
   }
 
+  /**
+   * Prompt user to enter their input again if their input is not an integer, or if it
+   * is not in the range 0 < input <= numDays
+   * @param input <code>String</code>
+   * @param numDays <code>int</code>: number of days between start and end date, inclusive
+   * @param sc <code>Scanner</code>: to scan user input again
+   * @return <code>int</code>: user input in integer format only when user input is valid
+   */
   public static int checkGroupingInput(String input, long numDays, Scanner sc) {
     input = input.trim();
 
+    // cannot divide the groups if the number of groups is not positive
+    // or if the number of group exceeds the total number of days
     while (!isIntegerFormat(input) || Integer.parseInt(input) <= 0 || Integer.parseInt(input) > numDays) {
       System.out.print("Your input is invalid, or the number you entered exceeds the number\n");
       System.out.print("of days between the start and end date. Please try again.\n>>>\s");
@@ -75,6 +90,13 @@ public class Validation {
     return Integer.parseInt(input);
   }
 
+  /**
+   * Prompt user to enter their input again if the groups cannot be divided equally
+   * @param input <code>String</code>
+   * @param numDays <code>int</code>: number of days between start and end date, inclusive
+   * @param sc <code>Scanner</code>: to scan user input again
+   * @return <code>int</code>: user input in integer format only when it is possible to divide groups equally
+   */
   public static int canDivideGroupsEqually(String input, long numDays, Scanner sc) {
     int numDaysPerGroup = checkGroupingInput(input, numDays, sc);
 
