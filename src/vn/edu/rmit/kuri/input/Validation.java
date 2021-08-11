@@ -4,6 +4,15 @@ import java.util.Scanner;
 
 public class Validation {
 
+  private static boolean isIntegerFormat(String input) {
+    try {
+      Integer.parseInt(input);
+      return true;
+    } catch (NumberFormatException exception) {
+      return false;
+    }
+  }
+
   /**
    * Create an array with all the options in the menu from the number of options
    * @param numOptions <code>int</code>: the number of options in the menu
@@ -55,17 +64,7 @@ public class Validation {
     return Integer.parseInt(input);
   }
 
-  private static boolean isIntegerFormat(String input) {
-    try {
-      Integer.parseInt(input);
-      return true;
-    } catch (NumberFormatException exception) {
-      return false;
-    }
-  }
-
-  public static int checkGroupingInput(String input, DateRange dateRange, Scanner sc) {
-    long numDays = dateRange.getNumDays();
+  public static int checkGroupingInput(String input, long numDays, Scanner sc) {
     input = input.trim();
 
     while (!isIntegerFormat(input) || Integer.parseInt(input) <= 0 || Integer.parseInt(input) > numDays) {
@@ -76,8 +75,19 @@ public class Validation {
     return Integer.parseInt(input);
   }
 
+  public static int canDivideGroupsEqually(String input, long numDays, Scanner sc) {
+    int numDaysPerGroup = checkGroupingInput(input, numDays, sc);
+
+    while (numDays % numDaysPerGroup != 0) {
+      System.out.println("With the number of days per group provided, we cannot divide the groups equally.");
+      System.out.print("Please enter another value: ");
+      numDaysPerGroup = checkGroupingInput(sc.nextLine(), numDays, sc);
+    }
+    return numDaysPerGroup;
+  }
+
   public static void main(String[] args) {
     DateRange d = new DateRange(2, "1w 2021-01-08");
-    System.out.println(checkGroupingInput("abx", d, new Scanner(System.in)));
+    System.out.println(canDivideGroupsEqually("abx", d.getNumDays(), new Scanner(System.in)));
   }
 }
