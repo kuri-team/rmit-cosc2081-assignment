@@ -4,9 +4,10 @@ import java.util.Scanner;
 
 public class Validation {
 
-  private static final int[] threeOptions = {1, 2, 3};
-  private static final int[] twoOptions = {1, 2};
-
+  /**
+   * @param numOptions <code>int</code>: the number of options in the menu
+   * @return <code>int[]</code>: an array containing all of the available options
+   */
   private static int[] returnOptionsArray(int numOptions) {
     int[] options = new int[numOptions];
 
@@ -16,6 +17,13 @@ public class Validation {
     return options;
   }
 
+  /**
+   * Check if user input matches one of the options in the menu
+   * @param input <code>String</code>: user input
+   * @param numOptions <code>int</code>: the number of options in the menu
+   * @return <code>int</code>: the option that matches with the user input, or -1 if
+   * there is no match
+   */
   private static int returnValidOption(String input, int numOptions) {
     int[] options = returnOptionsArray(numOptions);
     for (int option : options) {
@@ -25,6 +33,15 @@ public class Validation {
     }
     return -1;
   }
+
+  /**
+   * Prompt user to enter their input again if their input is not one of the available choices
+   * in the menu
+   * @param input <code>String</code>: user input
+   * @param sc <code>Scanner</code>: to scan user input again
+   * @param numOptions <code>int</code>: the number of options in the menu
+   * @return <code>int</code>: user input in integer format only when user input is valid
+   */
   public static int checkInput(String input, Scanner sc, int numOptions) {
     input = input.trim();
 
@@ -36,17 +53,6 @@ public class Validation {
     return Integer.parseInt(input);
   }
 
-  public static int[] getThreeOptions() {
-    return threeOptions;
-  }
-
-  public static int[] getTwoOptions() {
-    return twoOptions;
-  }
-
   public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    int option = checkInput("abc", sc, 3);
-    System.out.println(option);
   }
 }
