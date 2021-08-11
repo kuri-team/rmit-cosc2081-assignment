@@ -138,7 +138,7 @@ public class Display {
     tableInterface table = new tableInterface() {
       public String cellWidth(int width, String value) {
         String cell = " ";
-        int padding = Math.round(((float) width - value.length()) / 2);
+        int padding = (width - value.length()) / 2;
         cell = cell.repeat(padding);
         cell += value;
         if ((width - value.length()) % 2 == 1) {
