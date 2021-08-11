@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Validation {
 
   /**
+   * Create an array with all the options in the menu from the number of options
    * @param numOptions <code>int</code>: the number of options in the menu
    * @return <code>int[]</code>: an array containing all of the available options
    */
@@ -45,6 +46,7 @@ public class Validation {
   public static int checkInput(String input, Scanner sc, int numOptions) {
     input = input.trim();
 
+    // asks user to enter their choice again until their input is one of the options in menu
     while (returnValidOption(input, numOptions) == -1) {
       System.out.print("Your input is invalid. Please enter one of the options "
           + "specified above.\n>>>\s");

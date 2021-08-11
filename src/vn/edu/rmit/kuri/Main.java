@@ -143,6 +143,7 @@ public class Main {
             \t3 - n day(s) per group
             >>>\s"""
         );
+        //TODO: validate num of groups or num days per group
         int groupingOption = Validation.checkInput(sc.nextLine(), sc, 3);
         switch (groupingOption) {
           case 1 -> grouping = new Grouping();
