@@ -55,6 +55,16 @@ public class Validation {
     return Integer.parseInt(input);
   }
 
+  public static boolean isIntegerFormat(String input) {
+    try {
+      Integer.parseInt(input.trim());
+      return true;
+    } catch (NumberFormatException exception) {
+      return false;
+    }
+  }
+
   public static void main(String[] args) {
+    System.out.println(isIntegerFormat("12 "));
   }
 }

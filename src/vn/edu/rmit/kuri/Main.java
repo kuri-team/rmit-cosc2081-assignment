@@ -145,10 +145,13 @@ public class Main {
         );
         //TODO: validate num of groups or num days per group
         int groupingOption = Validation.checkInput(sc.nextLine(), sc, 3);
+        String input;
+
         switch (groupingOption) {
           case 1 -> grouping = new Grouping();
           case 2 -> {
             System.out.print("Enter number of group(s): ");
+            input = sc.nextLine();
             grouping = new Grouping(Integer.parseInt(sc.nextLine()), GroupingType.N_GROUPS);
           }
           case 3 -> {
