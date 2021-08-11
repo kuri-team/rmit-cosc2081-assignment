@@ -55,16 +55,29 @@ public class Validation {
     return Integer.parseInt(input);
   }
 
-  public static boolean isIntegerFormat(String input) {
+  private static boolean isIntegerFormat(String input) {
     try {
-      Integer.parseInt(input.trim());
+      Integer.parseInt(input);
       return true;
     } catch (NumberFormatException exception) {
       return false;
     }
   }
 
+  public static int checkGroupingInput(String input, DateRange dateRange, Scanner sc) {
+    long numDays = dateRange.getNumDays();
+    input = input.trim();
+
+    while (!isIntegerFormat(input) || Integer.parseInt(input) <= 0 || Integer.parseInt(input) > numDays) {
+      System.out.print("Your input is invalid, or the number you entered exceeds the number\n");
+      System.out.print("of days between the start and end date. Please try again.\n>>>\s");
+      input = sc.nextLine().trim();
+    }
+    return Integer.parseInt(input);
+  }
+
   public static void main(String[] args) {
-    System.out.println(isIntegerFormat("12 "));
+    DateRange d = new DateRange(2, "1w 2021-01-08");
+    System.out.println(checkGroupingInput("abx", d, new Scanner(System.in)));
   }
 }
