@@ -1,5 +1,7 @@
 package vn.edu.rmit.kuri.input;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
@@ -8,6 +10,7 @@ public class DateRange {
 
   private LocalDate start;
   private LocalDate end;
+  private long numDays;
 
   /**
    * @param option <code>int</code>. Format type.
@@ -161,6 +164,11 @@ public class DateRange {
 
   public LocalDate getEnd() {
     return this.end;
+  }
+
+  public long getNumDays() {
+    // add 1 because the original method misses 1 day
+    return (DAYS.between(start, end) + 1);
   }
 
 }
