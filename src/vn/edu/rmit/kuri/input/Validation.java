@@ -7,7 +7,15 @@ public class Validation {
   private static final int[] threeOptions = {1, 2, 3};
   private static final int[] twoOptions = {1, 2};
 
-  //TODO: get an int instead of int[] and turn that int into an array
+  private static int[] returnOptionsArray(int numOptions) {
+    int[] options = new int[numOptions];
+
+    for (int i = 0; i < numOptions; i++) {
+      options[i] = i + 1;
+    }
+    return options;
+  }
+
   public static int returnValidOption(String input, int[] options) {
     for (int option : options) {
       if (input.equals(Integer.toString(option))) {
