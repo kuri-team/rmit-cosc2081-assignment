@@ -104,7 +104,7 @@ public class Display {
        * Methods for creating first-column cells
        * @param width Width of the cell
        * @param value Value inside the cell
-       * @return Return the padding, value, and 2 vertical borderlines for column cells
+       * @return Return the padding, value, and 2 vertical borderlines for first-column cells
        */
       String cellWidthFirstCol(int width, String value);
 
@@ -129,7 +129,7 @@ public class Display {
        * Methods for creating a first-column horizontal borderline
        * @param width Width of the cell
        * @return <p>Return the conjunctions of borderlines using "+", a vertical borderline
-       * for non-first-column cells using "-"</p>
+       * for first-column cells using "-"</p>
        */
       String horizontalBorderFirstCol(int width);
     }
