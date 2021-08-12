@@ -56,7 +56,7 @@ public class Main {
       // Load database into memory
       System.out.print("Loading database...");
       Database database = new Database(databasePath);
-      System.out.println("[ LOADED ]\n\n");
+      System.out.println(" [ LOADED ]\n\n");
 
       if (database.size() == 0) {
         printEmptyDatabaseMessage();
@@ -175,7 +175,7 @@ public class Main {
         // 7 - Data processing
         System.out.print("\n\nProcessing data...");
         Summary summary = new Summary(geoArea, dateRange, grouping, database);
-        System.out.println("[ DONE ]\n");
+        System.out.println(" [ DONE ]\n");
 
         // 8 - Display processed data
         System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
