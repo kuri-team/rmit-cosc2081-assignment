@@ -182,13 +182,9 @@ public class Display {
 
     int index = 0;
     // Elements represent the value is replaced with '*'
-    for (int i = 0; i < valuePositionOnChart.size(); i++) {
-      for (int j = 0; j < valuePositionOnChart.size(); j++) {
-        if (i != 0 && i == j) {
-          displayChart[valuePositionOnChart.get(j)][i + spacing * index] = '*';
+    for (int i = 1; i <= valuePositionOnChart.size() * spacing; i += spacing) {
+          displayChart[valuePositionOnChart.get(index)][i] = '*';
           index += 1;
-        }
-      }
     }
 
     // Elements for drawing axes will be replaced with '|' or '_'
