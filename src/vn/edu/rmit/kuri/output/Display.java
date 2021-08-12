@@ -146,6 +146,7 @@ public class Display {
     // col is also represent chart's horizontal length
     int vertical = 24;
     int horizontal = 80;
+    int spacing;
     Character[][] displayChart = new Character[vertical][horizontal];
     ArrayList<Integer> valueForDisplay = query(summary, metric, resultType);
     ArrayList<Integer> valuePositionOnChart = new ArrayList<>();
@@ -165,9 +166,11 @@ public class Display {
       // the position of value is usually from the x axis which means from the bottom
       // the program prints from the top, the distance from the top to the * must be calculated
       // the distance must be rounded due to the limit of the program (only represent * with integer position)
-      int position = Math.round(vertical - (((float) value / max) * vertical));
+      int position = Math.round((vertical - 1) - (((float) value / max) * (vertical - 1)));
       valuePositionOnChart.add(position);
     }
+
+    spacing = 80  % valueForDisplay.size();
 
     // Replace null elements with ' '
     // Elements with other values will be modified later
@@ -177,11 +180,13 @@ public class Display {
       }
     }
 
+    int index = 0;
     // Elements represent the value is replaced with '*'
-    for (int i = 0; i < summary.size(); i++) {
+    for (int i = 0; i < valuePositionOnChart.size(); i++) {
       for (int j = 0; j < valuePositionOnChart.size(); j++) {
         if (i != 0 && i == j) {
-          displayChart[valuePositionOnChart.get(j)][i] = '*';
+          displayChart[valuePositionOnChart.get(j)][i + spacing * index] = '*';
+          index += 1;
         }
       }
     }
