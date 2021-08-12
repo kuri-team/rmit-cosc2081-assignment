@@ -8,6 +8,7 @@ import vn.edu.rmit.kuri.input.Grouping;
 import vn.edu.rmit.kuri.input.GroupingType;
 import vn.edu.rmit.kuri.input.Metric;
 import vn.edu.rmit.kuri.input.ResultType;
+import vn.edu.rmit.kuri.input.Validation;
 import vn.edu.rmit.kuri.output.Display;
 import vn.edu.rmit.kuri.output.DisplayFormat;
 import vn.edu.rmit.kuri.processing.Summary;
@@ -70,7 +71,8 @@ public class Main {
           System.out.printf("\t%d - %s\t", i + 1, allGeoAreas[i]);
         }
         System.out.print("\n>>> ");
-        String geoArea = allGeoAreas[Integer.parseInt(sc.nextLine()) - 1];
+        int areaOption = Validation.checkInput(sc.nextLine(), sc, allGeoAreas.length);
+        String geoArea = allGeoAreas[areaOption - 1];
 
         // 2 - User chooses a date range
         System.out.print("""
@@ -80,14 +82,8 @@ public class Main {
             \t3 - Number of days or weeks after start date, inclusive
             >>>\s"""
         );
-        int option = Integer.parseInt(sc.nextLine());
-
-        while (option != 1 && option != 2 && option != 3) {
-          System.out.print("Please enter a valid option.\n>>>\s");
-          option = Integer.parseInt(sc.nextLine());
-        }
-
-        switch (option) {
+        int dateRangeOption = Validation.checkInput(sc.nextLine(), sc, 3);
+        switch (dateRangeOption) {
           case 1 -> System.out.print("""
               \tEnter a pair of dates. Valid format example:
               \t\t2020-01-02 2021-03-04
@@ -104,7 +100,7 @@ public class Main {
               >>>\s"""
           );
         }
-        DateRange dateRange = new DateRange(option, sc.nextLine());
+        DateRange dateRange = new DateRange(dateRangeOption, sc.nextLine());
 
         // 3 - User chooses a metric
         Metric metric = null;
@@ -115,7 +111,8 @@ public class Main {
             \t3 - Vaccinations
             >>>\s"""
         );
-        switch (Integer.parseInt(sc.nextLine())) {
+        int metricOption = Validation.checkInput(sc.nextLine(), sc, 3);
+        switch (metricOption) {
           case 1 -> metric = Metric.CASES;
           case 2 -> metric = Metric.DEATHS;
           case 3 -> metric = Metric.VACCINATIONS;
@@ -131,7 +128,8 @@ public class Main {
             metric.toString().toLowerCase(),
             metric.toString().toLowerCase()
         );
-        switch (Integer.parseInt(sc.nextLine())) {
+        int resultTypeOption = Validation.checkInput(sc.nextLine(), sc, 2);
+        switch (resultTypeOption) {
           case 1 -> resultType = ResultType.NEW_PER_PERIOD;
           case 2 -> resultType = ResultType.CUMULATIVE;
         }
@@ -145,15 +143,19 @@ public class Main {
             \t3 - n day(s) per group
             >>>\s"""
         );
-        switch (Integer.parseInt(sc.nextLine())) {
+        int groupingOption = Validation.checkInput(sc.nextLine(), sc, 3);
+
+        switch (groupingOption) {
           case 1 -> grouping = new Grouping();
           case 2 -> {
             System.out.print("Enter number of group(s): ");
-            grouping = new Grouping(Integer.parseInt(sc.nextLine()), GroupingType.N_GROUPS);
+            int numGroups = Validation.checkGroupingInput(sc.nextLine(), dateRange.getNumDays(), sc);
+            grouping = new Grouping(numGroups, GroupingType.N_GROUPS);
           }
           case 3 -> {
             System.out.print("Enter number of day(s) per group: ");
-            grouping = new Grouping(Integer.parseInt(sc.nextLine()), GroupingType.N_DAYS_PER_GROUP);
+            int numDaysPerGroup = Validation.canDivideGroupsEqually(sc.nextLine(), dateRange.getNumDays(), sc);
+            grouping = new Grouping(numDaysPerGroup, GroupingType.N_DAYS_PER_GROUP);
           }
         }
 
@@ -165,7 +167,8 @@ public class Main {
             \t2 - Chart
             >>>\s"""
         );
-        switch (Integer.parseInt(sc.nextLine())) {
+        int formatOption = Validation.checkInput(sc.nextLine(), sc, 2);
+        switch (formatOption) {
           case 1 -> displayFormat = DisplayFormat.TABULAR;
           case 2 -> displayFormat = DisplayFormat.CHART;
         }
