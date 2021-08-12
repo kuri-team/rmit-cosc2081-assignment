@@ -1,9 +1,7 @@
 package vn.edu.rmit.kuri;
 
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
 import java.util.Scanner;
-import vn.edu.rmit.kuri.data.DataFilter;
 import vn.edu.rmit.kuri.data.Database;
 import vn.edu.rmit.kuri.input.DateRange;
 import vn.edu.rmit.kuri.input.Grouping;
