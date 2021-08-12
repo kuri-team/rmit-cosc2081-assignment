@@ -1,32 +1,42 @@
 package vn.edu.rmit.kuri.data;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 
 public class DataFilter implements DataArray<Data> {
 
   private final Data[] data;
 
   public DataFilter(String geoArea, LocalDate startDate, LocalDate endDate, Database database) {
-    LocalDate prevDate = startDate.minusDays(1);
-    ArrayList<Data> filteredData = new ArrayList<>();
+    // Populate this.data with blank entries
+    this.data = new Data[endDate.compareTo(startDate) + 1];
+    for (int i = 0; i < endDate.compareTo(startDate) + 1; i++) {
+      this.data[i] = new Data(
+              geoArea,
+              startDate.plusDays(i).format(DateTimeFormatter.ofPattern("M/d/yyyy")),
+              "0",
+              "0",
+              "0"
+      );
+    }
+
+    // Populate this.data with actual data, while skipping the missing dates
     for (int i = 0; i < database.size(); i++) {
       if (
           database.get(i).getGeoArea().equals(geoArea) &&
               database.get(i).getDate().compareTo(startDate) >= 0 &&
               database.get(i).getDate().compareTo(endDate) <= 0
       ) {
-        while (database.get(i).getDate().compareTo(prevDate) - 1 > 0) {
-          filteredData.add(new Data(geoArea, prevDate.toString(), "0", "0", "0"));
-          prevDate = prevDate.plusDays(1);
-          System.out.println("fill!");
+        for (Data entry : this.data) {
+          if (database.get(i).getDate().compareTo(entry.getDate()) == 0) {
+            entry.setNewCases(database.get(i).getNewCases());
+            entry.setNewDeaths(database.get(i).getNewDeaths());
+            entry.setNewVaccinations(database.get(i).getNewVaccinations());
+            break;
+          }
         }
-        filteredData.add(database.get(i));
-        prevDate = database.get(i).getDate();
       }
     }
-
-    this.data = filteredData.toArray(new Data[0]);
   }
 
   public int size() {

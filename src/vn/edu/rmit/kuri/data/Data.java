@@ -6,9 +6,9 @@ import java.time.format.DateTimeFormatter;
 public class Data {
   private final String geoArea;
   private final LocalDate date;
-  private final int newCases;
-  private final int newDeaths;
-  private final int newVaccinations;
+  private int newCases;
+  private int newDeaths;
+  private int newVaccinations;
 
   public Data(String geoArea, String date, String newCases, String newDeaths, String newVaccinations) {
     this.geoArea = geoArea;
@@ -47,5 +47,17 @@ public class Data {
 
   public int getNewVaccinations() {
     return newVaccinations;
+  }
+
+  public void setNewCases(int newCases) {
+    this.newCases = newCases;
+  }
+
+  public void setNewDeaths(int newDeaths) {
+    this.newDeaths = newDeaths;
+  }
+
+  public void setNewVaccinations(int newVaccinations) {
+    this.newVaccinations = newVaccinations;
   }
 }
