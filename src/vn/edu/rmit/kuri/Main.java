@@ -12,7 +12,7 @@ import vn.edu.rmit.kuri.input.Validation;
 import vn.edu.rmit.kuri.output.Display;
 import vn.edu.rmit.kuri.output.DisplayFormat;
 import vn.edu.rmit.kuri.processing.Summary;
-import vn.edu.rmit.kuri.test.Test;
+import vn.edu.rmit.kuri.test.Test; // TODO: Remove this line after summary has been implemented
 
 public class Main {
 
