@@ -170,7 +170,7 @@ public class Display {
       valuePositionOnChart.add(position);
     }
 
-    spacing = 80  % valueForDisplay.size();
+    spacing = (int) Math.floor((float) (horizontal - 1) / valueForDisplay.size());
 
     // Replace null elements with ' '
     // Elements with other values will be modified later
