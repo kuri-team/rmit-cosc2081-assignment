@@ -69,11 +69,16 @@ public class Main {
         System.out.println("Choose a country/region. Available choices:");
         String[] allGeoAreas = database.allGeoAreas();
         for (int i = 0; i < allGeoAreas.length; i++) {
-          System.out.printf("\t%d - %s\t", i + 1, allGeoAreas[i]);
+          if ((i + 1) % 3 != 0) {
+            System.out.printf("%3d - %s", i + 1, String.format("%-40s", allGeoAreas[i]));
+          } else {
+            System.out.printf("%3d - %s\n", i + 1, String.format("%-40s", allGeoAreas[i]));
+          }
         }
         System.out.print("\n>>> ");
         int areaOption = Validation.checkInput(sc.nextLine(), sc, allGeoAreas.length);
         String geoArea = allGeoAreas[areaOption - 1];
+        System.out.println("Country chosen: " + geoArea);
 
         // 2 - User chooses a date range
         System.out.print("""
