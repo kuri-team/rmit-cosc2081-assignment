@@ -153,12 +153,20 @@ public class Main {
           case 1 -> grouping = new Grouping();
           case 2 -> {
             System.out.print("Enter number of group(s): ");
-            int numGroups = Validation.checkGroupingInput(sc.nextLine(), dateRange.getNumDays(), sc);
+            int numGroups = Validation.checkGroupingInput(
+                sc.nextLine(),
+                dateRange.getNumDays(),
+                sc
+            );
             grouping = new Grouping(numGroups, GroupingType.N_GROUPS);
           }
           case 3 -> {
             System.out.print("Enter number of day(s) per group: ");
-            int numDaysPerGroup = Validation.canDivideGroupsEqually(sc.nextLine(), dateRange.getNumDays(), sc);
+            int numDaysPerGroup = Validation.canDivideGroupsEqually(
+                sc.nextLine(),
+                dateRange.getNumDays(),
+                sc
+            );
             grouping = new Grouping(numDaysPerGroup, GroupingType.N_DAYS_PER_GROUP);
           }
         }
