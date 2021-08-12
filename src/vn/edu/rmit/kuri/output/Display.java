@@ -11,12 +11,12 @@ public class Display {
 
   /**
    * Create a table from the summary data and user's selections
-   * @param summary Data that already has grouping
-   * @param metric  Metric chosen by the user
-   * @param resultType  Result type chosen by the user
+   *
+   * @param summary    Data that already has grouping
+   * @param metric     Metric chosen by the user
+   * @param resultType Result type chosen by the user
    */
   public static void tabular(TestSummary summary, Metric metric, ResultType resultType) {
-    // Dummy content TODO: Implement this
     // Create a table
     // Data from summary will be queried to return 2 arrays to add data to the table
     // The 1st array stores the Range and the 2nd stores the Value data
@@ -112,24 +112,30 @@ public class Display {
     int rangeColWidth = 35;
     int valueColWidth = 10;
 
-    System.out.println(table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
-    System.out.println(table.cellWidthFirstCol(rangeColWidth, "Range") + table.cellWidth(valueColWidth, "Value"));
-    System.out.println(table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
+    System.out.println(
+        table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
+    System.out.println(
+        table.cellWidthFirstCol(rangeColWidth, "Range") + table.cellWidth(valueColWidth, "Value"));
+    System.out.println(
+        table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
 
     for (int i = 0; i < range.size(); i++) {
-      System.out.println(table.cellWidthFirstCol(rangeColWidth, range.get(i)) + table.cellWidth(valueColWidth, valueForDisplay.get(i).toString()));
+      System.out.println(
+          table.cellWidthFirstCol(rangeColWidth, range.get(i)) + table.cellWidth(valueColWidth,
+              valueForDisplay.get(i).toString()));
     }
-    System.out.println(table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
+    System.out.println(
+        table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
   }
 
   /**
    * Create a chart from the summary data and user's selections
-   * @param summary Data that already has grouping
-   * @param metric  Metric chosen by the user
-   * @param resultType  Result type chosen by the user
+   *
+   * @param summary    Data that already has grouping
+   * @param metric     Metric chosen by the user
+   * @param resultType Result type chosen by the user
    */
   public static void chart(TestSummary summary, Metric metric, ResultType resultType) {
-    // Dummy content TODO: Implement this
     // Draw a textual chart
     // Create a 2D array to represent 24 rows x 80 cols
     // The 1st col and the last row will be left for groups and results
@@ -138,7 +144,7 @@ public class Display {
 
     // row is also chart's vertical length
     // col is also represent chart's horizontal length
-    int vertical  = 24;
+    int vertical = 24;
     int horizontal = 80;
     Character[][] displayChart = new Character[vertical][horizontal];
     ArrayList<Integer> valueForDisplay = query(summary, metric, resultType);
@@ -180,7 +186,7 @@ public class Display {
       }
     }
 
-    // Elements for drawing axes will be replace with '|' or '_'
+    // Elements for drawing axes will be replaced with '|' or '_'
     for (int i = 0; i < vertical; i++) {
       for (int j = 0; j < horizontal; j++) {
         if (i == vertical - 1) {
@@ -193,7 +199,7 @@ public class Display {
     }
 
     // Print the chart
-    for (int i = 0; i < vertical; i ++) {
+    for (int i = 0; i < vertical; i++) {
       for (int j = 0; j < horizontal; j++) {
         if (j != horizontal - 1) {
           System.out.print(displayChart[i][j]);
@@ -206,20 +212,21 @@ public class Display {
 
   /**
    * Query from already grouped data that fits the metric and resultType
-   * @param summary Data that already has grouping
-   * @param metric  Metric chosen by the user
-   * @param resultType  Result type chosen by the user
+   *
+   * @param summary    Data that already has grouping
+   * @param metric     Metric chosen by the user
+   * @param resultType Result type chosen by the user
    * @return an arraylist that contains value for display
    */
-  public static ArrayList<Integer> query(TestSummary summary, Metric metric, ResultType resultType) {
+  public static ArrayList<Integer> query(TestSummary summary, Metric metric,
+      ResultType resultType) {
     // Extract needed values based on the metric
     // Stored data in a 2D ArrayList
     // Data from the same group will be in the same ArrayList
     ArrayList<ArrayList<Integer>> value = new ArrayList<>();
     for (int i = 0; i < summary.size(); i++) {
       ArrayList<Integer> valueGroup = new ArrayList<>();
-      for (int j = 0; j <summary.get(i).size(); j++)
-      {
+      for (int j = 0; j < summary.get(i).size(); j++) {
         switch (metric) {
           case CASES -> {
             int k = summary.get(i).get(j).getNewCases();
