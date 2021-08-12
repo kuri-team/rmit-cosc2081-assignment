@@ -162,7 +162,7 @@ public class Main {
         System.out.print("""
             Choose a format to display the processed data:
             \t1 - Tabular
-            \t2 - Chart
+            \t2 - Chart (24 rows x 80 cols)
             >>>\s"""
         );
         switch (Integer.parseInt(sc.nextLine())) {
