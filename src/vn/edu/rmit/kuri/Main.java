@@ -176,8 +176,8 @@ public class Main {
         System.out.println("[ DONE ]\n");
 
         // 8 - Display processed data
-        Test.main(database); // TODO: Remove this line after summary has been implemented
         System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
+        Test.main(database); // TODO: Remove this line after summary has been implemented
 //        switch (displayFormat) {
 //          case TABULAR -> Display.tabular(summary, metric, resultType);
 //          case CHART -> Display.chart(summary, metric, resultType);
