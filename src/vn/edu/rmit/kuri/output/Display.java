@@ -122,16 +122,95 @@ public class Display {
     System.out.println(table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
   }
 
-  public static void chart(Summary summary, Metric metric, ResultType resultType) {
+  /**
+   * Create a chart from the summary data and user's selections
+   * @param summary Data that already has grouping
+   * @param metric  Metric chosen by the user
+   * @param resultType  Result type chosen by the user
+   */
+  public static void chart(TestSummary summary, Metric metric, ResultType resultType) {
     // Dummy content TODO: Implement this
     // Draw a textual chart
     // Create a 2D array to represent 24 rows x 80 cols
     // The 1st col and the last row will be left for groups and results
     // Data from summary will be queried to return a 2D array to add data to the chart
     // metric and resultType will determine the data of the 2D array
-    System.out.println("To be implemented");
+
+    // row is also chart's vertical length
+    // col is also represent chart's horizontal length
+    int vertical  = 24;
+    int horizontal = 80;
+    Character[][] displayChart = new Character[vertical][horizontal];
+    ArrayList<Integer> valueForDisplay = query(summary, metric, resultType);
+    ArrayList<Integer> valuePositionOnChart = new ArrayList<>();
+
+    // find the max value to calculate the position of the * based on it
+    // each * present a value from a group
+    int max = 0;
+
+    for (Integer i : valueForDisplay) {
+      if (max < i) {
+        max = i;
+      }
+    }
+
+    // store position values in an ArrayList
+    for (Integer value : valueForDisplay) {
+      // the position of value is usually from the x axis which means from the bottom
+      // the program prints from the top, the distance from the top to the * must be calculated
+      // the distance must be rounded due to the limit of the program (only represent * with integer position)
+      int position = Math.round(vertical - (((float) value / max) * vertical));
+      valuePositionOnChart.add(position);
+    }
+
+    // Replace null elements with ' '
+    // Elements with other values will be modified later
+    for (int i = 0; i < vertical; i++) {
+      for (int j = 0; j < horizontal; j++) {
+        displayChart[i][j] = ' ';
+      }
+    }
+
+    // Elements represent the value is replaced with '*'
+    for (int i = 0; i < summary.size(); i++) {
+      for (int j = 0; j < valuePositionOnChart.size(); j++) {
+        if (i != 0 && i == j) {
+          displayChart[valuePositionOnChart.get(j)][i] = '*';
+        }
+      }
+    }
+
+    // Elements for drawing axes will be replace with '|' or '_'
+    for (int i = 0; i < vertical; i++) {
+      for (int j = 0; j < horizontal; j++) {
+        if (i == vertical - 1) {
+          displayChart[i][j] = '_';
+        }
+        if (j == 0) {
+          displayChart[i][j] = '|';
+        }
+      }
+    }
+
+    // Print the chart
+    for (int i = 0; i < vertical; i ++) {
+      for (int j = 0; j < horizontal; j++) {
+        if (j != horizontal - 1) {
+          System.out.print(displayChart[i][j]);
+        } else {
+          System.out.println(displayChart[i][j]);
+        }
+      }
+    }
   }
 
+  /**
+   * Query from already grouped data that fits the metric and resultType
+   * @param summary Data that already has grouping
+   * @param metric  Metric chosen by the user
+   * @param resultType  Result type chosen by the user
+   * @return an arraylist that contains value for display
+   */
   public static ArrayList<Integer> query(TestSummary summary, Metric metric, ResultType resultType) {
     // Extract needed values based on the metric
     // Stored data in a 2D ArrayList
@@ -189,7 +268,7 @@ public class Display {
 
   /**
    * Store each group's range in an ArrayList
-   * @param summary
+   * @param summary Data that already has grouping
    * @return an arraylist of strings that represent group's range for display
    */
   public static ArrayList<String> groupRange(TestSummary summary) {
