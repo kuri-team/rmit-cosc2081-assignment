@@ -11,7 +11,7 @@ public class TestSummary {
   private final ArrayList<ArrayList<Data>> processedData = new ArrayList<>();
 
   TestSummary(Database database) {
-    DataFilter data = new DataFilter("Vietnam", LocalDate.parse("2021-04-01"), LocalDate.parse("2021-04-30"), database);
+    DataFilter data = new DataFilter("Vietnam", LocalDate.parse("2021-04-01"), LocalDate.parse("2021-04-01").plusDays(160), database);
     ArrayList<Data> group = new ArrayList<>();
     for (int i = 0; i < data.size(); i++) {
       if ((i + 1) % 2 != 0) {
