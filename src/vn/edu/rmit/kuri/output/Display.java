@@ -166,7 +166,8 @@ public class Display {
       // the position of value is usually from the x axis which means from the bottom
       // the program prints from the top, the distance from the top to the * must be calculated
       // the distance must be rounded due to the limit of the program (only represent * with integer position)
-      int position = Math.round((vertical - 1) - (((float) value / max) * (vertical - 1)));
+      // the reason for -2: -1 for the double array start from 0 rather than 1, -1 for the 1st col and the last row is used for axes
+      int position = Math.round((vertical - 2) - (((float) value / max) * (vertical - 2)));
       valuePositionOnChart.add(position);
     }
 
