@@ -12,7 +12,7 @@ import vn.edu.rmit.kuri.input.Validation;
 import vn.edu.rmit.kuri.output.Display;
 import vn.edu.rmit.kuri.output.DisplayFormat;
 import vn.edu.rmit.kuri.processing.Summary;
-import vn.edu.rmit.kuri.test.Test;
+import vn.edu.rmit.kuri.test.Test; // TODO: Remove this line after summary has been implemented
 
 public class Main {
 
@@ -56,23 +56,27 @@ public class Main {
       // Load database into memory
       System.out.print("Loading database...");
       Database database = new Database(databasePath);
-      System.out.println("[ LOADED ]\n\n");
+      System.out.println(" [ LOADED ]\n\n");
 
       if (database.size() == 0) {
         printEmptyDatabaseMessage();
       } else {
-        // TODO: Optimize 1 through 6 (input) and check for bad inputs from user. I.e. when the program wants an integer but the user enters a string, when the user press enters too many times, etc.
         Scanner sc = new Scanner(System.in);
 
         // 1 - User chooses a country/region
         System.out.println("Choose a country/region. Available choices:");
         String[] allGeoAreas = database.allGeoAreas();
         for (int i = 0; i < allGeoAreas.length; i++) {
-          System.out.printf("\t%d - %s\t", i + 1, allGeoAreas[i]);
+          if ((i + 1) % 3 != 0) {
+            System.out.printf("%3d - %s", i + 1, String.format("%-40s", allGeoAreas[i]));
+          } else {
+            System.out.printf("%3d - %s\n", i + 1, String.format("%-40s", allGeoAreas[i]));
+          }
         }
         System.out.print("\n>>> ");
         int areaOption = Validation.checkInput(sc.nextLine(), sc, allGeoAreas.length);
         String geoArea = allGeoAreas[areaOption - 1];
+        System.out.println("Country chosen: " + geoArea);
 
         // 2 - User chooses a date range
         System.out.print("""
@@ -149,12 +153,20 @@ public class Main {
           case 1 -> grouping = new Grouping();
           case 2 -> {
             System.out.print("Enter number of group(s): ");
-            int numGroups = Validation.checkGroupingInput(sc.nextLine(), dateRange.getNumDays(), sc);
+            int numGroups = Validation.checkGroupingInput(
+                sc.nextLine(),
+                dateRange.getNumDays(),
+                sc
+            );
             grouping = new Grouping(numGroups, GroupingType.N_GROUPS);
           }
           case 3 -> {
             System.out.print("Enter number of day(s) per group: ");
-            int numDaysPerGroup = Validation.canDivideGroupsEqually(sc.nextLine(), dateRange.getNumDays(), sc);
+            int numDaysPerGroup = Validation.canDivideGroupsEqually(
+                sc.nextLine(),
+                dateRange.getNumDays(),
+                sc
+            );
             grouping = new Grouping(numDaysPerGroup, GroupingType.N_DAYS_PER_GROUP);
           }
         }
@@ -176,7 +188,7 @@ public class Main {
         // 7 - Data processing
         System.out.print("\n\nProcessing data...");
         Summary summary = new Summary(geoArea, dateRange, grouping, database);
-        System.out.println("[ DONE ]\n");
+        System.out.println(" [ DONE ]\n");
 
         // 8 - Display processed data
         System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
