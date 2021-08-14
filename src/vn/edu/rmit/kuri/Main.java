@@ -125,7 +125,7 @@ public class Main {
         // 4 - User chooses a calculation method
         ResultType resultType = null;
         System.out.printf("""
-                Choose a metric to track:
+                Choose a calculation method:
                 \t1 - New %s per day
                 \t2 - Cumulative %s
                 >>>\s""",
@@ -141,7 +141,7 @@ public class Main {
         // 5 - User chooses a grouping method
         Grouping grouping = null;
         System.out.print("""
-            Choose a metric to track:
+            Choose a grouping type:
             \t1 - No grouping
             \t2 - n group(s)
             \t3 - n day(s) per group
