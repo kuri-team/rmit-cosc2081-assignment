@@ -32,13 +32,25 @@ public class Summary implements DataArray<ArrayList<Data>> {
         ArrayList<Data> group = new ArrayList<>();
         for (int i = 0; i < this.filteredData.size(); i++) {
           group.add(this.filteredData.get(i));
-          if ((i + 1) % daysPerGroup == 0) {
+          if ((i + 1) % daysPerGroup == 0 && groupCount < grouping.getGroupingNum() - 1) {
+            this.processedData.add(group);
+            groupCount++;
+            group = new ArrayList<>();
+          } else if (i == this.filteredData.size() - 1) {
+            this.processedData.add(group);
+          }
+        }
+      }
+      case N_DAYS_PER_GROUP -> {
+        ArrayList<Data> group = new ArrayList<>();
+        for (int i = 0; i < this.filteredData.size(); i++) {
+          group.add(this.filteredData.get(i));
+          if ((i + 1) % grouping.getGroupingNum() == 0) {
             this.processedData.add(group);
             group = new ArrayList<>();
           }
         }
-      }  // do processing
-      case N_DAYS_PER_GROUP -> {}  // do processing
+      }
     }
   }
 
