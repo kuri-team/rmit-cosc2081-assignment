@@ -19,8 +19,12 @@ public class Summary implements DataArray<ArrayList<Data>> {
 
     // Implementation TODO: Turn filtered data into processed data using grouping and groupingNum from parameter
     switch (grouping.getType()) {
-      case NONE -> {}  // do processing
-      case N_GROUPS -> {}  // do processing
+      case NONE -> {
+        processedData.add(filteredData);// add filtered data to array list?
+      }  // do processing
+      case N_GROUPS -> {
+        int group = number
+      }  // do processing
       // test something out
       case N_DAYS_PER_GROUP -> {}  // do processing
     }
