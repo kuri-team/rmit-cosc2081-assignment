@@ -17,7 +17,6 @@ public class Summary implements DataArray<ArrayList<Data>> {
     this.filteredData = new DataFilter(geoArea, dateRange.getStart(), dateRange.getEnd(), database);
     this.processedData = new ArrayList<>();
 
-    // Implementation TODO: Turn filtered data into processed data using grouping and groupingNum from parameter
     switch (grouping.getType()) {
       case NONE -> {
         for (int i = 0; i < this.filteredData.size(); i++) {
