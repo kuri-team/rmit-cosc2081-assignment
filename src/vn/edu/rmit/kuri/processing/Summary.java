@@ -26,7 +26,18 @@ public class Summary implements DataArray<ArrayList<Data>> {
           this.processedData.add(group);
         }
       }
-      case N_GROUPS -> {}  // do processing
+      case N_GROUPS -> {
+        int daysPerGroup = this.filteredData.size() / grouping.getGroupingNum();
+        int groupCount = 0;
+        ArrayList<Data> group = new ArrayList<>();
+        for (int i = 0; i < this.filteredData.size(); i++) {
+          group.add(this.filteredData.get(i));
+          if ((i + 1) % daysPerGroup == 0) {
+            this.processedData.add(group);
+            group = new ArrayList<>();
+          }
+        }
+      }  // do processing
       case N_DAYS_PER_GROUP -> {}  // do processing
     }
   }

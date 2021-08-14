@@ -175,6 +175,10 @@ public class Main {
         Summary summary = new Summary(geoArea, dateRange, grouping, database);
         System.out.println("[ DONE ]\n");
 
+        for (int i = 0; i < summary.size(); i++) {
+          System.out.println(summary.get(i));
+        }
+
         // 8 - Display processed data
         Test.main(database); // TODO: Remove this line after summary has been implemented
         System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
