@@ -10,5 +10,6 @@ public class Test {
   public static void main(Database database) {
     TestSummary summary = new TestSummary(database);
     Display.tabular(summary, Metric.CASES, ResultType.NEW_PER_PERIOD);
+    Display.chart(summary, Metric.CASES, ResultType.NEW_PER_PERIOD);
   }
 }
