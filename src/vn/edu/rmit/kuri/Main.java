@@ -12,7 +12,6 @@ import vn.edu.rmit.kuri.input.Validation;
 import vn.edu.rmit.kuri.output.Display;
 import vn.edu.rmit.kuri.output.DisplayFormat;
 import vn.edu.rmit.kuri.processing.Summary;
-import vn.edu.rmit.kuri.test.Test; // TODO: Remove this line after summary has been implemented
 
 public class Main {
 
@@ -192,11 +191,10 @@ public class Main {
 
         // 8 - Display processed data
         System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
-        Test.main(database); // TODO: Remove this line after summary has been implemented
-//        switch (displayFormat) {
-//          case TABULAR -> Display.tabular(summary, metric, resultType);
-//          case CHART -> Display.chart(summary, metric, resultType);
-//        }
+        switch (displayFormat) {
+          case TABULAR -> Display.tabular(summary, metric, resultType);
+          case CHART -> Display.chart(summary, metric, resultType);
+        }
       }
 
     } catch (FileNotFoundException e) {  // Invalid database file path, or file doesn't exist
