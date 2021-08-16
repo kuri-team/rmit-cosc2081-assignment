@@ -106,7 +106,7 @@ public class Main {
         DateRange dateRange = new DateRange(dateRangeOption, sc.nextLine());
 
         // 3 - User chooses a metric
-        Metric metric = null;
+        Metric metric = Metric.NULL;
         System.out.print("""
             Choose a metric to track:
             \t1 - Cases
@@ -122,7 +122,7 @@ public class Main {
         }
 
         // 4 - User chooses a calculation method
-        ResultType resultType = null;
+        ResultType resultType = ResultType.NULL;
         System.out.printf("""
                 Choose a calculation method:
                 \t1 - New %s per day
@@ -171,7 +171,7 @@ public class Main {
         }
 
         // 6 - User chooses a display format
-        DisplayFormat displayFormat = null;
+        DisplayFormat displayFormat = DisplayFormat.NULL;
         System.out.print("""
             Choose a format to display the processed data:
             \t1 - Tabular
@@ -186,7 +186,10 @@ public class Main {
 
         // 7 - Data processing
         System.out.print("\n\nProcessing data...");
-        Summary summary = new Summary(geoArea, dateRange, grouping, database);
+        Summary summary = null;
+        if (grouping != null) {
+          summary = new Summary(geoArea, dateRange, grouping, database);
+        }
         System.out.println(" [ DONE ]\n");
 
         // 8 - Display processed data
