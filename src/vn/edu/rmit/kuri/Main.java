@@ -12,7 +12,6 @@ import vn.edu.rmit.kuri.input.Validation;
 import vn.edu.rmit.kuri.output.Display;
 import vn.edu.rmit.kuri.output.DisplayFormat;
 import vn.edu.rmit.kuri.processing.Summary;
-import vn.edu.rmit.kuri.test.Test; // TODO: Remove this line after summary has been implemented
 
 public class Main {
 
@@ -99,7 +98,7 @@ public class Main {
               >>>\s"""
           );
           case 3 -> System.out.print("""
-              \tEnter start date (yyyy-MM-dd) and number of days/ weeks. Valid format example:
+              \tEnter start date (yyyy-MM-dd) and number of days/weeks. Valid format example:
               \t\t2020-01-02 12d or 2020-01-02 3w
               >>>\s"""
           );
@@ -107,7 +106,7 @@ public class Main {
         DateRange dateRange = new DateRange(dateRangeOption, sc.nextLine());
 
         // 3 - User chooses a metric
-        Metric metric = null;
+        Metric metric = Metric.NULL;
         System.out.print("""
             Choose a metric to track:
             \t1 - Cases
@@ -123,7 +122,7 @@ public class Main {
         }
 
         // 4 - User chooses a calculation method
-        ResultType resultType = null;
+        ResultType resultType = ResultType.NULL;
         System.out.printf("""
                 Choose a calculation method:
                 \t1 - New %s per day
@@ -155,7 +154,7 @@ public class Main {
             System.out.print("Enter number of group(s): ");
             int numGroups = Validation.checkGroupingInput(
                 sc.nextLine(),
-                dateRange.getNumDays(),
+                dateRange.getDurationInDays(),
                 sc
             );
             grouping = new Grouping(numGroups, GroupingType.N_GROUPS);
@@ -164,7 +163,7 @@ public class Main {
             System.out.print("Enter number of day(s) per group: ");
             int numDaysPerGroup = Validation.canDivideGroupsEqually(
                 sc.nextLine(),
-                dateRange.getNumDays(),
+                dateRange.getDurationInDays(),
                 sc
             );
             grouping = new Grouping(numDaysPerGroup, GroupingType.N_DAYS_PER_GROUP);
@@ -172,7 +171,7 @@ public class Main {
         }
 
         // 6 - User chooses a display format
-        DisplayFormat displayFormat = null;
+        DisplayFormat displayFormat = DisplayFormat.NULL;
         System.out.print("""
             Choose a format to display the processed data:
             \t1 - Tabular
@@ -187,16 +186,18 @@ public class Main {
 
         // 7 - Data processing
         System.out.print("\n\nProcessing data...");
-        Summary summary = new Summary(geoArea, dateRange, grouping, database);
+        Summary summary = null;
+        if (grouping != null) {
+          summary = new Summary(geoArea, dateRange, grouping, database);
+        }
         System.out.println(" [ DONE ]\n");
 
         // 8 - Display processed data
         System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
-        Test.main(database); // TODO: Remove this line after summary has been implemented
-//        switch (displayFormat) {
-//          case TABULAR -> Display.tabular(summary, metric, resultType);
-//          case CHART -> Display.chart(summary, metric, resultType);
-//        }
+        switch (displayFormat) {
+          case TABULAR -> Display.tabular(summary, metric, resultType);
+          case CHART -> Display.chart(summary, metric, resultType);
+        }
       }
 
     } catch (FileNotFoundException e) {  // Invalid database file path, or file doesn't exist

@@ -1,11 +1,9 @@
 package vn.edu.rmit.kuri.output;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import vn.edu.rmit.kuri.input.Metric;
 import vn.edu.rmit.kuri.input.ResultType;
 import vn.edu.rmit.kuri.processing.Summary;
-import vn.edu.rmit.kuri.test.TestSummary;
 
 public class Display {
 
@@ -16,7 +14,7 @@ public class Display {
    * @param metric     Metric chosen by the user
    * @param resultType Result type chosen by the user
    */
-  public static void tabular(TestSummary summary, Metric metric, ResultType resultType) {
+  public static void tabular(Summary summary, Metric metric, ResultType resultType) {
     // Create a table
     // Data from summary will be queried to return 2 arrays to add data to the table
     // The 1st array stores the Range and the 2nd stores the Value data
@@ -135,7 +133,7 @@ public class Display {
    * @param metric     Metric chosen by the user
    * @param resultType Result type chosen by the user
    */
-  public static void chart(TestSummary summary, Metric metric, ResultType resultType) {
+  public static void chart(Summary summary, Metric metric, ResultType resultType) {
     // Draw a textual chart
     // Create a 2D array to represent 24 rows x 80 cols
     // The 1st col and the last row will be left for groups and results
@@ -220,7 +218,7 @@ public class Display {
    * @param resultType Result type chosen by the user
    * @return an arraylist that contains value for display
    */
-  public static ArrayList<Integer> query(TestSummary summary, Metric metric,
+  public static ArrayList<Integer> query(Summary summary, Metric metric,
       ResultType resultType) {
     // Extract needed values based on the metric
     // Stored data in a 2D ArrayList
@@ -280,7 +278,7 @@ public class Display {
    * @param summary Data that already has grouping
    * @return an arraylist of strings that represent group's range for display
    */
-  public static ArrayList<String> groupRange(TestSummary summary) {
+  public static ArrayList<String> groupRange(Summary summary) {
     ArrayList<String> range = new ArrayList<>();
     for (int i = 0; i < summary.size(); i++) {
       int groupSize = summary.get(i).size();
