@@ -62,11 +62,17 @@ public class Data {
   }
 
   public void setNewVaccinationsPerDay(int i, Database database) {
+    int dtbCurrentValue = database.get(i).getNewVaccinations();
+
     if (i == 0) {
-      this.setNewVaccinations(database.get(i).getNewVaccinations());
+      this.setNewVaccinations(dtbCurrentValue);
+
+    } else if (dtbCurrentValue == 0) {
+      this.setNewVaccinations(0);
+
     } else {
-      this.setNewVaccinations(
-          database.get(i).getNewVaccinations() - database.get(i - 1).getNewVaccinations());
+      int dtbPrevValue = database.get(i - 1).getNewVaccinations();
+      this.setNewVaccinations(dtbCurrentValue - dtbPrevValue);
     }
   }
 }
