@@ -9,7 +9,7 @@ public class DataFilter implements DataArray<Data> {
 
   public DataFilter(String geoArea, DateRange dateRange, Database database) {
     // Populate this.data with blank entries
-    this.data = new Data[(int) dateRange.getNumDays()];
+    this.data = new Data[(int) dateRange.getDurationInDays()];
     for (int i = 0; i < this.data.length; i++) {
       this.data[i] = new Data(
               geoArea,

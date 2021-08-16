@@ -98,7 +98,7 @@ public class Main {
               >>>\s"""
           );
           case 3 -> System.out.print("""
-              \tEnter start date (yyyy-MM-dd) and number of days/ weeks. Valid format example:
+              \tEnter start date (yyyy-MM-dd) and number of days/weeks. Valid format example:
               \t\t2020-01-02 12d or 2020-01-02 3w
               >>>\s"""
           );
@@ -154,7 +154,7 @@ public class Main {
             System.out.print("Enter number of group(s): ");
             int numGroups = Validation.checkGroupingInput(
                 sc.nextLine(),
-                dateRange.getNumDays(),
+                dateRange.getDurationInDays(),
                 sc
             );
             grouping = new Grouping(numGroups, GroupingType.N_GROUPS);
@@ -163,7 +163,7 @@ public class Main {
             System.out.print("Enter number of day(s) per group: ");
             int numDaysPerGroup = Validation.canDivideGroupsEqually(
                 sc.nextLine(),
-                dateRange.getNumDays(),
+                dateRange.getDurationInDays(),
                 sc
             );
             grouping = new Grouping(numDaysPerGroup, GroupingType.N_DAYS_PER_GROUP);

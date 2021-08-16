@@ -168,7 +168,7 @@ public class DateRange {
   /**
    * @return the number of days between the start and end date, inclusive
    */
-  public long getNumDays() {
+  public long getDurationInDays() {
     // add 1 because the original method misses 1 day
     return (DAYS.between(start, end) + 1);
   }
