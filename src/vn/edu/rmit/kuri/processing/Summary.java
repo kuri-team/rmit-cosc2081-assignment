@@ -15,9 +15,9 @@ public class Summary implements DataArray<ArrayList<Data>> {
   public Summary(String geoArea, DateRange dateRange, Grouping grouping, Database database) {
     DataFilter filteredData = new DataFilter(
         geoArea,
-        dateRange.getStart(),
-        dateRange.getEnd(),
-        database);
+        dateRange,
+        database
+    );
     this.processedData = new ArrayList<>();
 
     switch (grouping.getType()) {
