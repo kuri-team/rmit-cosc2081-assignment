@@ -108,4 +108,19 @@ public class Validation {
     return numDaysPerGroup;
   }
 
+  /**
+   * If user inputs a number of group that is larger than 79, display a message error
+   */
+  public static void chartDisplayLimit(String input, long numDays, Scanner sc) {
+    int duration = checkGroupingInput(input, numDays, sc);
+    switch (Grouping.getGroupingNum()) { // resolve later
+      case 2 -> {
+        // if user choose the data in chart form, display message error
+      }
+      case 3 -> {
+        // if the number of groups calculated from num of days and numOfDaysPerGroup is greater
+        // than 79 and user choose to display data in chart form, display error.
+      }
+    }
+  }
 }
