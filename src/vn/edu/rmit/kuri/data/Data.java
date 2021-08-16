@@ -60,4 +60,13 @@ public class Data {
   public void setNewVaccinations(int newVaccinations) {
     this.newVaccinations = newVaccinations;
   }
+
+  public void setNewVaccinationsPerDay(int i, Database database) {
+    if (i == 0) {
+      this.setNewVaccinations(database.get(i).getNewVaccinations());
+    } else {
+      this.setNewVaccinations(
+          database.get(i).getNewVaccinations() - database.get(i - 1).getNewVaccinations());
+    }
+  }
 }
