@@ -69,7 +69,7 @@ public class Data {
 
     } else {
       int j = 1;
-      while (j <= i) {
+      while (j <= i && database.get(i - j).getGeoArea().equals(database.get(i).getGeoArea())) {
         if (database.get(i - j).getNewVaccinations() != 0) {
           this.setNewVaccinations(dtbCurrentValue - database.get(i - j).getNewVaccinations());
           return;
