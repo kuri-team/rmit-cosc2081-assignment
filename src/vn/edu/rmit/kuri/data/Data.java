@@ -64,8 +64,9 @@ public class Data {
   public void setNewVaccinationsPerDay(int i, Database database) {
     int dtbCurrentValue = database.get(i).getNewVaccinations();
 
-    if (dtbCurrentValue == 0) {
-      // set all null or 0 values in database as 0 for new vaccination
+    if (dtbCurrentValue == 0 || (i > 0 && dtbCurrentValue < database.get(i - 1).getNewVaccinations())) {
+      // if current accumulative value is 0, null, or less than previous value,
+      // set the new vaccination as 0
       this.setNewVaccinations(0);
 
     } else {
