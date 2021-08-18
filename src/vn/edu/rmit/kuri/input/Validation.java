@@ -1,6 +1,7 @@
 package vn.edu.rmit.kuri.input;
 
 import java.util.Scanner;
+import vn.edu.rmit.kuri.processing.Summary;
 
 public class Validation {
 
@@ -111,8 +112,9 @@ public class Validation {
   /**
    * If user inputs a number of group that is larger than 79, display a message error
    */
-  public static void chartDisplayLimit(String input, long numDays, Scanner sc) {
+  public void chartDisplayLimit(String input, long numDays, Scanner sc) {
     int duration = checkGroupingInput(input, numDays, sc);
+    int groups = new Summary.processedData.size();
     switch (Grouping.getGroupingNum()) { // resolve later
       case 2 -> {
         // if user choose the data in chart form, display message error
