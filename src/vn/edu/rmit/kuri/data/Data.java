@@ -16,6 +16,10 @@ public class Data {
     this.newCases = newCases == null || newCases.equals("") ? 0 : Integer.parseInt(newCases);
     this.newDeaths = newDeaths == null || newDeaths.equals("") ? 0 : Integer.parseInt(newDeaths);
     this.newVaccinations = newVaccinations == null || newVaccinations.equals("") ? 0 : Integer.parseInt(newVaccinations);
+
+    if (this.newCases < 0 || this.newDeaths < 0 || this.newVaccinations < 0) {
+      this.newCases = this.newDeaths = this.newVaccinations = 0;
+    }
   }
 
   @Override
