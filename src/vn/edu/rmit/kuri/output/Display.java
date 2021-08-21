@@ -149,6 +149,12 @@ public class Display {
     ArrayList<Integer> valueForDisplay = query(summary, metric, resultType);
     ArrayList<Integer> valuePositionOnChart = new ArrayList<>();
 
+    // check if the size of summary processed data is more than 79 groups.
+    if (summary.size() > 79) {
+      System.out.println("Cannot draw chart with more than 79 groups.");
+      return;
+    }
+
     // find the max value to calculate the position of the * based on it
     // each * present a value from a group
     int max = 0;
