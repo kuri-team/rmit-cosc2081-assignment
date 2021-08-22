@@ -32,7 +32,7 @@ public class Summary implements DataArray<ArrayList<Data>> {
         int daysPerGroup = filteredData.size() / grouping.getGroupingNum();
         int holder = daysPerGroup;
         int groupWithMoreDays = filteredData.size() - daysPerGroup * grouping.getGroupingNum();
-        int groupCount = 0;
+
         ArrayList<Data> group = new ArrayList<>();
         for (int i = 0; i < filteredData.size(); i++) {
           group.add(filteredData.get(i));
@@ -48,7 +48,6 @@ public class Summary implements DataArray<ArrayList<Data>> {
           }
           if (group.size() == daysPerGroup) {
             this.processedData.add(group);
-            groupCount++;
             group = new ArrayList<>();
             groupWithMoreDays -= 1;
           }
