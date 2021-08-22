@@ -152,11 +152,13 @@ public class Display {
     // find the max value to calculate the position of the * based on it
     // each * present a value from a group
     int max = 0;
+    int zeroCount = 0;
 
     for (Integer i : valueForDisplay) {
       if (max < i) {
         max = i;
       }
+      zeroCount += 1;
     }
 
     // store position values in an ArrayList
@@ -165,7 +167,10 @@ public class Display {
       // the program prints from the top, the distance from the top to the * must be calculated
       // the distance must be rounded due to the limit of the program (only represent * with integer position)
       // the reason for -2: -1 for the double array start from 0 rather than 1, -1 for the 1st col and the last row is used for axes
-      int position = Math.round((vertical - 2) - (((float) value / max) * (vertical - 2)));
+      int position = vertical - 2;  // last row in the display area
+      if (zeroCount != valueForDisplay.size()) {
+        position = Math.round((vertical - 2) - (((float) value / max) * (vertical - 2)));
+      }
       valuePositionOnChart.add(position);
     }
 
