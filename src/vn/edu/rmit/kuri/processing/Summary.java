@@ -51,8 +51,6 @@ public class Summary implements DataArray<ArrayList<Data>> {
             groupCount++;
             group = new ArrayList<>();
             groupWithMoreDays -= 1;
-          } else if (i == filteredData.size() - 1) {
-            this.processedData.add(group);
           }
         }
       }
