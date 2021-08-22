@@ -46,7 +46,7 @@ public class Summary implements DataArray<ArrayList<Data>> {
           } else {
             daysPerGroup = holder;
           }
-          if ((i + 1) % daysPerGroup == 0 && groupCount < grouping.getGroupingNum() - 1) {
+          if (group.size() == daysPerGroup) {
             this.processedData.add(group);
             groupCount++;
             group = new ArrayList<>();
