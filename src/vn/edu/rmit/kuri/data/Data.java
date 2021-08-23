@@ -16,6 +16,10 @@ public class Data {
     this.newCases = newCases == null || newCases.equals("") ? 0 : Integer.parseInt(newCases);
     this.newDeaths = newDeaths == null || newDeaths.equals("") ? 0 : Integer.parseInt(newDeaths);
     this.newVaccinations = newVaccinations == null || newVaccinations.equals("") ? 0 : Integer.parseInt(newVaccinations);
+
+    if (this.newCases < 0 || this.newDeaths < 0 || this.newVaccinations < 0) {
+      this.newCases = this.newDeaths = this.newVaccinations = 0;
+    }
   }
 
   @Override
@@ -59,5 +63,30 @@ public class Data {
 
   public void setNewVaccinations(int newVaccinations) {
     this.newVaccinations = newVaccinations;
+  }
+
+  public void setNewVaccinationsPerDay(int i, Database database) {
+    int dtbCurrentValue = database.get(i).getNewVaccinations();
+
+    if (dtbCurrentValue == 0 || (i > 0 && dtbCurrentValue < database.get(i - 1).getNewVaccinations())) {
+      // if current accumulative value is 0, null, or less than previous value,
+      // set the new vaccination as 0
+      this.setNewVaccinations(0);
+
+    } else {
+      int j = 1;
+      // make sure that index doesn't get out of bounds
+      // and two data are in the same geoArea
+      while (j <= i && database.get(i - j).getGeoArea().equals(database.get(i).getGeoArea())) {
+        if (database.get(i - j).getNewVaccinations() != 0) {
+          this.setNewVaccinations(dtbCurrentValue - database.get(i - j).getNewVaccinations());
+          return;
+        }
+        j++;
+      }
+      // set new vaccination as current accumulative value if all data above it
+      // are 0 or null
+      this.setNewVaccinations(dtbCurrentValue);
+    }
   }
 }

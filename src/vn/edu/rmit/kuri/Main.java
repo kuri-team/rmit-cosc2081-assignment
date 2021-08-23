@@ -75,7 +75,7 @@ public class Main {
         System.out.print("\n>>> ");
         int areaOption = Validation.checkInput(sc.nextLine(), sc, allGeoAreas.length);
         String geoArea = allGeoAreas[areaOption - 1];
-        System.out.println("Country chosen: " + geoArea);
+        System.out.println("Country/region chosen: " + geoArea);
 
         // 2 - User chooses a date range
         System.out.print("""
@@ -175,7 +175,7 @@ public class Main {
         System.out.print("""
             Choose a format to display the processed data:
             \t1 - Tabular
-            \t2 - Chart (24 rows x 80 cols)
+            \t2 - Chart (23 rows x 79 cols)
             >>>\s"""
         );
         int formatOption = Validation.checkInput(sc.nextLine(), sc, 2);

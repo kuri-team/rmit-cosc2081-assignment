@@ -38,11 +38,9 @@ public class DateRange {
       // format => splitting may lead to error or incorrect data processing afterwards
       rangeTokens = dateRange.split("\s+");
 
-      // check if either date is correct or if the 2 dates are the same
-      while (!isValidDate(rangeTokens[0]) || !isValidDate(rangeTokens[1])
-          || rangeTokens[0].equals(rangeTokens[1])) {
-        System.out.print("The date you have entered does not exist, or the 2 dates entered "
-            + "are identical. Please try again.\n>>>\s");
+      // check if either date is correct
+      while (!isValidDate(rangeTokens[0]) || !isValidDate(rangeTokens[1])) {
+        System.out.print("The date you have entered does not exist. Please try again.\n>>>\s");
         dateRange = sc.nextLine();
 
         // need to check the format of user input again before it can be split
