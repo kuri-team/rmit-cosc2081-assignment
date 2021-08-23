@@ -1,6 +1,7 @@
 package vn.edu.rmit.kuri.input;
 
 import java.util.Scanner;
+import vn.edu.rmit.kuri.processing.Summary;
 
 public class Validation {
 
@@ -107,5 +108,4 @@ public class Validation {
     }
     return numDaysPerGroup;
   }
-
 }

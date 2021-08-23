@@ -30,16 +30,26 @@ public class Summary implements DataArray<ArrayList<Data>> {
       }
       case N_GROUPS -> {
         int daysPerGroup = filteredData.size() / grouping.getGroupingNum();
-        int groupCount = 0;
+        int holder = daysPerGroup;
+        int groupWithMoreDays = filteredData.size() - daysPerGroup * grouping.getGroupingNum();
+
         ArrayList<Data> group = new ArrayList<>();
         for (int i = 0; i < filteredData.size(); i++) {
           group.add(filteredData.get(i));
-          if ((i + 1) % daysPerGroup == 0 && groupCount < grouping.getGroupingNum() - 1) {
+          // When the number of days is not divisible by the number of the groups,
+          // there must be groups with Math.round(numOfDays/numOfGroups) days and
+          // groups with Math.floor(numOfDays/numOfGroups) days.
+          // Groups with Math.round(numOfDays/numOfGroups) will be likely to appear earlier
+          // in the result.
+          if (groupWithMoreDays > 0) {
+            daysPerGroup = holder + 1;
+          } else {
+            daysPerGroup = holder;
+          }
+          if (group.size() == daysPerGroup) {
             this.processedData.add(group);
-            groupCount++;
             group = new ArrayList<>();
-          } else if (i == filteredData.size() - 1) {
-            this.processedData.add(group);
+            groupWithMoreDays -= 1;
           }
         }
       }
