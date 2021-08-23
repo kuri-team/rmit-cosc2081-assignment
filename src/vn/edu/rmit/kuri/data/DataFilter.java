@@ -31,7 +31,7 @@ public class DataFilter implements DataArray<Data> {
           if (database.get(i).getDate().compareTo(entry.getDate()) == 0) {
             entry.setNewCases(database.get(i).getNewCases());
             entry.setNewDeaths(database.get(i).getNewDeaths());
-            entry.setNewVaccinations(database.get(i).getNewVaccinations());
+            entry.setNewVaccinationsPerDay(i, database);
             break;
           }
         }
