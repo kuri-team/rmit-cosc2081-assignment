@@ -75,7 +75,7 @@ public class Main {
         System.out.print("\n>>> ");
         int areaOption = Validation.checkInput(sc.nextLine(), sc, allGeoAreas.length);
         String geoArea = allGeoAreas[areaOption - 1];
-        System.out.println("Country chosen: " + geoArea);
+        System.out.println("Country/region chosen: " + geoArea);
 
         // 2 - User chooses a date range
         System.out.print("""
