@@ -125,7 +125,7 @@ public class Main {
         ResultType resultType = ResultType.NULL;
         System.out.printf("""
                 Choose a calculation method:
-                \t1 - New %s per day
+                \t1 - New %s per period
                 \t2 - Cumulative %s
                 >>>\s""",
             metric.toString().toLowerCase(),
