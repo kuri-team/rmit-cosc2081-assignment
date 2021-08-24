@@ -65,7 +65,7 @@ public class Main {
 
         // 1 - User chooses a country/region
         System.out.println("Choose a country/region. Available choices:");
-        String[] allGeoAreas = database.allGeoAreas();
+        String[] allGeoAreas = Database.allGeoAreas();
         for (int i = 0; i < allGeoAreas.length; i++) {
           if ((i + 1) % 3 != 0) {
             System.out.printf("%3d - %s", i + 1, String.format("%-40s", allGeoAreas[i]));
@@ -199,8 +199,8 @@ public class Main {
         // 8 - Display processed data
         System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
         switch (displayFormat) {
-          case TABULAR -> Display.tabular(summary, metric, resultType);
-          case CHART -> Display.chart(summary, metric, resultType);
+          case TABULAR -> Display.tabular(summary, metric);
+          case CHART -> Display.chart(summary, metric);
         }
       }
 
