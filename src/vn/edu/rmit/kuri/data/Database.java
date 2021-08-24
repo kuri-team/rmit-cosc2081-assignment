@@ -11,7 +11,7 @@ public class Database implements DataArray<Data> {
   private final Data[] data;
   private final HashSet<String> geoAreas;
 
-  public Database(String path) throws FileNotFoundException {
+  public Database(String path, boolean cumulative) throws FileNotFoundException {
     ArrayList<HashMap<String, String>> data = Csv.read(path);
     this.data = new Data[data.size()];
     this.geoAreas = new HashSet<>();

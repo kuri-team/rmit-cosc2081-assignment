@@ -54,7 +54,8 @@ public class Main {
     try {
       // Load database into memory
       System.out.print("Loading database...");
-      Database database = new Database(databasePath);
+      Database database = new Database(databasePath, false);
+      Database cumulativeDatabase = new Database(databasePath, true);
       System.out.println(" [ LOADED ]\n\n");
 
       if (database.size() == 0) {
@@ -188,7 +189,10 @@ public class Main {
         System.out.print("\n\nProcessing data...");
         Summary summary = null;
         if (grouping != null) {
-          summary = new Summary(geoArea, dateRange, grouping, database);
+          switch (resultType) {
+            case NEW_PER_PERIOD -> summary = new Summary(geoArea, dateRange, grouping, database);
+            case CUMULATIVE -> summary = new Summary(geoArea, dateRange, grouping, cumulativeDatabase);
+          }
         }
         System.out.println(" [ DONE ]\n");
 
