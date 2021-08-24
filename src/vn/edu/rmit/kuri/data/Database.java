@@ -8,13 +8,14 @@ import java.util.HashSet;
 
 public class Database implements DataArray<Data> {
 
+  private static final HashSet<String> geoAreas = new HashSet<>();;
   private final Data[] data;
-  private final HashSet<String> geoAreas;
+  private final boolean cumulative;
 
   public Database(String path, boolean cumulative) throws FileNotFoundException {
     ArrayList<HashMap<String, String>> data = Csv.read(path);
     this.data = new Data[data.size()];
-    this.geoAreas = new HashSet<>();
+    this.cumulative = cumulative;
 
     for (int i = 0; i < this.data.length; i++) {
       HashMap<String, String> row = data.get(i);
@@ -27,6 +28,30 @@ public class Database implements DataArray<Data> {
       );
       geoAreas.add(row.get("location"));
     }
+
+    if (this.cumulative) {
+      String currentGeoArea = this.data[0].getGeoArea();
+      int cumulativeCases = this.data[0].getCases();
+      int cumulativeDeaths = this.data[0].getDeaths();
+      for (int i = 1; i < this.data.length; i++) {
+        if (this.data[i].getGeoArea().equals(currentGeoArea)) {
+          cumulativeCases += this.data[i].getCases();
+          this.data[i].setCases(cumulativeCases);
+          cumulativeDeaths += this.data[i].getDeaths();
+          this.data[i].setDeaths(cumulativeDeaths);
+        } else {
+          currentGeoArea = this.data[i].getGeoArea();
+          cumulativeCases = this.data[i].getCases();
+          cumulativeDeaths = this.data[i].getDeaths();
+        }
+      }
+    }
+  }
+
+  public static String[] allGeoAreas() {
+    String[] result = geoAreas.toArray(new String[0]);
+    Arrays.sort(result);
+    return result;
   }
 
   public int size() {
@@ -37,9 +62,7 @@ public class Database implements DataArray<Data> {
     return this.data[index];
   }
 
-  public String[] allGeoAreas() {
-    String[] result = this.geoAreas.toArray(new String[0]);
-    Arrays.sort(result);
-    return result;
+  public boolean isCumulative() {
+    return this.cumulative;
   }
 }

@@ -240,15 +240,15 @@ public class Display {
       for (int j = 0; j < summary.get(i).size(); j++) {
         switch (metric) {
           case CASES -> {
-            int k = summary.get(i).get(j).getNewCases();
+            int k = summary.get(i).get(j).getCases();
             valueGroup.add(k);
           }
           case DEATHS -> {
-            int k = summary.get(i).get(j).getNewDeaths();
+            int k = summary.get(i).get(j).getDeaths();
             valueGroup.add(k);
           }
           case VACCINATIONS -> {
-            int k = summary.get(i).get(j).getNewVaccinations();
+            int k = summary.get(i).get(j).getVaccinations();
             valueGroup.add(k);
           }
         }

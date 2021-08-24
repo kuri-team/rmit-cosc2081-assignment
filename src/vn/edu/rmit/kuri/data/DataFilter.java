@@ -29,9 +29,13 @@ public class DataFilter implements DataArray<Data> {
       ) {
         for (Data entry : this.data) {
           if (database.get(i).getDate().compareTo(entry.getDate()) == 0) {
-            entry.setNewCases(database.get(i).getNewCases());
-            entry.setNewDeaths(database.get(i).getNewDeaths());
-            entry.setNewVaccinationsPerDay(i, database);
+            entry.setCases(database.get(i).getCases());
+            entry.setDeaths(database.get(i).getDeaths());
+            if (database.isCumulative()) {
+              entry.setVaccinations(database.get(i).getVaccinations());
+            } else {
+              entry.setNewVaccinationsPerDay(i, database);
+            }
             break;
           }
         }
