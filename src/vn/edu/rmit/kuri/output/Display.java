@@ -154,7 +154,7 @@ public class Display {
       System.out.println("Cannot draw chart with more than 79 groups.");
       return;
     }
-    //add hotfix branch. Begin debugging
+    //add hotfix branch to fix chart display
 
     // find the max value to calculate the position of the * based on it
     // each * present a value from a group
