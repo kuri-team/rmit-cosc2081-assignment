@@ -61,146 +61,162 @@ public class Main {
       if (database.size() == 0) {
         printEmptyDatabaseMessage();
       } else {
-        Scanner sc = new Scanner(System.in);
 
-        // 1 - User chooses a country/region
-        System.out.println("Choose a country/region. Available choices:");
-        String[] allGeoAreas = Database.allGeoAreas();
-        for (int i = 0; i < allGeoAreas.length; i++) {
-          if ((i + 1) % 3 != 0) {
-            System.out.printf("%3d - %s", i + 1, String.format("%-40s", allGeoAreas[i]));
-          } else {
-            System.out.printf("%3d - %s\n", i + 1, String.format("%-40s", allGeoAreas[i]));
+        // Main loop
+        while (true) {
+          Scanner sc = new Scanner(System.in);
+
+          // 1 - User chooses a country/region
+          System.out.println("Choose a country/region. Available choices:");
+          String[] allGeoAreas = Database.allGeoAreas();
+          for (int i = 0; i < allGeoAreas.length; i++) {
+            if ((i + 1) % 3 != 0) {
+              System.out.printf("%3d - %s", i + 1, String.format("%-40s", allGeoAreas[i]));
+            } else {
+              System.out.printf("%3d - %s\n", i + 1, String.format("%-40s", allGeoAreas[i]));
+            }
           }
-        }
-        System.out.print("\n>>> ");
-        int areaOption = Validation.checkInput(sc.nextLine(), sc, allGeoAreas.length);
-        String geoArea = allGeoAreas[areaOption - 1];
-        System.out.println("Country/region chosen: " + geoArea);
+          System.out.print("\n>>> ");
+          int areaOption = Validation.checkInput(sc.nextLine(), sc, allGeoAreas.length);
+          String geoArea = allGeoAreas[areaOption - 1];
+          System.out.println("Country/region chosen: " + geoArea);
 
-        // 2 - User chooses a date range
-        System.out.print("""
-            Choose a format for date range:
-            \t1 - yyyy-MM-dd yyyy-MM-dd (start date and end date, inclusive and in any order)
-            \t2 - Number of days or weeks before end date, inclusive
-            \t3 - Number of days or weeks after start date, inclusive
-            >>>\s"""
-        );
-        int dateRangeOption = Validation.checkInput(sc.nextLine(), sc, 3);
-        switch (dateRangeOption) {
-          case 1 -> System.out.print("""
-              \tEnter a pair of dates. Valid format example:
-              \t\t2020-01-02 2021-03-04
+          // 2 - User chooses a date range
+          System.out.print("""
+              Choose a format for date range:
+              \t1 - yyyy-MM-dd yyyy-MM-dd (start date and end date, inclusive and in any order)
+              \t2 - Number of days or weeks before end date, inclusive
+              \t3 - Number of days or weeks after start date, inclusive
               >>>\s"""
           );
-          case 2 -> System.out.print("""
-              \tEnter number of days/ weeks and end date (yyyy-MM-dd). Valid format example:
-              \t\t12d 2021-03-04 or 3w 2021-03-04
-              >>>\s"""
-          );
-          case 3 -> System.out.print("""
-              \tEnter start date (yyyy-MM-dd) and number of days/weeks. Valid format example:
-              \t\t2020-01-02 12d or 2020-01-02 3w
-              >>>\s"""
-          );
-        }
-        DateRange dateRange = new DateRange(dateRangeOption, sc.nextLine());
-
-        // 3 - User chooses a metric
-        Metric metric = Metric.NULL;
-        System.out.print("""
-            Choose a metric to track:
-            \t1 - Cases
-            \t2 - Deaths
-            \t3 - Vaccinations
-            >>>\s"""
-        );
-        int metricOption = Validation.checkInput(sc.nextLine(), sc, 3);
-        switch (metricOption) {
-          case 1 -> metric = Metric.CASES;
-          case 2 -> metric = Metric.DEATHS;
-          case 3 -> metric = Metric.VACCINATIONS;
-        }
-
-        // 4 - User chooses a calculation method
-        ResultType resultType = ResultType.NULL;
-        System.out.printf("""
-                Choose a calculation method:
-                \t1 - New %s per period
-                \t2 - Cumulative %s
-                >>>\s""",
-            metric.toString().toLowerCase(),
-            metric.toString().toLowerCase()
-        );
-        int resultTypeOption = Validation.checkInput(sc.nextLine(), sc, 2);
-        switch (resultTypeOption) {
-          case 1 -> resultType = ResultType.NEW_PER_PERIOD;
-          case 2 -> resultType = ResultType.CUMULATIVE;
-        }
-
-        // 5 - User chooses a grouping method
-        Grouping grouping = null;
-        System.out.print("""
-            Choose a grouping type:
-            \t1 - No grouping
-            \t2 - n group(s)
-            \t3 - n day(s) per group
-            >>>\s"""
-        );
-        int groupingOption = Validation.checkInput(sc.nextLine(), sc, 3);
-
-        switch (groupingOption) {
-          case 1 -> grouping = new Grouping();
-          case 2 -> {
-            System.out.print("Enter number of group(s): ");
-            int numGroups = Validation.checkGroupingInput(
-                sc.nextLine(),
-                dateRange.getDurationInDays(),
-                sc
+          int dateRangeOption = Validation.checkInput(sc.nextLine(), sc, 3);
+          switch (dateRangeOption) {
+            case 1 -> System.out.print("""
+                \tEnter a pair of dates. Valid format example:
+                \t\t2020-01-02 2021-03-04
+                >>>\s"""
             );
-            grouping = new Grouping(numGroups, GroupingType.N_GROUPS);
-          }
-          case 3 -> {
-            System.out.print("Enter number of day(s) per group: ");
-            int numDaysPerGroup = Validation.canDivideGroupsEqually(
-                sc.nextLine(),
-                dateRange.getDurationInDays(),
-                sc
+            case 2 -> System.out.print("""
+                \tEnter number of days/ weeks and end date (yyyy-MM-dd). Valid format example:
+                \t\t12d 2021-03-04 or 3w 2021-03-04
+                >>>\s"""
             );
-            grouping = new Grouping(numDaysPerGroup, GroupingType.N_DAYS_PER_GROUP);
+            case 3 -> System.out.print("""
+                \tEnter start date (yyyy-MM-dd) and number of days/weeks. Valid format example:
+                \t\t2020-01-02 12d or 2020-01-02 3w
+                >>>\s"""
+            );
           }
-        }
+          DateRange dateRange = new DateRange(dateRangeOption, sc.nextLine());
 
-        // 6 - User chooses a display format
-        DisplayFormat displayFormat = DisplayFormat.NULL;
-        System.out.print("""
-            Choose a format to display the processed data:
-            \t1 - Tabular
-            \t2 - Chart (23 rows x 79 cols)
-            >>>\s"""
-        );
-        int formatOption = Validation.checkInput(sc.nextLine(), sc, 2);
-        switch (formatOption) {
-          case 1 -> displayFormat = DisplayFormat.TABULAR;
-          case 2 -> displayFormat = DisplayFormat.CHART;
-        }
-
-        // 7 - Data processing
-        System.out.print("\n\nProcessing data...");
-        Summary summary = null;
-        if (grouping != null) {
-          switch (resultType) {
-            case NEW_PER_PERIOD -> summary = new Summary(geoArea, dateRange, grouping, database);
-            case CUMULATIVE -> summary = new Summary(geoArea, dateRange, grouping, cumulativeDatabase);
+          // 3 - User chooses a metric
+          Metric metric = Metric.NULL;
+          System.out.print("""
+              Choose a metric to track:
+              \t1 - Cases
+              \t2 - Deaths
+              \t3 - Vaccinations
+              >>>\s"""
+          );
+          int metricOption = Validation.checkInput(sc.nextLine(), sc, 3);
+          switch (metricOption) {
+            case 1 -> metric = Metric.CASES;
+            case 2 -> metric = Metric.DEATHS;
+            case 3 -> metric = Metric.VACCINATIONS;
           }
-        }
-        System.out.println(" [ DONE ]\n");
 
-        // 8 - Display processed data
-        System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
-        switch (displayFormat) {
-          case TABULAR -> Display.tabular(summary, metric);
-          case CHART -> Display.chart(summary, metric);
+          // 4 - User chooses a calculation method
+          ResultType resultType = ResultType.NULL;
+          System.out.printf("""
+                  Choose a calculation method:
+                  \t1 - New %s per period
+                  \t2 - Cumulative %s
+                  >>>\s""",
+              metric.toString().toLowerCase(),
+              metric.toString().toLowerCase()
+          );
+          int resultTypeOption = Validation.checkInput(sc.nextLine(), sc, 2);
+          switch (resultTypeOption) {
+            case 1 -> resultType = ResultType.NEW_PER_PERIOD;
+            case 2 -> resultType = ResultType.CUMULATIVE;
+          }
+
+          // 5 - User chooses a grouping method
+          Grouping grouping = null;
+          System.out.print("""
+              Choose a grouping type:
+              \t1 - No grouping
+              \t2 - n group(s)
+              \t3 - n day(s) per group
+              >>>\s"""
+          );
+          int groupingOption = Validation.checkInput(sc.nextLine(), sc, 3);
+
+          switch (groupingOption) {
+            case 1 -> grouping = new Grouping();
+            case 2 -> {
+              System.out.print("Enter number of group(s): ");
+              int numGroups = Validation.checkGroupingInput(
+                  sc.nextLine(),
+                  dateRange.getDurationInDays(),
+                  sc
+              );
+              grouping = new Grouping(numGroups, GroupingType.N_GROUPS);
+            }
+            case 3 -> {
+              System.out.print("Enter number of day(s) per group: ");
+              int numDaysPerGroup = Validation.canDivideGroupsEqually(
+                  sc.nextLine(),
+                  dateRange.getDurationInDays(),
+                  sc
+              );
+              grouping = new Grouping(numDaysPerGroup, GroupingType.N_DAYS_PER_GROUP);
+            }
+          }
+
+          // 6 - User chooses a display format
+          DisplayFormat displayFormat = DisplayFormat.NULL;
+          System.out.print("""
+              Choose a format to display the processed data:
+              \t1 - Tabular
+              \t2 - Chart (23 rows x 79 cols)
+              >>>\s"""
+          );
+          int formatOption = Validation.checkInput(sc.nextLine(), sc, 2);
+          switch (formatOption) {
+            case 1 -> displayFormat = DisplayFormat.TABULAR;
+            case 2 -> displayFormat = DisplayFormat.CHART;
+          }
+
+          // 7 - Data processing
+          System.out.print("\n\nProcessing data...");
+          Summary summary = null;
+          if (grouping != null) {
+            switch (resultType) {
+              case NEW_PER_PERIOD -> summary = new Summary(geoArea, dateRange, grouping, database);
+              case CUMULATIVE -> summary = new Summary(geoArea, dateRange, grouping,
+                  cumulativeDatabase);
+            }
+          }
+          System.out.println(" [ DONE ]\n");
+
+          // 8 - Display processed data
+          System.out.println("\n\n─────────────────[ RESULTS ]─────────────────");
+          switch (displayFormat) {
+            case TABULAR -> Display.tabular(summary, metric);
+            case CHART -> Display.chart(summary, metric);
+          }
+
+          // Ask if the user wants to continue or quit
+          System.out.print("Continue (Y/N)? ");
+          String userInput;
+          do {
+            userInput = sc.nextLine();
+            if (userInput.equals("n") || userInput.equals("N")) {
+              return;
+            }
+          } while (!userInput.equals("y") && !userInput.equals("Y"));
+          System.out.print("\n\n");
         }
       }
 
