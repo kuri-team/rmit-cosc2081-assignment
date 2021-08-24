@@ -193,9 +193,12 @@ public class Main {
           Summary summary = null;
           if (grouping != null) {
             switch (resultType) {
-              case NEW_PER_PERIOD -> summary = new Summary(geoArea, dateRange, grouping, database);
-              case CUMULATIVE -> summary = new Summary(geoArea, dateRange, grouping,
-                  cumulativeDatabase);
+              case NEW_PER_PERIOD -> summary = new Summary(
+                  geoArea, dateRange, grouping, database
+              );
+              case CUMULATIVE -> summary = new Summary(
+                  geoArea, dateRange, grouping, cumulativeDatabase
+              );
             }
           }
           System.out.println(" [ DONE ]\n");

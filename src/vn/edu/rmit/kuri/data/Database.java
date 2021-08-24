@@ -8,7 +8,7 @@ import java.util.HashSet;
 
 public class Database implements DataArray<Data> {
 
-  private static final HashSet<String> geoAreas = new HashSet<>();;
+  private static final HashSet<String> geoAreas = new HashSet<>();
   private final Data[] data;
   private final boolean cumulative;
 
