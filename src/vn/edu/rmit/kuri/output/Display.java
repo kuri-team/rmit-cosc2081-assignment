@@ -165,7 +165,9 @@ public class Display {
       if (max < i) {
         max = i;
       }
+      if (i == 0) {
       zeroCount += 1;
+      }
     }
 
     // store position values in an ArrayList
@@ -175,9 +177,9 @@ public class Display {
       // the distance must be rounded due to the limit of the program (only represent * with integer position)
       // the reason for -2: -1 for the double array start from 0 rather than 1, -1 for the 1st col and the last row is used for axes
       int position = vertical - 2;  // last row in the display area
-//      if (zeroCount != valueForDisplay.size()) {
+      if (zeroCount != valueForDisplay.size()) {
       position = Math.round((vertical - 2) - (((float) value / max) * (vertical - 2)));
-//    }
+      }
       valuePositionOnChart.add(position);
     }
 
