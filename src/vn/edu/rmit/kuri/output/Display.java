@@ -154,6 +154,7 @@ public class Display {
       System.out.println("Cannot draw chart with more than 79 groups.");
       return;
     }
+    //add hotfix branch to fix chart display
 
     // find the max value to calculate the position of the * based on it
     // each * present a value from a group
@@ -164,7 +165,9 @@ public class Display {
       if (max < i) {
         max = i;
       }
+      if (i == 0) {
       zeroCount += 1;
+      }
     }
 
     // store position values in an ArrayList
@@ -175,7 +178,7 @@ public class Display {
       // the reason for -2: -1 for the double array start from 0 rather than 1, -1 for the 1st col and the last row is used for axes
       int position = vertical - 2;  // last row in the display area
       if (zeroCount != valueForDisplay.size()) {
-        position = Math.round((vertical - 2) - (((float) value / max) * (vertical - 2)));
+      position = Math.round((vertical - 2) - (((float) value / max) * (vertical - 2)));
       }
       valuePositionOnChart.add(position);
     }
