@@ -211,9 +211,9 @@ public class Main {
           }
 
           // Ask if the user wants to continue or quit
-          System.out.print("Continue (Y/N)? ");
           String userInput;
           do {
+            System.out.print("Continue (Y/N)? ");
             userInput = sc.nextLine();
             if (userInput.equals("n") || userInput.equals("N")) {
               return;
