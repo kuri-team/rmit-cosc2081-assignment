@@ -93,7 +93,7 @@ public class Data {
     int dtbCurrentValue = database.get(i).getVaccinations();
     if (dtbCurrentValue == 0 || (i > 0 && dtbCurrentValue < database.get(i - 1).getVaccinations())) {
       // if current accumulative value is 0, null, or less than previous day's value,
-      // set the new vaccination as the closest day's value that is greater than 0
+      // set the cumulative vaccination as the closest day's value that is greater than 0
       int j = i - 1;
       while (j > 0 && database.get(j).getGeoArea().equals(this.geoArea)) {
         if (database.get(j).getVaccinations() > 0) {
