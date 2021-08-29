@@ -92,9 +92,9 @@ public class Data {
   public void setCumulativeVaccinations(int i, Database database) {
     int dtbCurrentValue = database.get(i).getVaccinations();
     if (dtbCurrentValue == 0 || (i > 0 && dtbCurrentValue < database.get(i - 1).getVaccinations())) {
-      // if current accumulative value is 0, null, or less than previous value,
-      // set the new vaccination as 0
-      this.setVaccinations(0);
+      // if current accumulative value is 0, null, or less than previous day's value,
+      // set the new vaccination as the previous day's value
+      this.setVaccinations(database.get(i - 1).getVaccinations());
     } else {
       this.setVaccinations(database.get(i).getVaccinations());
     }
