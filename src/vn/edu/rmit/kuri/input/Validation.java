@@ -77,7 +77,7 @@ public class Validation {
    * @param sc <code>Scanner</code>: to scan user input again
    * @return <code>int</code>: user input in integer format only when user input is valid
    */
-  public static int getGroupingInput(String input, long numDays, Scanner sc) {
+  public static int getNumOfGroups(String input, long numDays, Scanner sc) {
     input = input.trim();
 
     // cannot divide the groups if the number of groups is not positive
@@ -97,13 +97,13 @@ public class Validation {
    * @param sc <code>Scanner</code>: to scan user input again
    * @return <code>int</code>: user input in integer format only when it is possible to divide groups equally
    */
-  public static int canDivideGroupsEqually(String input, long numDays, Scanner sc) {
-    int numDaysPerGroup = getGroupingInput(input, numDays, sc);
+  public static int getDaysPerGroup(String input, long numDays, Scanner sc) {
+    int numDaysPerGroup = getNumOfGroups(input, numDays, sc);
 
     while (numDays % numDaysPerGroup != 0) {
       System.out.println("With the number of days per group provided, we cannot divide the groups equally.");
       System.out.print("Please enter another value: ");
-      numDaysPerGroup = getGroupingInput(sc.nextLine(), numDays, sc);
+      numDaysPerGroup = getNumOfGroups(sc.nextLine(), numDays, sc);
     }
     return numDaysPerGroup;
   }

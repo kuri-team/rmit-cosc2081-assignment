@@ -156,7 +156,7 @@ public class Main {
             case 1 -> grouping = new Grouping();
             case 2 -> {
               System.out.print("Enter number of group(s): ");
-              int numGroups = Validation.getGroupingInput(
+              int numGroups = Validation.getNumOfGroups(
                   sc.nextLine(),
                   dateRange.getDurationInDays(),
                   sc
@@ -165,7 +165,7 @@ public class Main {
             }
             case 3 -> {
               System.out.print("Enter number of day(s) per group: ");
-              int numDaysPerGroup = Validation.canDivideGroupsEqually(
+              int numDaysPerGroup = Validation.getDaysPerGroup(
                   sc.nextLine(),
                   dateRange.getDurationInDays(),
                   sc
