@@ -75,13 +75,8 @@ public class Display {
     tableInterface table = new tableInterface() {
       public String cellWidth(int width, String value) {
         String cell = " ";
-        int padding = (width - value.length()) / 2;
-        cell = cell.repeat(padding);
-        cell += value;
-        if ((width - value.length()) % 2 == 1) {
-          padding += 1;
-        }
-        cell += " ".repeat(padding) + "|";
+        int padding = (width - value.length());
+        cell = " " + value + cell.repeat(padding - 1) + "|";
         return cell;
       }
 
@@ -106,7 +101,7 @@ public class Display {
     };
 
     int rangeColWidth = 35;
-    int valueColWidth = 10;
+    int valueColWidth = 15;
 
     System.out.println(
         table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
@@ -151,7 +146,6 @@ public class Display {
       System.out.println("Cannot draw chart with more than 79 groups.");
       return;
     }
-    //add hotfix branch to fix chart display
 
     // find the max value to calculate the position of the * based on it
     // each * present a value from a group
@@ -180,7 +174,7 @@ public class Display {
       valuePositionOnChart.add(position);
     }
 
-    spacing = (int) Math.floor((float) (horizontal - 1) / valueForDisplay.size());
+    spacing = (int) Math.floor((float) (horizontal - 1) / valueForDisplay.size());  // TODO: This is not accurate. Fix it.
 
     // Replace null elements with ' '
     // Elements with other values will be modified later
