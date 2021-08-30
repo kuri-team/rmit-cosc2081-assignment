@@ -2,7 +2,6 @@ package vn.edu.rmit.kuri.output;
 
 import java.util.ArrayList;
 import vn.edu.rmit.kuri.input.Metric;
-import vn.edu.rmit.kuri.input.ResultType;
 import vn.edu.rmit.kuri.processing.Summary;
 
 public class Display {
@@ -12,15 +11,14 @@ public class Display {
    *
    * @param summary    Data that already has grouping
    * @param metric     Metric chosen by the user
-   * @param resultType Result type chosen by the user
    */
-  public static void tabular(Summary summary, Metric metric, ResultType resultType) {
+  public static void tabular(Summary summary, Metric metric) {
     // Create a table
     // Data from summary will be queried to return 2 arrays to add data to the table
     // The 1st array stores the Range and the 2nd stores the Value data
     // Elements with the same index from the 2 arrays matches each other
     // The headers of the table are Range and Value
-    // metric and resultType will determine the data of the arrays
+    // metric will determine the data of the arrays
     // Table demo (the width can be changed):
     //+---------------------+---------------+
     //|         Range       |     Value     |
@@ -30,7 +28,7 @@ public class Display {
     //|         .....       |     .....     |
     //+---------------------+---------------+
 
-    ArrayList<Integer> valueForDisplay = query(summary, metric, resultType);
+    ArrayList<Integer> valueForDisplay = query(summary, metric);
 
     // Store each group's range in an ArrayList
     ArrayList<String> range = groupRange(summary);
@@ -77,13 +75,8 @@ public class Display {
     tableInterface table = new tableInterface() {
       public String cellWidth(int width, String value) {
         String cell = " ";
-        int padding = (width - value.length()) / 2;
-        cell = cell.repeat(padding);
-        cell += value;
-        if ((width - value.length()) % 2 == 1) {
-          padding += 1;
-        }
-        cell += " ".repeat(padding) + "|";
+        int padding = (width - value.length());
+        cell = " " + value + cell.repeat(padding - 1) + "|";
         return cell;
       }
 
@@ -108,7 +101,7 @@ public class Display {
     };
 
     int rangeColWidth = 35;
-    int valueColWidth = 10;
+    int valueColWidth = 15;
 
     System.out.println(
         table.horizontalBorderFirstCol(rangeColWidth) + table.horizontalBorder(valueColWidth));
@@ -131,14 +124,13 @@ public class Display {
    *
    * @param summary    Data that already has grouping
    * @param metric     Metric chosen by the user
-   * @param resultType Result type chosen by the user
    */
-  public static void chart(Summary summary, Metric metric, ResultType resultType) {
+  public static void chart(Summary summary, Metric metric) {
     // Draw a textual chart
     // Create a 2D array to represent 24 rows x 80 cols
     // The 1st col and the last row will be left for groups and results
     // Data from summary will be queried to return a 2D array to add data to the chart
-    // metric and resultType will determine the data of the 2D array
+    // metric will determine the data of the 2D array
 
     // row is also chart's vertical length
     // col is also represent chart's horizontal length
@@ -146,7 +138,7 @@ public class Display {
     int horizontal = 80;
     int spacing;
     Character[][] displayChart = new Character[vertical][horizontal];
-    ArrayList<Integer> valueForDisplay = query(summary, metric, resultType);
+    ArrayList<Integer> valueForDisplay = query(summary, metric);
     ArrayList<Integer> valuePositionOnChart = new ArrayList<>();
 
     // check if the size of summary processed data is more than 79 groups.
@@ -154,7 +146,6 @@ public class Display {
       System.out.println("Cannot draw chart with more than 79 groups.");
       return;
     }
-    //add hotfix branch to fix chart display
 
     // find the max value to calculate the position of the * based on it
     // each * present a value from a group
@@ -183,7 +174,7 @@ public class Display {
       valuePositionOnChart.add(position);
     }
 
-    spacing = (int) Math.floor((float) (horizontal - 1) / valueForDisplay.size());
+    spacing = (int) Math.floor((float) (horizontal - 1) / valueForDisplay.size());  // TODO: This is not accurate. Fix it.
 
     // Replace null elements with ' '
     // Elements with other values will be modified later
@@ -196,8 +187,8 @@ public class Display {
     int index = 0;
     // Elements represent the value is replaced with '*'
     for (int i = 1; i <= valuePositionOnChart.size() * spacing; i += spacing) {
-          displayChart[valuePositionOnChart.get(index)][i] = '*';
-          index += 1;
+      displayChart[valuePositionOnChart.get(index)][i] = '*';
+      index += 1;
     }
 
     // Elements for drawing axes will be replaced with '|' or '_'
@@ -225,15 +216,13 @@ public class Display {
   }
 
   /**
-   * Query from already grouped data that fits the metric and resultType
+   * Query from already grouped data that fits the metric
    *
    * @param summary    Data that already has grouping
    * @param metric     Metric chosen by the user
-   * @param resultType Result type chosen by the user
    * @return an arraylist that contains value for display
    */
-  public static ArrayList<Integer> query(Summary summary, Metric metric,
-      ResultType resultType) {
+  public static ArrayList<Integer> query(Summary summary, Metric metric) {
     // Extract needed values based on the metric
     // Stored data in a 2D ArrayList
     // Data from the same group will be in the same ArrayList
@@ -243,15 +232,15 @@ public class Display {
       for (int j = 0; j < summary.get(i).size(); j++) {
         switch (metric) {
           case CASES -> {
-            int k = summary.get(i).get(j).getNewCases();
+            int k = summary.get(i).get(j).getCases();
             valueGroup.add(k);
           }
           case DEATHS -> {
-            int k = summary.get(i).get(j).getNewDeaths();
+            int k = summary.get(i).get(j).getDeaths();
             valueGroup.add(k);
           }
           case VACCINATIONS -> {
-            int k = summary.get(i).get(j).getNewVaccinations();
+            int k = summary.get(i).get(j).getVaccinations();
             valueGroup.add(k);
           }
         }
@@ -259,27 +248,17 @@ public class Display {
       value.add(valueGroup);
     }
 
-    // Calculate the value to display based on the resultType
+    // Calculate the value to display
     // Each group's value will be stored as an integer in an ArrayList
     ArrayList<Integer> valueForDisplay = new ArrayList<>();
     int valueOfEachGroup = 0;
     for (ArrayList<Integer> integers : value) {
       for (int j = 0; j < integers.size(); j++) {
         valueOfEachGroup += integers.get(j);
-        switch (resultType) {
-          case CUMULATIVE -> {
-            if (j == integers.size() - 1) {
-              // do not reset value for cumulative results
-              valueForDisplay.add(valueOfEachGroup);
-            }
-          }
-          case NEW_PER_PERIOD -> {
-            if (j == integers.size() - 1) {
-              valueForDisplay.add(valueOfEachGroup);
-              // reset value for the next group when reach the last value
-              valueOfEachGroup = 0;
-            }
-          }
+        if (j == integers.size() - 1) {
+          valueForDisplay.add(valueOfEachGroup);
+          // reset value for the next group when reach the last value
+          valueOfEachGroup = 0;
         }
       }
     }
@@ -289,6 +268,7 @@ public class Display {
 
   /**
    * Store each group's range in an ArrayList
+   *
    * @param summary Data that already has grouping
    * @return an arraylist of strings that represent group's range for display
    */

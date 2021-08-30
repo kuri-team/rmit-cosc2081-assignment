@@ -1,6 +1,8 @@
 package vn.edu.rmit.kuri.processing;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import vn.edu.rmit.kuri.data.Data;
 import vn.edu.rmit.kuri.data.DataArray;
 import vn.edu.rmit.kuri.data.DataFilter;
@@ -30,7 +32,7 @@ public class Summary implements DataArray<ArrayList<Data>> {
       }
       case N_GROUPS -> {
         int daysPerGroup = filteredData.size() / grouping.getGroupingNum();
-        int holder = daysPerGroup;
+        int temp = daysPerGroup;
         int groupWithMoreDays = filteredData.size() - daysPerGroup * grouping.getGroupingNum();
 
         ArrayList<Data> group = new ArrayList<>();
@@ -42,12 +44,24 @@ public class Summary implements DataArray<ArrayList<Data>> {
           // Groups with Math.round(numOfDays/numOfGroups) will be likely to appear earlier
           // in the result.
           if (groupWithMoreDays > 0) {
-            daysPerGroup = holder + 1;
+            daysPerGroup = temp + 1;
           } else {
-            daysPerGroup = holder;
+            daysPerGroup = temp;
           }
           if (group.size() == daysPerGroup) {
-            this.processedData.add(group);
+            if (database.isCumulative()) {
+              this.processedData.add(
+                  new ArrayList<>(
+                      Arrays.asList(
+                          new Data(geoArea, group.get(0).getDate()
+                              .format(DateTimeFormatter.ofPattern("M/d/yyyy")), "0", "0", "0"),
+                          // Dummy group start data for Display to access the group's start date
+                          group.get(group.size() - 1)) // Actual cumulative data
+                  )
+              );
+            } else {
+              this.processedData.add(group);
+            }
             group = new ArrayList<>();
             groupWithMoreDays -= 1;
           }
@@ -58,7 +72,19 @@ public class Summary implements DataArray<ArrayList<Data>> {
         for (int i = 0; i < filteredData.size(); i++) {
           group.add(filteredData.get(i));
           if ((i + 1) % grouping.getGroupingNum() == 0) {
-            this.processedData.add(group);
+            if (database.isCumulative()) {
+              this.processedData.add(
+                  new ArrayList<>(
+                      Arrays.asList(
+                          new Data(geoArea, group.get(0).getDate()
+                              .format(DateTimeFormatter.ofPattern("M/d/yyyy")), "0", "0", "0"),
+                          // Dummy group start data for Display to access the group's start date
+                          group.get(group.size() - 1)) // Actual cumulative data
+                  )
+              );
+            } else {
+              this.processedData.add(group);
+            }
             group = new ArrayList<>();
           }
         }

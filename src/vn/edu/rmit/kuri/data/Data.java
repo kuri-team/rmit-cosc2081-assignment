@@ -6,19 +6,19 @@ import java.time.format.DateTimeFormatter;
 public class Data {
   private final String geoArea;
   private final LocalDate date;
-  private int newCases;
-  private int newDeaths;
-  private int newVaccinations;
+  private int cases;
+  private int deaths;
+  private int vaccinations;
 
-  public Data(String geoArea, String date, String newCases, String newDeaths, String newVaccinations) {
+  public Data(String geoArea, String date, String cases, String deaths, String vaccinations) {
     this.geoArea = geoArea;
     this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("M/d/yyyy"));
-    this.newCases = newCases == null || newCases.equals("") ? 0 : Integer.parseInt(newCases);
-    this.newDeaths = newDeaths == null || newDeaths.equals("") ? 0 : Integer.parseInt(newDeaths);
-    this.newVaccinations = newVaccinations == null || newVaccinations.equals("") ? 0 : Integer.parseInt(newVaccinations);
+    this.cases = cases == null || cases.equals("") ? 0 : Integer.parseInt(cases);
+    this.deaths = deaths == null || deaths.equals("") ? 0 : Integer.parseInt(deaths);
+    this.vaccinations = vaccinations == null || vaccinations.equals("") ? 0 : Integer.parseInt(vaccinations);
 
-    if (this.newCases < 0 || this.newDeaths < 0 || this.newVaccinations < 0) {
-      this.newCases = this.newDeaths = this.newVaccinations = 0;
+    if (this.cases < 0 || this.deaths < 0 || this.vaccinations < 0) {
+      this.cases = this.deaths = this.vaccinations = 0;
     }
   }
 
@@ -27,9 +27,9 @@ public class Data {
     return this.getClass() + "\n{"
         + "\n\tgeoArea: " + this.geoArea
         + "\n\tdate: " + this.date.toString()
-        + "\n\tnewCase: " + this.newCases
-        + "\n\tnewDeaths: " + this.newDeaths
-        + "\n\tnewVaccinations: " + this.newVaccinations
+        + "\n\tcases: " + this.cases
+        + "\n\tdeaths: " + this.deaths
+        + "\n\tvaccinations: " + this.vaccinations
         + "\n}\n";
   }
 
@@ -41,52 +41,69 @@ public class Data {
     return date;
   }
 
-  public int getNewCases() {
-    return newCases;
+  public int getCases() {
+    return cases;
   }
 
-  public int getNewDeaths() {
-    return newDeaths;
+  public int getDeaths() {
+    return deaths;
   }
 
-  public int getNewVaccinations() {
-    return newVaccinations;
+  public int getVaccinations() {
+    return vaccinations;
   }
 
-  public void setNewCases(int newCases) {
-    this.newCases = newCases;
+  public void setCases(int cases) {
+    this.cases = cases;
   }
 
-  public void setNewDeaths(int newDeaths) {
-    this.newDeaths = newDeaths;
+  public void setDeaths(int deaths) {
+    this.deaths = deaths;
   }
 
-  public void setNewVaccinations(int newVaccinations) {
-    this.newVaccinations = newVaccinations;
+  public void setVaccinations(int vaccinations) {
+    this.vaccinations = vaccinations;
   }
 
   public void setNewVaccinationsPerDay(int i, Database database) {
-    int dtbCurrentValue = database.get(i).getNewVaccinations();
+    int dtbCurrentValue = database.get(i).getVaccinations();
 
-    if (dtbCurrentValue == 0 || (i > 0 && dtbCurrentValue < database.get(i - 1).getNewVaccinations())) {
+    if (dtbCurrentValue == 0 || (i > 0 && dtbCurrentValue < database.get(i - 1).getVaccinations())) {
       // if current accumulative value is 0, null, or less than previous value,
       // set the new vaccination as 0
-      this.setNewVaccinations(0);
+      this.setVaccinations(0);
 
     } else {
       int j = 1;
-      // make sure that index doesn't get out of bounds
-      // and two data are in the same geoArea
+      // make sure that index doesn't get out of bounds and two data are in the same geoArea
       while (j <= i && database.get(i - j).getGeoArea().equals(database.get(i).getGeoArea())) {
-        if (database.get(i - j).getNewVaccinations() != 0) {
-          this.setNewVaccinations(dtbCurrentValue - database.get(i - j).getNewVaccinations());
+        if (database.get(i - j).getVaccinations() != 0) {
+          this.setVaccinations(dtbCurrentValue - database.get(i - j).getVaccinations());
           return;
         }
         j++;
       }
       // set new vaccination as current accumulative value if all data above it
       // are 0 or null
-      this.setNewVaccinations(dtbCurrentValue);
+      this.setVaccinations(dtbCurrentValue);
+    }
+  }
+
+  public void setCumulativeVaccinations(int i, Database database) {
+    int dtbCurrentValue = database.get(i).getVaccinations();
+    if (dtbCurrentValue == 0 || (i > 0 && dtbCurrentValue < database.get(i - 1).getVaccinations())) {
+      // if current accumulative value is 0, null, or less than previous day's value,
+      // set the cumulative vaccination as the closest day's value that is greater than 0
+      int j = i - 1;
+      while (j > 0 && database.get(j).getGeoArea().equals(database.get(i).getGeoArea())) {
+        if (database.get(j).getVaccinations() > 0) {
+          this.setVaccinations(database.get(j).getVaccinations());
+          break;
+        }
+        j--;
+      }
+    } else {
+      this.setVaccinations(database.get(i).getVaccinations());
     }
   }
 }
