@@ -77,7 +77,7 @@ public class Main {
             }
           }
           System.out.print("\n>>> ");
-          int areaOption = Validation.checkInput(sc.nextLine(), sc, allGeoAreas.length);
+          int areaOption = Validation.getInput(sc.nextLine(), allGeoAreas.length, sc);
           String geoArea = allGeoAreas[areaOption - 1];
           System.out.println("Country/region chosen: " + geoArea);
 
@@ -89,7 +89,7 @@ public class Main {
               \t3 - Number of days or weeks after start date, inclusive
               >>>\s"""
           );
-          int dateRangeOption = Validation.checkInput(sc.nextLine(), sc, 3);
+          int dateRangeOption = Validation.getInput(sc.nextLine(), 3, sc);
           switch (dateRangeOption) {
             case 1 -> System.out.print("""
                 \tEnter a pair of dates. Valid format example:
@@ -118,7 +118,7 @@ public class Main {
               \t3 - Vaccinations
               >>>\s"""
           );
-          int metricOption = Validation.checkInput(sc.nextLine(), sc, 3);
+          int metricOption = Validation.getInput(sc.nextLine(), 3, sc);
           switch (metricOption) {
             case 1 -> metric = Metric.CASES;
             case 2 -> metric = Metric.DEATHS;
@@ -135,7 +135,7 @@ public class Main {
               metric.toString().toLowerCase(),
               metric.toString().toLowerCase()
           );
-          int resultTypeOption = Validation.checkInput(sc.nextLine(), sc, 2);
+          int resultTypeOption = Validation.getInput(sc.nextLine(), 2, sc);
           switch (resultTypeOption) {
             case 1 -> resultType = ResultType.NEW_PER_PERIOD;
             case 2 -> resultType = ResultType.CUMULATIVE;
@@ -150,13 +150,13 @@ public class Main {
               \t3 - n day(s) per group
               >>>\s"""
           );
-          int groupingOption = Validation.checkInput(sc.nextLine(), sc, 3);
+          int groupingOption = Validation.getInput(sc.nextLine(), 3, sc);
 
           switch (groupingOption) {
             case 1 -> grouping = new Grouping();
             case 2 -> {
               System.out.print("Enter number of group(s): ");
-              int numGroups = Validation.checkGroupingInput(
+              int numGroups = Validation.getGroupingInput(
                   sc.nextLine(),
                   dateRange.getDurationInDays(),
                   sc
@@ -182,7 +182,7 @@ public class Main {
               \t2 - Chart (23 rows x 79 cols)
               >>>\s"""
           );
-          int formatOption = Validation.checkInput(sc.nextLine(), sc, 2);
+          int formatOption = Validation.getInput(sc.nextLine(), 2, sc);
           switch (formatOption) {
             case 1 -> displayFormat = DisplayFormat.TABULAR;
             case 2 -> displayFormat = DisplayFormat.CHART;

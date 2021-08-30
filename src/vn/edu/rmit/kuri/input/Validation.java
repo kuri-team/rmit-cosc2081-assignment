@@ -1,7 +1,6 @@
 package vn.edu.rmit.kuri.input;
 
 import java.util.Scanner;
-import vn.edu.rmit.kuri.processing.Summary;
 
 public class Validation {
 
@@ -24,7 +23,7 @@ public class Validation {
    * @param numOptions <code>int</code>: the number of options in the menu
    * @return <code>int[]</code>: an array containing all of the available options
    */
-  private static int[] returnOptionsArray(int numOptions) {
+  private static int[] getOptionsArray(int numOptions) {
     int[] options = new int[numOptions];
 
     for (int i = 0; i < numOptions; i++) {
@@ -40,8 +39,8 @@ public class Validation {
    * @return <code>int</code>: the option that matches with the user input, or -1 if
    * there is no match
    */
-  private static int returnValidOption(String input, int numOptions) {
-    int[] options = returnOptionsArray(numOptions);
+  private static int getValidOption(String input, int numOptions) {
+    int[] options = getOptionsArray(numOptions);
     for (int option : options) {
       if (input.equals(Integer.toString(option))) {
         return option;
@@ -54,15 +53,15 @@ public class Validation {
    * Prompt user to enter their input again if their input is not one of the available choices
    * in the menu
    * @param input <code>String</code>
-   * @param sc <code>Scanner</code>: to scan user input again
    * @param numOptions <code>int</code>: the number of options in the menu
+   * @param sc <code>Scanner</code>: to scan user input again
    * @return <code>int</code>: user input in integer format only when user input is valid
    */
-  public static int checkInput(String input, Scanner sc, int numOptions) {
+  public static int getInput(String input, int numOptions, Scanner sc) {
     input = input.trim();
 
     // asks user to enter their choice again until their input is one of the options in menu
-    while (returnValidOption(input, numOptions) == -1) {
+    while (getValidOption(input, numOptions) == -1) {
       System.out.print("Your input is invalid. Please enter one of the options "
           + "specified above.\n>>>\s");
       input = sc.nextLine().trim();
@@ -78,7 +77,7 @@ public class Validation {
    * @param sc <code>Scanner</code>: to scan user input again
    * @return <code>int</code>: user input in integer format only when user input is valid
    */
-  public static int checkGroupingInput(String input, long numDays, Scanner sc) {
+  public static int getGroupingInput(String input, long numDays, Scanner sc) {
     input = input.trim();
 
     // cannot divide the groups if the number of groups is not positive
@@ -99,12 +98,12 @@ public class Validation {
    * @return <code>int</code>: user input in integer format only when it is possible to divide groups equally
    */
   public static int canDivideGroupsEqually(String input, long numDays, Scanner sc) {
-    int numDaysPerGroup = checkGroupingInput(input, numDays, sc);
+    int numDaysPerGroup = getGroupingInput(input, numDays, sc);
 
     while (numDays % numDaysPerGroup != 0) {
       System.out.println("With the number of days per group provided, we cannot divide the groups equally.");
       System.out.print("Please enter another value: ");
-      numDaysPerGroup = checkGroupingInput(sc.nextLine(), numDays, sc);
+      numDaysPerGroup = getGroupingInput(sc.nextLine(), numDays, sc);
     }
     return numDaysPerGroup;
   }
