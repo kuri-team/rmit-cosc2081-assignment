@@ -31,7 +31,7 @@ public class Display {
     ArrayList<Integer> valueForDisplay = query(summary, metric);
 
     // Store each group's range in an ArrayList
-    ArrayList<String> range = groupRange(summary);
+    ArrayList<String> range = getGroupRange(summary);
 
     // Nested interface containing methods for creating a terminal-based table
     // Cells have their own vertical borderlines, horizontal borderlines methods must be used before or after the cell methods
@@ -272,7 +272,7 @@ public class Display {
    * @param summary Data that already has grouping
    * @return an arraylist of strings that represent group's range for display
    */
-  private static ArrayList<String> groupRange(Summary summary) {
+  private static ArrayList<String> getGroupRange(Summary summary) {
     ArrayList<String> range = new ArrayList<>();
     for (int i = 0; i < summary.size(); i++) {
       int groupSize = summary.get(i).size();
