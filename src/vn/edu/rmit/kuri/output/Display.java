@@ -222,7 +222,7 @@ public class Display {
    * @param metric     Metric chosen by the user
    * @return an arraylist that contains value for display
    */
-  public static ArrayList<Integer> query(Summary summary, Metric metric) {
+  private static ArrayList<Integer> query(Summary summary, Metric metric) {
     // Extract needed values based on the metric
     // Stored data in a 2D ArrayList
     // Data from the same group will be in the same ArrayList
@@ -272,7 +272,7 @@ public class Display {
    * @param summary Data that already has grouping
    * @return an arraylist of strings that represent group's range for display
    */
-  public static ArrayList<String> groupRange(Summary summary) {
+  private static ArrayList<String> groupRange(Summary summary) {
     ArrayList<String> range = new ArrayList<>();
     for (int i = 0; i < summary.size(); i++) {
       int groupSize = summary.get(i).size();

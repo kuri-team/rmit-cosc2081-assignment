@@ -32,9 +32,9 @@ public class DataFilter implements DataArray<Data> {
             entry.setCases(database.get(i).getCases());
             entry.setDeaths(database.get(i).getDeaths());
             if (database.isCumulative()) {
-              entry.setCumulativeVaccinations(i, database);
+              entry.calculateCumulativeVaccinations(i, database);
             } else {
-              entry.setNewVaccinationsPerDay(i, database);
+              entry.calculateNewVaccinationsPerDay(i, database);
             }
             break;
           }

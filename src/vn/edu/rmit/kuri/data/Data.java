@@ -53,19 +53,19 @@ public class Data {
     return vaccinations;
   }
 
-  public void setCases(int cases) {
-    this.cases = cases;
+  public void setCases(int value) {
+    this.cases = value;
   }
 
-  public void setDeaths(int deaths) {
-    this.deaths = deaths;
+  public void setDeaths(int value) {
+    this.deaths = value;
   }
 
-  public void setVaccinations(int vaccinations) {
-    this.vaccinations = vaccinations;
+  public void setVaccinations(int value) {
+    this.vaccinations = value;
   }
 
-  public void setNewVaccinationsPerDay(int i, Database database) {
+  public void calculateNewVaccinationsPerDay(int i, Database database) {
     int dtbCurrentValue = database.get(i).getVaccinations();
 
     if (dtbCurrentValue == 0 || (i > 0 && dtbCurrentValue < database.get(i - 1).getVaccinations())) {
@@ -89,7 +89,7 @@ public class Data {
     }
   }
 
-  public void setCumulativeVaccinations(int i, Database database) {
+  public void calculateCumulativeVaccinations(int i, Database database) {
     int dtbCurrentValue = database.get(i).getVaccinations();
     if (dtbCurrentValue == 0 || (i > 0 && dtbCurrentValue < database.get(i - 1).getVaccinations())) {
       // if current accumulative value is 0, null, or less than previous day's value,
