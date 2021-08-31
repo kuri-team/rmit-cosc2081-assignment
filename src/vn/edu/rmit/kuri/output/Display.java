@@ -174,8 +174,11 @@ public class Display {
       valuePositionOnChart.add(position);
     }
 
+    //create spacing between data points on the chart
     spacing = (int) Math.floor((float) (horizontal) / valueForDisplay.size());
-    int horizontalEdge = horizontal - (spacing * valueForDisplay.size());
+    /*check if the remaining space between the last data point and the horizontal edge is smaller
+    or equal to spacing.*/
+    int horizontalEdge = horizontal - (spacing * (valueForDisplay.size() - 1));
     while (spacing < horizontalEdge) {
       spacing ++;
     }
