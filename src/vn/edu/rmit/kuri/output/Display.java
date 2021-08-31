@@ -175,6 +175,10 @@ public class Display {
     }
 
     spacing = (int) Math.floor((float) (horizontal) / valueForDisplay.size());
+    int horizontalEdge = horizontal - (spacing * valueForDisplay.size());
+    while (spacing < horizontalEdge) {
+      spacing ++;
+    }
 
     // Replace null elements with ' '
     // Elements with other values will be modified later
