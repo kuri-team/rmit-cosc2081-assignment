@@ -174,7 +174,7 @@ public class Display {
       valuePositionOnChart.add(position);
     }
 
-    spacing = (int) Math.floor((float) (horizontal - 1) / valueForDisplay.size());  // TODO: This is not accurate. Fix it.
+    spacing = (int) Math.floor((float) (horizontal) / valueForDisplay.size());
 
     // Replace null elements with ' '
     // Elements with other values will be modified later
