@@ -175,11 +175,11 @@ public class Display {
     }
 
     //create spacing between data points on the chart
-    spacing = (int) Math.floor((float) (horizontal) / valueForDisplay.size());
+    spacing = (int) Math.floor((float) (horizontal - 1) / valueForDisplay.size());
     /*check if the remaining space between the last data point and the horizontal edge is smaller
     or equal to spacing.*/
-    int horizontalEdge = horizontal - (spacing * (valueForDisplay.size() - 1));
-    while (spacing < horizontalEdge) {
+    int remainingSpace = horizontal - (spacing * (valueForDisplay.size() - 1));
+    while (spacing < remainingSpace) {
       spacing ++;
     }
 
