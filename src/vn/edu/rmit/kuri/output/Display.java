@@ -175,12 +175,15 @@ public class Display {
     }
 
     //create spacing between data points on the chart
-    spacing = (int) Math.floor((float) (horizontal - 1) / valueForDisplay.size());
-    /*check if the remaining space between the last data point and the horizontal edge is smaller
-    or equal to spacing.*/
-    int remainingSpace = horizontal - (spacing * (valueForDisplay.size() - 1));
-    while (spacing < remainingSpace) {
+    /*spacing starts after the vertical axis and the first data point, which is always next to
+    the y-axis, so the remaining space is horizontal - 2*/
+    spacing = (int) Math.floor((float) (horizontal - 2) / (valueForDisplay.size() - 1));
+    //Exempting the first datapoint, the remaining data points are valueForDisplay.size() - 1
+    int remainingSpace = (horizontal-2) - (spacing * (valueForDisplay.size() - 1));
+    //increase spacing so long as the data points are within bound
+    while ((valueForDisplay.size() - 1) <= remainingSpace) {
       spacing ++;
+      remainingSpace = (horizontal-2) - (spacing * (valueForDisplay.size() - 1));
     }
 
     // Replace null elements with ' '
