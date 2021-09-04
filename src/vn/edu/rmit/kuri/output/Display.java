@@ -150,12 +150,18 @@ public class Display {
     // find the max value to calculate the position of the * based on it
     // each * present a value from a group
     int max = 0;
+    int min = valueForDisplay.get(0);
     int zeroCount = 0;
 
     for (Integer i : valueForDisplay) {
       if (max < i) {
         max = i;
       }
+
+      if (min > i) {
+        min = i;
+      }
+
       if (i == 0) {
       zeroCount += 1;
       }
@@ -169,12 +175,22 @@ public class Display {
       // the reason for -2: -1 for the double array start from 0 rather than 1, -1 for the 1st col and the last row is used for axes
       int position = vertical - 2;  // last row in the display area
       if (zeroCount != valueForDisplay.size()) {
-      position = Math.round((vertical - 2) - (((float) value / max) * (vertical - 2)));
+      position = Math.round((vertical - 2) - (((float) (value - min) / (max - min)) * (vertical - 2)));
       }
       valuePositionOnChart.add(position);
     }
 
-    spacing = (int) Math.floor((float) (horizontal - 1) / valueForDisplay.size());  // TODO: This is not accurate. Fix it.
+    //create spacing between data points on the chart
+    /*spacing starts after the vertical axis and the first data point, which is always next to
+    the y-axis, so the remaining space is horizontal - 2*/
+    spacing = (int) Math.floor((float) (horizontal - 2) / (valueForDisplay.size() - 1));
+    //Exempting the first datapoint, the remaining data points are valueForDisplay.size() - 1
+    int remainingSpace = (horizontal-2) - (spacing * (valueForDisplay.size() - 1));
+    //increase spacing so long as the data points are within bound
+    while ((valueForDisplay.size() - 1) <= remainingSpace) {
+      spacing ++;
+      remainingSpace = (horizontal-2) - (spacing * (valueForDisplay.size() - 1));
+    }
 
     // Replace null elements with ' '
     // Elements with other values will be modified later
